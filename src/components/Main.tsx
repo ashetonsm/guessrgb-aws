@@ -40,7 +40,6 @@ class Main extends React.Component<any, any> {
         }
 
         const winCondition = () => {
-            console.log("You win!");
             document.getElementById("resultArea")!.style.visibility = "visible";
             this.setState({ correct: true })
             this.setState({ gamePlaying: false })
@@ -48,14 +47,13 @@ class Main extends React.Component<any, any> {
 
         const loseCondition = () => {
             document.getElementById("resultArea")!.style.visibility = "visible";
-            console.log("You lose!");
             this.setState({ gamePlaying: false })
         }
 
         return (
             <>
             <div className="center" id="resultArea" style={{visibility: "hidden"}}>
-            {correct ? <h1 id="youWin">You win!</h1> : <h1 id="youLose">You lose...</h1>}
+            {correct ? <div className="answerSwatch" id="youWin" style={{backgroundColor: `rgb(${answer})`}}>You win!</div> : <div className="answerSwatch" id="youLose" style={{backgroundColor: `rgb(${answer})`}}>You lose...</div>}
             <button onClick={clearList} id="restartButton">Restart?</button>
             </div>
             <div className="center" id="mainArea">

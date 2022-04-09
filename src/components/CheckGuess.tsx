@@ -11,20 +11,17 @@ const CheckGuess = (answer: any, numberOfGuesses: any): number => {
     var numCorrect = 0;
 
     if (red > guessR - 26 && red < guessR + 26) {
-        guessSpans[0].style.color = "green";
-        console.log("R is close");
+        guessSpans[0].style.color = "#9dff00";
         numCorrect++;
     }
 
     if (green > guessG - 26 && green < guessG + 26) {
-        guessSpans[1].style.color = "green";
-        console.log("G is close");
+        guessSpans[1].style.color = "#9dff00";
         numCorrect++;
     }
 
     if (blue > guessB - 26 && blue < guessB + 26) {
-        guessSpans[2].style.color = "green";
-        console.log("B is close");
+        guessSpans[2].style.color = "#9dff00";
         numCorrect++;
     }
 
