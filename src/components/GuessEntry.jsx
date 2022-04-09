@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
 const GuessEntry = props => {
-    const pickerInput = "";
     const [guessInput, setGuess] = useState("");
 
     function changeGuess(e: any) {
@@ -17,10 +16,10 @@ const GuessEntry = props => {
     }
 
     return (
-        <div>
-        <h4 id="converter">Color:</h4>
-        <input type="color" value="#000000" id="colorPicker" onChange={changeGuess}/>
-        <button value="submit" onClick={submitGuess}>Submit</button>
+        <div id="guessEntry">
+            <h4 id="converter">Color:</h4>
+            <input type="color" value="#000000" id="colorPicker" onChange={changeGuess}/><p></p>
+            <button value="submit" onClick={submitGuess}>Submit</button>
         </div>
     );
 }
