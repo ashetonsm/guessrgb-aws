@@ -16,17 +16,18 @@ div[id^="guessBG"] {
 .center {
   margin: auto;
   width: 50%;
-  border: 1px solid grey;
   text-align: center;
   padding: 10px;
 }
 
 #guessEntry {
-    background-color: lightblue;
+    border: 1px solid grey;
+    padding: 2em;
 }
 
-#title {
-    background-color: lightyellow;
+div #title {
+    font-family: consolas;
+    padding: 1em;
 }
 
 @keyframes slideDown {
