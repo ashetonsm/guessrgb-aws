@@ -10,6 +10,8 @@ A casual browser game. Guess the color by selecting a value from the color input
 
 If you win or run out of guesses, press "Restart" to play again with a new color!
 
+[Play on GitHub Pages](https://ashetonsm.github.io/guessRGB/)
+
 ---
 
 ### Tools:
