@@ -52,23 +52,18 @@ class Main extends React.Component<any, any> {
 
         return (
             <>
-                <div>
+            <div className="center" id="mainArea">
+                {children.length >= 5 && !correct && gamePlaying ? loseCondition() : null}
+                {correct ? <h1 id="youWin">You win!</h1> : children.length >= 5 && !correct ?
+                    <h1 id="youLose">You lose...</h1> : null}
+                {children.length >= 5 || correct ? <button onClick={clearList} id="restartButton">Restart?</button> : null}
 
-                    {children.length >= 5 && !correct && gamePlaying ? loseCondition() : null}
-
-                    {correct ? <h1>You win!</h1> :
-                        children.length >= 5 && !correct ? <h1>You lose...</h1>
-                            : null}
-
-                    {children.length >= 5 || correct ? <button onClick={clearList}>Restart?</button> : null}
-                    <GuessEntry submit={addChild} gamePlaying={gamePlaying} />
-                    <ul>
-                        {children ?.map((guess: any) =>
-                            <li key={numberOfGuesses++}>
-                                <GuessDisplay guess={guess} num={numberOfGuesses} answer={answer} winCondition={winCondition} gamePlaying={gamePlaying} />
-                            </li>)}
-                    </ul>
-                </div>
+                <GuessEntry submit={addChild} gamePlaying={gamePlaying} />
+                {children ?.map((guess: any) =>
+                    <div className="guessContainer" key={numberOfGuesses++}>
+                    <GuessDisplay guess={guess} num={numberOfGuesses} answer={answer} winCondition={winCondition} gamePlaying={gamePlaying} />
+                    </div>)}
+            </div>
             </>
         );
     }

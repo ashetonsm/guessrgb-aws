@@ -5,10 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: lightblue;
+  background-color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+div[id^="guessBG"] {
+    border-radius: 10px;
+    font-size: 2em;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  border: 1px solid grey;
+  text-align: center;
+  padding: 10px;
+}
+
+#guessEntry {
+    background-color: lightblue;
+}
+
+#title {
+    background-color: lightyellow;
 }

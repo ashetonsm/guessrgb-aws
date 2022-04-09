@@ -1,4 +1,4 @@
-const CheckGuess = (answer: any, guess: string[], numberOfGuesses: any): number => {
+const CheckGuess = (answer: any, numberOfGuesses: any): number => {
     //console.log("Answer: " + answer);
     const guessDiv = document.getElementById(`guessNum${numberOfGuesses}`);
     const guessSpans = guessDiv!.getElementsByTagName("span");
