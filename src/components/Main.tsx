@@ -40,7 +40,6 @@ class Main extends React.Component<any, any> {
         }
 
         const winCondition = () => {
-            console.log("You win!");
             document.getElementById("resultArea")!.style.visibility = "visible";
             this.setState({ correct: true })
             this.setState({ gamePlaying: false })
@@ -48,7 +47,6 @@ class Main extends React.Component<any, any> {
 
         const loseCondition = () => {
             document.getElementById("resultArea")!.style.visibility = "visible";
-            console.log("You lose!");
             this.setState({ gamePlaying: false })
         }
 
