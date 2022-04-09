@@ -10,7 +10,7 @@ const GuessDisplay: any = (props: any) => {
     });
 
     return (
-        <div id={`guessNum${props.num}`}>
+        <div className="slideDown" id={`guessNum${props.num}`}>
             <h2>Guess {props.num + 1}</h2>
             <div id={`guessBG${props.num}`}  style={{backgroundColor: `rgb(${props.guess})`}}>
                 <span>{props.guess[0]}</span>,

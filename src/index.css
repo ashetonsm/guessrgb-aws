@@ -28,3 +28,18 @@ div[id^="guessBG"] {
 #title {
     background-color: lightyellow;
 }
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 100%;
+  }
+}
+
+.slideDown {
+  animation: 0.5s ease-out 0s 1 slideDown;
+}
