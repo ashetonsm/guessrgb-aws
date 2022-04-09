@@ -8,9 +8,19 @@ body {
   background-color: white;
 }
 
-div[id^="guessBG"] {
+div[id^="guessBG"], .answerSwatch {
+    color: white;
     border-radius: 10px;
     font-size: 2em;
+    text-shadow: 1px 0px 0px #000000,
+                -1px -0px 0px #000000,
+                0px 1px 0px #000000,
+                0px -1px 0px #000000;
+}
+
+#converter {
+    padding: 0px;
+    margin-bottom: 0.5em;
 }
 
 .center {
@@ -20,14 +30,33 @@ div[id^="guessBG"] {
   padding: 10px;
 }
 
-#guessEntry {
-    border: 1px solid grey;
-    padding: 2em;
+#mainArea {
+    display: flex;
+    flex-direction: column;
 }
 
-div #title {
+#guessContainer {
+    flex: 1;
+}
+
+#guessEntry {
+    color: white;
+    text-transform: uppercase;
+    background-color: black;
+    border: 1px solid grey;
+    border-bottom-right-radius: 1em;
+    padding-bottom: 2em;
+}
+
+#resultArea {
+    padding-top: 0em;
+}
+
+#title h1 {
     font-family: consolas;
-    padding: 1em;
+    padding: 0em;
+    margin-top: 0.5em;
+    margin-bottom: 0em;
 }
 
 @keyframes slideDown {
