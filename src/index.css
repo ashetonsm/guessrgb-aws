@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: white;
+  animation: rainbow 20s infinite;
 }
 
 div[id^="guessBG"], .answerSwatch {
@@ -30,6 +31,10 @@ div[id^="guessBG"], .answerSwatch {
   padding: 10px;
 }
 
+.slideDown {
+  animation: 0.5s ease-out 0s 1 slideDown;
+}
+
 #mainArea {
     display: flex;
     flex-direction: column;
@@ -42,8 +47,7 @@ div[id^="guessBG"], .answerSwatch {
 #guessEntry {
     color: white;
     text-transform: uppercase;
-    background-color: black;
-    border: 1px solid grey;
+    background-color: white;
     border-bottom-right-radius: 1em;
     padding-bottom: 2em;
 }
@@ -70,6 +74,24 @@ div[id^="guessBG"], .answerSwatch {
   }
 }
 
-.slideDown {
-  animation: 0.5s ease-out 0s 1 slideDown;
+@keyframes rainbow {
+  0% {
+    background-color: #ffb0d2;
+  }
+  20% {
+    background-color: #ffcbb0;
+  }
+  40% {
+    background-color: #ffefb0;
+  }
+  60% {
+    background-color: #caffb0;
+  }
+  80% {
+    background-color: #b0eeff;
+  }
+  100% {
+      background-color: #ffb0d2;
+
+  }
 }
