@@ -1,13 +1,11 @@
 import { useState } from "react"
 import Button from "react-bootstrap/esm/Button"
 
-export const GuessEntry = ({recordGuess}) => {
+export const GuessEntry = ({ recordGuess }) => {
 
     const [currentColor, setCurrentColor] = useState("#000000")
 
-
     return (
-
         <div className="d-flex justify-content-center">
             <div className="flex-column text-center">
                 <h5 className="display-5">Please choose a color:</h5>

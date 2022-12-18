@@ -13,13 +13,10 @@ export const Home = () => {
         setGuesses([...guesses, RGBGuess])
     }
 
-
-
     return (
         <Container>
             <GuessEntry recordGuess={recordGuess} />
             <div className="d-flex gap-3">
-
                 <GuessDisplay guesses={guesses} />
             </div>
 
