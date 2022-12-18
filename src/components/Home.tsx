@@ -7,8 +7,15 @@ import { GuessEntry } from "./GuessEntry"
 export const Home = () => {
 
     const [guesses, setGuesses] = useState<Array<any>>([])
+    const [correctAnswer, setCorrectAnswer] = useState({
+        r: Math.round(Math.random() * 255),
+        g: Math.round(Math.random() * 255),
+        b: Math.round(Math.random() * 255),
+    }
+    )
 
     const recordGuess = (hexGuess: string) => {
+        console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
         const RGBGuess = HexToRgb(hexGuess)
         setGuesses([...guesses, RGBGuess])
     }
