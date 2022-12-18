@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Container } from "react-bootstrap"
 import HexToRgb from "../utilities/HexToRGB"
+import GuessDisplay from "./GuessDisplay"
 import { GuessEntry } from "./GuessEntry"
 
 export const Home = () => {
@@ -12,23 +13,15 @@ export const Home = () => {
         setGuesses([...guesses, RGBGuess])
     }
 
-    function displayGuessed() {
-        var output = guesses.map((RGB, idx) =>
 
-            <p key={idx}>
-                <span className="px-1">{RGB.r}</span>
-                <span className="px-1">{RGB.g}</span>
-                <span className="px-1">{RGB.b}</span>
-            </p>
-
-        )
-        return (output)
-    }
 
     return (
         <Container>
             <GuessEntry recordGuess={recordGuess} />
-            {displayGuessed()}
+            <div className="d-flex gap-3">
+
+                <GuessDisplay guesses={guesses} />
+            </div>
 
         </Container>
     )
