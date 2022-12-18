@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Button from "react-bootstrap/esm/Button"
 
-export const GuessEntry = () => {
+export const GuessEntry = ({recordGuess}) => {
 
     const [currentColor, setCurrentColor] = useState("#000000")
 
@@ -21,6 +21,7 @@ export const GuessEntry = () => {
                 <div className="text-center">
                     <Button onClick={(e) => {
                         console.log("Current color: " + currentColor)
+                        recordGuess(currentColor)
                     }}>Submit Guess</Button>
                 </div>
             </div>
