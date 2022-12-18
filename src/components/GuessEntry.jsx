@@ -1,27 +1,31 @@
-import React, {useState} from 'react';
+import { useState } from "react"
+import Button from "react-bootstrap/esm/Button"
 
-const GuessEntry = props => {
-    const [guessInput, setGuess] = useState("");
+export const GuessEntry = () => {
 
-    function changeGuess(e: any) {
-        let converter = document.querySelector("#converter");
-        converter.style.color = e.target.value;
-        setGuess(converter.style.color.slice(4, -1).split(", "));
-    }
+    const [currentColor, setCurrentColor] = useState("#000000")
 
-    function submitGuess() {
-        if (props.gamePlaying) {
-            props.submit(guessInput);
-        }
-    }
 
     return (
-        <div id="guessEntry">
-            <h4 id="converter">Color:</h4>
-            <input type="color" value="#000000" id="colorPicker" onChange={changeGuess}/><p></p>
-            <button value="submit" onClick={submitGuess}>Submit</button>
+
+        <div className="d-flex justify-content-center">
+            <div className="flex-column text-center">
+                <h5 className="display-5">Please choose a color:</h5>
+                <input
+                    id="colorPicker"
+                    type="color"
+                    onChange={(e) => {
+                        setCurrentColor(e.target.value)
+                    }}
+                />
+                <div className="text-center">
+                    <Button onClick={(e) => {
+                        console.log("Current color: " + currentColor)
+                    }}>Submit Guess</Button>
+                </div>
+            </div>
         </div>
-    );
+    )
 }
 
 export default GuessEntry;

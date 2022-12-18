@@ -1,8 +1,18 @@
+import { useState } from "react"
+import { Container } from "react-bootstrap"
+import Button from "react-bootstrap/esm/Button"
+import { GuessEntry } from "./GuessEntry"
+
 export const Home = () => {
-    return(
-        <div>
-            <input type="color"/>
-            "Hello, world."
-        </div>
-        )
+
+
+
+    return (
+        <Container>
+            <GuessEntry />
+
+
+
+        </Container>
+    )
 }
