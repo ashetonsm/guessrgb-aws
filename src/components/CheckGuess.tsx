@@ -1,31 +1,11 @@
-const CheckGuess = (answer: any, numberOfGuesses: any): number => {
-    //console.log("Answer: " + answer);
-    const guessDiv = document.getElementById(`guessNum${numberOfGuesses}`);
-    const guessSpans = guessDiv!.getElementsByTagName("span");
-    var guessR = parseInt(guessSpans[0].innerText);
-    var guessG = parseInt(guessSpans[1].innerText);
-    var guessB = parseInt(guessSpans[2].innerText);
-    var red = answer[0];
-    var green = answer[1];
-    var blue = answer[2];
-    var numCorrect = 0;
+const CheckGuess = (answer: { r: number; g: number; b: number; }, guess: { r: number; g: number; b: number; }) => {
+    var result = [];
 
-    if (red > guessR - 26 && red < guessR + 26) {
-        guessSpans[0].style.color = "#9dff00";
-        numCorrect++;
-    }
+    (answer.r >= (guess.r - 25) && answer.r <= (guess.r + 25)) ? result.push(1) : result.push(0);
+    (answer.g >= (guess.g - 25) && answer.g <= (guess.g + 25)) ? result.push(1) : result.push(0);
+    (answer.b >= (guess.b - 25) && answer.b <= (guess.b + 25)) ? result.push(1) : result.push(0);
 
-    if (green > guessG - 26 && green < guessG + 26) {
-        guessSpans[1].style.color = "#9dff00";
-        numCorrect++;
-    }
-
-    if (blue > guessB - 26 && blue < guessB + 26) {
-        guessSpans[2].style.color = "#9dff00";
-        numCorrect++;
-    }
-
-    return numCorrect;
+    return result;
 }
 
 export default CheckGuess;
