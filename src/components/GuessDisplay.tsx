@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react';
-import CheckGuess from "./CheckGuess";
+import { Card, ListGroup } from "react-bootstrap";
 
-const GuessDisplay: any = (props: any) => {
+export const GuessDisplay = ({ guesses }: { guesses: any }) => {
 
-    useEffect(() => {
-        if (props.gamePlaying) {
-            if (CheckGuess(props.answer, props.num) === 3) { props.winCondition(); }
-        }
-    });
+    var output = guesses.map((RGB: { r: number; g: number; b: number; correct: Array<number> }, idx: number) =>
 
-    return (
-        <div className="slideDown" id={`guessNum${props.num}`}>
-            <h2>Guess {props.num + 1}</h2>
-            <div id={`guessBG${props.num}`}  style={{backgroundColor: `rgb(${props.guess})`}}>
-                <span>{props.guess[0]}</span>,
-                <span>{props.guess[1]}</span>,
-                <span>{props.guess[2]}</span>
-            </div>
-        </div>
-
-    );
+        <Card key={idx} className="text-center slideDown">
+            <Card.Header as="h5" >Guess {idx + 1}</Card.Header>
+            <ListGroup id="guessContainer" variant="flush" style={{ backgroundColor: `rgb(${RGB.r}, ${RGB.g}, ${RGB.b})` }}>
+                <ListGroup.Item style={{ backgroundColor: "inherit" }}>
+                    <span style={{ color: RGB.correct[0] === 1 ? '#9dff00' : '#FFF' }}>
+                        {RGB.r}
+                    </span>
+                </ListGroup.Item>
+                <ListGroup.Item style={{ backgroundColor: "inherit" }}>
+                    <span style={{ color: RGB.correct[1] === 1 ? '#9dff00' : '#FFF' }}>
+                        {RGB.g}
+                    </span>
+                </ListGroup.Item>
+                <ListGroup.Item style={{ backgroundColor: "inherit" }}>
+                    <span style={{ color: RGB.correct[2] === 1 ? '#9dff00' : '#FFF' }}>
+                        {RGB.b}
+                    </span>
+                </ListGroup.Item>
+            </ListGroup>
+        </Card>
+    )
+    return (output)
 }
 
-export default GuessDisplay;
+export default GuessDisplay
