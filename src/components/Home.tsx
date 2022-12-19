@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Button, Container } from "react-bootstrap"
 import HexToRgb from "../utilities/HexToRGB"
+import { AnswerToast } from "./AnswerToast"
 import CheckGuess from "./CheckGuess"
 import GuessDisplay from "./GuessDisplay"
 import { GuessEntry } from "./GuessEntry"
@@ -18,7 +19,7 @@ export const Home = () => {
     })
 
     const recordGuess = (hexValue: string) => {
-        console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
+        // console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
         const rgbValue = HexToRgb(hexValue)
         const userAnswer = {
             r: rgbValue!.r,
@@ -32,7 +33,6 @@ export const Home = () => {
             if (element === 1) { numCorrect++ }
         })
         if (numCorrect === 3) {
-            console.log("You win!")
             setGameWon(true)
             setGamePlaying(false)
         }
@@ -57,8 +57,8 @@ export const Home = () => {
     return (
         <>
             <Menu />
-
             <Container>
+            {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
                 <div className="d-flex justify-content-center">
                     <div className="flex-column text-center">
                         <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
