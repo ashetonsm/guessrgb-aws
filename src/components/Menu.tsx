@@ -14,15 +14,17 @@ export const Menu = () => {
                     left: '2vw'
                 }}>MENU</span>
 
-            <Offcanvas show={showMenu} onHide={() => {
-                setShowMenu(false)
-            }}>
+            <Offcanvas show={showMenu} onHide={ () => setShowMenu(false) }>
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                    <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    Some text as placeholder. In real life you can have the elements you
-                    have chosen. Like, text, images, lists, etc.
+                    <h5>Coming soon:</h5>
+                    <p>Log in</p>
+                    <p>Log out</p>
+                    <p>Register</p>
+                    <hr/>
+                    <p>About</p>
                 </Offcanvas.Body>
             </Offcanvas>
         </>
