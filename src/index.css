@@ -9,7 +9,7 @@ body {
   animation: rainbow 20s infinite;
 }
 
-div[id^="guessContainer"] {
+div[id^="guessContainer"], #answerText {
   color: white;
   font-size: 1.5em;
   text-shadow: 1px 0px 0px #000000,

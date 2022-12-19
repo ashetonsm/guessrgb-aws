@@ -17,7 +17,7 @@ export const AnswerToast = (c: { correctAnswer: { r: number; g: number; b: numbe
                 <Toast.Header>
                     <h5 className="me-auto">The answer was...</h5>
                 </Toast.Header>
-                <Toast.Body>{c.correctAnswer.r}, {c.correctAnswer.g}, {c.correctAnswer.b}</Toast.Body>
+                <Toast.Body id='answerText'>{c.correctAnswer.r}, {c.correctAnswer.g}, {c.correctAnswer.b}</Toast.Body>
             </Toast>
         </ToastContainer>
     )
