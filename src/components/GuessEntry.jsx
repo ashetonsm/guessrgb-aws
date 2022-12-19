@@ -18,7 +18,6 @@ export const GuessEntry = ({ recordGuess, gamePlaying }) => {
                 <Button
                     disabled={!gamePlaying}
                     onClick={() => {
-                        console.log("Current color: " + currentColor)
                         recordGuess(currentColor)
                     }}>Submit Guess</Button>
             </div>

@@ -5,8 +5,6 @@ const CheckGuess = (answer: { r: number; g: number; b: number; }, guess: { r: nu
     (answer.g >= (guess.g - 25) && answer.g <= (guess.g + 25)) ? result.push(1) : result.push(0);
     (answer.b >= (guess.b - 25) && answer.b <= (guess.b + 25)) ? result.push(1) : result.push(0);
 
-    console.log(result);
-
     return result;
 }
 
