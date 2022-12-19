@@ -4,6 +4,7 @@ import HexToRgb from "../utilities/HexToRGB"
 import CheckGuess from "./CheckGuess"
 import GuessDisplay from "./GuessDisplay"
 import { GuessEntry } from "./GuessEntry"
+import { Menu } from "./Menu"
 
 export const Home = () => {
 
@@ -54,26 +55,30 @@ export const Home = () => {
     }
 
     return (
-        <Container>
-            <div className="d-flex justify-content-center">
-                <div className="flex-column text-center">
-                    <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
-                    <GuessEntry recordGuess={recordGuess} gamePlaying={gamePlaying} />
-                    <div className="mt-2 mb-2 px-2 ">
-                        <Button
-                            style={{ visibility: gamePlaying ? 'hidden' : 'visible' }}
-                            onClick={() => {
-                                resetGame()
-                            }}>
-                            Play Again
-                        </Button>
-                    </div>
-                    <div className="d-flex gap-3">
-                        <GuessDisplay guesses={guesses} />
+        <>
+            <Menu />
+
+            <Container>
+                <div className="d-flex justify-content-center">
+                    <div className="flex-column text-center">
+                        <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
+                        <GuessEntry recordGuess={recordGuess} gamePlaying={gamePlaying} />
+                        <div className="mt-2 mb-2 px-2 ">
+                            <Button
+                                style={{ visibility: gamePlaying ? 'hidden' : 'visible' }}
+                                onClick={() => {
+                                    resetGame()
+                                }}>
+                                Play Again
+                            </Button>
+                        </div>
+                        <div className="d-flex gap-3">
+                            <GuessDisplay guesses={guesses} />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </Container>
+            </Container>
+        </>
     )
 }
