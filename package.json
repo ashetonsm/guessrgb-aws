@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "cors": "^2.8.5",
     "gh-pages": "^3.2.3"
   }
 }

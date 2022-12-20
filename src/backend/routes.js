@@ -1,11 +1,13 @@
-const express = require("express");
+const express = require('express');
+var cors = require('cors');
 var bodyParser = require('body-parser');
-require("./database/conn")
+require('./database/conn')
 const PORT = process.env.PORT || 5000;
 var url = process.env.ATLAS_URI;
 const User = require('./models/user.model');
-const { default: mongoose } = require("mongoose");
+const { default: mongoose } = require('mongoose');
 const app = express();
+app.use(cors());
 
 var jsonParser = bodyParser.json()
 // var urlencodedParser = bodyParser.urlencoded({extended: true})
