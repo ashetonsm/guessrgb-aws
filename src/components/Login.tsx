@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap"
 export const Login = () => {
 
     const [inputs, setInputs] = useState({
-        username: "",
+        email: "",
         password: ""
     });
 
@@ -22,15 +22,27 @@ export const Login = () => {
     }
 
     return (
-        <Form>
+        <Form validated>
             <Form.Group className="mb-3">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="username" id="username" value={inputs.username} onChange={handleChange} />
-                <Form.Text>Please enter your username.</Form.Text>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                    type="email"
+                    id="email"
+                    minLength={6}
+                    maxLength={50}
+                    value={inputs.email}
+                    onChange={handleChange} />
+                <Form.Text>Please enter your email address.</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" id="password" value={inputs.password} onChange={handleChange} />
+                <Form.Control
+                    type="password"
+                    id="password"
+                    minLength={8}
+                    maxLength={12}
+                    value={inputs.password}
+                    onChange={handleChange} />
                 <Form.Text>Please enter your password.</Form.Text>
             </Form.Group>
 
@@ -41,7 +53,7 @@ export const Login = () => {
                     label="Remember me"
                 />
             </Form.Group>
-            <Button type="submit" onClick={handleSubmit}>Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>Log in</Button>
         </Form>
     )
 }

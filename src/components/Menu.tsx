@@ -1,5 +1,7 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useState } from "react"
+import { Login } from './Login'
+import { Register } from './Register'
 
 export const Menu = () => {
 
@@ -21,8 +23,10 @@ export const Menu = () => {
                 <Offcanvas.Body>
                     <h5>Coming soon:</h5>
                     <p>Log in</p>
-                    <p>Log out</p>
+                    <Login/>
                     <p>Register</p>
+                    <Register/>
+                    <p>Log out</p>
                     <hr/>
                     <p>About</p>
                 </Offcanvas.Body>
