@@ -46,7 +46,7 @@ export const Login = () => {
                 <Form.Text>Please enter your password.</Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3 text-start">
                 <Form.Check
                     type="checkbox"
                     id="rememberUser"
