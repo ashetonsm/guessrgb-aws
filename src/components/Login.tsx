@@ -16,9 +16,20 @@ export const Login = () => {
         }))
     }
 
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
-        console.log(inputs);
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const response = await fetch(`http://localhost:5000/api/login`,
+            {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(inputs)
+            }
+        )
+
+        const data = await response.json()
+        console.log(data)
     }
 
     return (
