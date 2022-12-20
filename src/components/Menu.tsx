@@ -52,6 +52,7 @@ export const Menu = () => {
                                         setShowRegister(true)
                                         }}>Register</Nav.Link>
                                 </Nav.Item>
+                                <hr/>
                                 {showLogin ? <Login /> : null}
 
                                 {showRegister ? <Register /> : null}
@@ -61,7 +62,7 @@ export const Menu = () => {
                     </Nav>
 
                     <hr />
-                    <p>Asheton S. M.</p>
+                    <p>Built by <a href="https://github.com/ashetonsm">Asheton S. M.</a></p>
                 </Offcanvas.Body>
             </Offcanvas>
         </>
