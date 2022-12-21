@@ -6,19 +6,32 @@
 
 ### What is this?
 
-A casual browser game. Guess the color by selecting a value from the color input. The answer is randomly generated. The player has five chances to guess correctly. 
+A casual browser game. Guess the color by selecting a value from the color input. The answer is randomly generated. The player has five chances to guess correctly.
 
-If you win or run out of guesses, press "Play Again" to play again with a new color!
+This application is currently in development. It's being completely rewritten and the demo is not live at this time.
 
-[Play on GitHub Pages](https://ashetonsm.github.io/guessRGB/)
+### To do:
+- General
+    - [ ] Move to a global app context (useContext)
+- Navigation
+    - [ ] Integrate log in session info with app navigation
+- Styling
+    - [ ] Finish styling
+- Login and registration
+    - [ ] Redirect after logging in
+    - [ ] Add retry cooldown
+    - [ ] Rework login with better salt/hash protocols
+- Profile page
+    - [ ] Show win/lose stats
+    - [ ] Show winning color swatches
 
 ---
 
 ### Tools:
 
-- React
-- TypeScript
-- CSS/HTML
-- React-Bootstrap
-- Bootstrap 5
-- MongoDB
+- React Typescript
+- Bootstrap 5/React-Bootstrap
+- MongoDB/Mongoose
+- Bcryptjs
+- Express
+- Node.js
