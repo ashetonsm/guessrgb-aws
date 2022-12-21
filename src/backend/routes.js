@@ -6,13 +6,12 @@ const PORT = process.env.PORT || 5000;
 var url = process.env.ATLAS_URI;
 const User = require('./models/user.model');
 const { default: mongoose } = require('mongoose');
+const PasswordUtils = require('../utilities/PasswordUtils');
 const app = express();
 app.use(cors());
 
 var jsonParser = bodyParser.json()
 // var urlencodedParser = bodyParser.urlencoded({extended: true})
-
-console.log(url)
 mongoose.connect(url)
 
 // node backend/server.js
@@ -24,6 +23,8 @@ app.listen(PORT, () => {
 // Log into the application
 app.post('/api/login', jsonParser, async function (req, res) {
     console.log(req.body)
+
+    PasswordUtils.encrypt("hi")
 
     const user = await User.findOne({
         email: req.body.email,
@@ -43,9 +44,10 @@ app.post('/api/login', jsonParser, async function (req, res) {
 app.post('/api/register', jsonParser, async function (req, res) {
     console.log(req.body)
 
+    PasswordUtils.encrypt("hi")
+
     try {
         const user = await User.create({
-            username: req.body.username,
             email: req.body.email,
             password: req.body.password
         })
