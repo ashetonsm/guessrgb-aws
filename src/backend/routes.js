@@ -19,7 +19,6 @@ app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
 
-
 // Log into the application
 app.post('/api/login', jsonParser, async function (req, res) {
 
@@ -33,46 +32,34 @@ app.post('/api/login', jsonParser, async function (req, res) {
             let hashedInput = PasswordUtils.hash(req.body.password)
             const match = PasswordUtils.compare(hashedInput, user.password)
             if (match === true) {
-                res.json({ status: 'success', error: 'Log in success.' })
+                res.json({ status: 'success', message: 'Log in success.' })
             } else {
-                res.json({ status: 'error', error: 'Log in error.' })
+                res.json({ status: 'error', message: 'Log in error.' })
             }
         } else {
-            res.json({ status: 'error', error: 'No user found or something.' })
+            res.json({ status: 'error', message: 'No user found or something.' })
         }
     } catch (e) {
-        res.json({ status: 'error', error: e })
+        res.json({ status: 'error', message: e })
     }
 });
-
 
 // Create a new User
 app.post('/api/register', jsonParser, async function (req, res) {
 
     const hashed = PasswordUtils.hash(req.body.password)
-
-    try {
-        const user = await User.create({
-            email: req.body.email,
-            password: hashed
-        })
-
-        if (user._id) {
-            console.log(user)
-            res.json({ status: 'success', error: 'User creation success.' })
-        } else {
-            console.log(user)
-            res.json({ status: 'error', error: 'User creation failure.' })
-        }
-    } catch (e) {
-        res.json({ status: 'error', error: 'User creation failure.' })
-    }
-});
-
-// A test.
-app.route('/test')
-    .get(async function (req, res) {
-        console.log("Hello, world!")
-        res.send("Hello, tester!")
+    var user = new User({
+        email: req.body.email,
+        password: hashed
     })
 
+    await user.save()
+        .then(data => {
+            res.json({ status: 'success', message: 'Registration success.' })
+        })
+        .catch(error => {
+            res.json({ status: 'error', message: 'Registration failure. Error: ', error })
+            console.error('Database Error.')
+        })
+
+});

@@ -21,12 +21,18 @@ export const Register = () => {
         const response = await fetch(`http://localhost:5000/api/register`,
             {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(inputs)
             }
         )
+        const data = await response.json()
+        if (data.status == "success") {
+            alert("Registration successful!");
+        } else {
+            alert("Registration unsuccessful.");
+        }
     }
 
     return (

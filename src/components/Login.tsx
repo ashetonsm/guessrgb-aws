@@ -21,15 +21,18 @@ export const Login = () => {
         const response = await fetch(`http://localhost:5000/api/login`,
             {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(inputs)
             }
         )
-
         const data = await response.json()
-        console.log(data)
+        if (data.status == "success") {
+            alert("Log in successful!");
+        } else {
+            alert("Log in unsuccessful.");
+        }
     }
 
     return (
