@@ -1,12 +1,16 @@
+var bcrypt = require('bcryptjs');
+var salt = process.env.SALT
+
 module.exports = {
-    encrypt: function (plainText) {
-        const encryptedPass = "";
-        console.log(plainText)
-        return encryptedPass;
+    hash: function (plainText) {
+        return bcrypt.hashSync(plainText, salt);
     },
-    decrypt: function (encrypted) {
-        const decryptedPass = "";
-        console.log(encrypted)
-        return decryptedPass;
+    compare: function (inputPass, savedPass) {
+        // Return true or false depending on match
+        if (inputPass == savedPass) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
