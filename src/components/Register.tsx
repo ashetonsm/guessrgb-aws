@@ -37,8 +37,10 @@ export const Register = () => {
         )
         const data = await response.json()
         if (data.status === "success") {
+            console.log(data)
             alert("Registration successful!");
         } else {
+            console.log(data)
             alert("Registration unsuccessful.");
         }
     }
