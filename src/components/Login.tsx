@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap"
+import { Button, Form } from "react-bootstrap";
 
 export const Login = () => {
 
+    const [validated, setValidated] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: ""
@@ -17,7 +18,8 @@ export const Login = () => {
     }
 
     const handleSubmit = async (e: any) => {
-        e.preventDefault()
+        e.preventDefault();
+        setValidated(true);
         const form = e.currentTarget.parentElement;
         if (form.checkValidity() === false) {
             console.log(form.checkValidity());
@@ -44,7 +46,7 @@ export const Login = () => {
     }
 
     return (
-        <Form validated>
+        <Form noValidate validated={validated}>
             <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
