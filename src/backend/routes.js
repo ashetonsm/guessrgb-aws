@@ -22,12 +22,10 @@ app.listen(PORT, () => {
 // Log into the application
 app.post('/api/login', jsonParser, async function (req, res) {
 
-    try {
-        const user = await User.findOne({
-            email: req.body.email,
-        })
-
-        if (user) {
+    await User.findOne({
+        email: req.body.email,
+    })
+        .then((user) => {
             res.status(200)
             let hashedInput = PasswordUtils.hash(req.body.password)
             const match = PasswordUtils.compare(hashedInput, user.password)
@@ -36,12 +34,11 @@ app.post('/api/login', jsonParser, async function (req, res) {
             } else {
                 res.json({ status: 'error', message: 'Log in error.' })
             }
-        } else {
-            res.json({ status: 'error', message: 'No user found or something.' })
-        }
-    } catch (e) {
-        res.json({ status: 'error', message: e })
-    }
+        })
+        .catch(error => {
+            res.json({ status: 'error', message: 'Log in failure. Error: ', error })
+            console.error('Database Error (login).')
+        })
 });
 
 // Create a new User
@@ -59,7 +56,7 @@ app.post('/api/register', jsonParser, async function (req, res) {
         })
         .catch(error => {
             res.json({ status: 'error', message: 'Registration failure. Error: ', error })
-            console.error('Database Error.')
+            console.error('Database Error (registration).')
         })
 
 });
