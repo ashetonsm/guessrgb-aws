@@ -17,7 +17,15 @@ export const Login = () => {
     }
 
     const handleSubmit = async (e: any) => {
-        e.preventDefault();
+        e.preventDefault()
+        const form = e.currentTarget.parentElement;
+        if (form.checkValidity() === false) {
+            console.log(form.checkValidity());
+            return e.stopPropagation();
+        }
+
+        console.log(form.checkValidity());
+
         const response = await fetch(`http://localhost:5000/api/login`,
             {
                 method: 'POST',
@@ -28,7 +36,7 @@ export const Login = () => {
             }
         )
         const data = await response.json()
-        if (data.status == "success") {
+        if (data.status === "success") {
             alert("Log in successful!");
         } else {
             alert("Log in unsuccessful.");
@@ -40,6 +48,7 @@ export const Login = () => {
             <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                    required
                     type="email"
                     id="email"
                     minLength={6}
@@ -51,6 +60,7 @@ export const Login = () => {
             <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                    required
                     type="password"
                     id="password"
                     minLength={8}
