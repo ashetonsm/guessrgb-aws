@@ -7,8 +7,10 @@ var url = process.env.ATLAS_URI;
 const User = require('./models/user.model');
 const { default: mongoose } = require('mongoose');
 const PasswordUtils = require('../utilities/PasswordUtils');
+const session = require('express-session');
+const { sessionOptions } = require('./database/session');
 const app = express();
-app.use(cors());
+app.use(cors(), session(sessionOptions));
 
 var jsonParser = bodyParser.json()
 // var urlencodedParser = bodyParser.urlencoded({extended: true})
@@ -30,7 +32,9 @@ app.post('/api/login', jsonParser, async function (req, res) {
             let hashedInput = PasswordUtils.hash(req.body.password)
             const match = PasswordUtils.compare(hashedInput, user.password)
             if (match === true) {
-                res.json({ status: 'success', message: 'Log in success.' })
+                var session = req.session;
+                console.log(req.session);
+                res.json({ status: 'success', message: 'Log in success.', session })
             } else {
                 res.json({ status: 'error', message: 'Log in error.' })
             }
