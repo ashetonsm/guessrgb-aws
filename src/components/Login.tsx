@@ -39,13 +39,8 @@ export const Login = () => {
         )
         const data = await response.json()
         if (data.status === "success") {
-            const date = new Date(data.session.cookie.expires);
-            // Plus one day from the time the session was generated
-            date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
-            document.cookie = `username=${inputs.email}; expires=${date.toUTCString()}; path=${data.session.cookie.path}`;
+            document.cookie = `username=${inputs.email}; expires=${new Date(data.session.cookie.expires).toUTCString()}; path=${data.session.cookie.path}`;
             console.log(data)
-            // console.log(new Date().toUTCString())
-            // console.log(date.toUTCString())
             alert("Log in successful!");
         } else {
             console.log(data)

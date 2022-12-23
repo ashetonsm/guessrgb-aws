@@ -34,6 +34,10 @@ app.post('/api/login', jsonParser, async function (req, res) {
             if (match === true) {
                 var session = req.session;
                 console.log(req.session);
+                var date = new Date(req.session.cookie.expires);
+                // Plus one day from the time the session was generated
+                date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
+                req.session.cookie.expires = date;
                 res.json({ status: 'success', message: 'Log in success.', session })
             } else {
                 res.json({ status: 'error', message: 'Log in error.' })
