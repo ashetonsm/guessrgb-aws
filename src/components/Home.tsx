@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useContext } from "react"
 import { Button, Container } from "react-bootstrap"
+import GameContext from "../context/GameContext"
 import HexToRgb from "../utilities/HexToRGB"
 import { AnswerToast } from "./AnswerToast"
 import CheckGuess from "./CheckGuess"
@@ -9,17 +10,10 @@ import { Menu } from "./Menu"
 
 export const Home = () => {
 
-    const [gamePlaying, setGamePlaying] = useState(true)
-    const [gameWon, setGameWon] = useState(false)
-    const [guesses, setGuesses] = useState<Array<any>>([])
-    const [correctAnswer, setCorrectAnswer] = useState({
-        r: Math.round(Math.random() * 255),
-        g: Math.round(Math.random() * 255),
-        b: Math.round(Math.random() * 255)
-    })
+    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses } = useContext(GameContext);
 
     const recordGuess = (hexValue: string) => {
-        // console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
+        console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
         const rgbValue = HexToRgb(hexValue)
         const userAnswer = {
             r: rgbValue!.r,
@@ -33,32 +27,34 @@ export const Home = () => {
             if (element === 1) { numCorrect++ }
         })
         if (numCorrect === 3) {
-            setGameWon(true)
-            setGamePlaying(false)
+            dispatch({ type: 'SET_GAMEWON', payload: true });
+            dispatch({ type: 'SET_GAMEPLAYING', payload: false });
         }
 
-        setGuesses([...guesses, userAnswer])
+        dispatch({ type: 'SET_GUESSES', payload: [...guesses, userAnswer] });
         if (guesses.length >= 4) {
-            setGamePlaying(false)
+            dispatch({ type: 'SET_GAMEPLAYING', payload: false });
         }
     }
 
     const resetGame = () => {
-        setGuesses([])
-        setCorrectAnswer({
-            r: Math.round(Math.random() * 255),
-            g: Math.round(Math.random() * 255),
-            b: Math.round(Math.random() * 255)
-        })
-        setGameWon(false)
-        setGamePlaying(true)
+        dispatch({ type: 'SET_GUESSES', payload: [] });
+        dispatch({
+            type: 'SET_CORRECTANSWER', payload: {
+                r: Math.round(Math.random() * 255),
+                g: Math.round(Math.random() * 255),
+                b: Math.round(Math.random() * 255)
+            }
+        });
+        dispatch({ type: 'SET_GAMEWON', payload: false });
+        dispatch({ type: 'SET_GAMEPLAYING', payload: true });
     }
 
     return (
         <>
             <Menu />
             <Container>
-            {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
+                {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
                 <div className="d-flex justify-content-center">
                     <div className="flex-column text-center">
                         <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
