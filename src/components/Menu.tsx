@@ -15,9 +15,9 @@ export const Menu = () => {
         var checked = false;
         while (!checked) {
             if (!loggedIn) {
-                var loginCookie = document.cookie.split(';')[0].split('username=')[1]
-                if (loginCookie !== undefined) {
-                    console.log(loginCookie)
+                var loggedInEmail = document.cookie.split(';')[0].split('username=')[1]
+                if (loggedInEmail !== undefined) {
+                    console.log(loggedInEmail)
                     setLoggedIn(true)
                     console.log('Logged in')
                 } else {
@@ -33,7 +33,6 @@ export const Menu = () => {
             var date:Date = new Date();
             date.setTime(date.getTime() - (24 * 60 * 60 * 1000));
             document.cookie = `username=; expires=${date.toUTCString()}; path=/`;
-            console.log(document.cookie)
             setLoggedIn(false)
             console.log('Logged out')
         } else {
