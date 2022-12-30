@@ -2,11 +2,10 @@ import { useContext } from "react"
 import { Button, Container } from "react-bootstrap"
 import GameContext from "../context/GameContext"
 import HexToRgb from "../utilities/HexToRGB"
-import { AnswerToast } from "./AnswerToast"
-import CheckGuess from "./CheckGuess"
-import GuessDisplay from "./GuessDisplay"
-import { GuessEntry } from "./GuessEntry"
-import { Menu } from "./Menu"
+import { AnswerToast } from "../components/AnswerToast"
+import CheckGuess from "../components/CheckGuess"
+import GuessDisplay from "../components/GuessDisplay"
+import { GuessEntry } from "../components/GuessEntry"
 
 export const Home = () => {
 
@@ -52,7 +51,6 @@ export const Home = () => {
 
     return (
         <>
-            <Menu />
             <Container>
                 {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
                 <div className="d-flex justify-content-center">

@@ -1,14 +1,18 @@
 import './App.css';
-import { Home } from "./components/Home";
+import { Home } from "./pages/Home";
 import { GameProvider } from './context/GameContext';
 import { LoginProvider } from './context/LoginContext';
+import { Profile } from './pages/Profile';
+import { Menu } from './components/Menu';
 
 function App() {
 
   return (
     <LoginProvider>
-      <h1 className="text-center">guessRGB</h1>
       <GameProvider>
+      <h1 className="text-center">guessRGB</h1>
+      <Menu/>
+        <Profile/>
         <Home />
       </GameProvider>
     </LoginProvider>
