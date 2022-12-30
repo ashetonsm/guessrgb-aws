@@ -10,13 +10,16 @@ const PasswordUtils = require('../utilities/PasswordUtils');
 const session = require('express-session');
 const { sessionOptions } = require('./database/session');
 const app = express();
+var bcrypt = require('bcryptjs');
+var saltRounds = parseInt(process.env.SALT_ROUNDS);
+var saltStart = parseInt(process.env.SALT_START);
+var saltEnd = parseInt(process.env.SALT_END);
 app.use(cors(), session(sessionOptions));
 
 var jsonParser = bodyParser.json()
 // var urlencodedParser = bodyParser.urlencoded({extended: true})
 mongoose.connect(url)
 
-// node backend/server.js
 app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
@@ -27,10 +30,12 @@ app.post('/api/login', jsonParser, async function (req, res) {
     await User.findOne({
         email: req.body.email,
     })
-        .then((user) => {
+        .then(async (user) => {
             res.status(200)
-            let hashedInput = PasswordUtils.hash(req.body.password)
-            const match = PasswordUtils.compare(hashedInput, user.password)
+            var existingSalt = user.password.slice(saltStart, saltEnd);
+            var hashedPassword = await bcrypt.hash(req.body.password, existingSalt);
+            const match = PasswordUtils.compare(hashedPassword, user.password);
+
             if (match === true) {
                 var session = req.session;
                 console.log(req.session);
@@ -52,10 +57,10 @@ app.post('/api/login', jsonParser, async function (req, res) {
 // Create a new User
 app.post('/api/register', jsonParser, async function (req, res) {
 
-    const hashed = PasswordUtils.hash(req.body.password)
-    var user = new User({
+    const hash = await bcrypt.hash(req.body.password, saltRounds);
+    const user = new User({
         email: req.body.email,
-        password: hashed
+        password: hash
     })
 
     await user.save()
@@ -67,4 +72,5 @@ app.post('/api/register', jsonParser, async function (req, res) {
             console.error('Database Error (registration).')
         })
 
+    console.log(user)
 });
