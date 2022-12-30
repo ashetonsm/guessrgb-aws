@@ -6,10 +6,11 @@ export const Login = () => {
     const [validated, setValidated] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
-        password: ""
+        password: "",
+        rememberUser: "false",
     });
 
-    const handleChange = (e: { target: { id: string; value: string; }; }) => {
+    const handleChange = (e: { target: { id: string; value: any; }; }) => {
         const { id, value } = e.target
         setInputs((inputs) => ({
             ...inputs,
@@ -22,11 +23,11 @@ export const Login = () => {
         setValidated(true);
         const form = e.currentTarget.parentElement;
         if (form.checkValidity() === false) {
-            console.log(form.checkValidity());
+            // console.log(form.checkValidity());
             return e.stopPropagation();
         }
 
-        console.log(form.checkValidity());
+        // console.log(form.checkValidity());
 
         const response = await fetch(`http://localhost:5000/api/login`,
             {
@@ -80,6 +81,14 @@ export const Login = () => {
                     type="checkbox"
                     id="rememberUser"
                     label="Remember me"
+                    value={inputs.rememberUser}
+                    onChange={(e) => {
+                        const { id, value } = e.target
+                        setInputs((inputs) => ({
+                            ...inputs,
+                            [id]: value === "false" ? "true" : "false",
+                        }))
+                    }}
                 />
             </Form.Group>
             <Button type="submit" onClick={handleSubmit}>Log in</Button>
