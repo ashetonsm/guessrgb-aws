@@ -5,6 +5,7 @@ require('./database/conn')
 const PORT = process.env.PORT || 5000;
 var url = process.env.ATLAS_URI;
 const User = require('./models/user.model');
+const Game = require('./models/game.model');
 const { default: mongoose } = require('mongoose');
 const PasswordUtils = require('../utilities/PasswordUtils');
 const session = require('express-session');
@@ -47,6 +48,7 @@ app.post('/api/login', jsonParser, async function (req, res) {
                     date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
                 }
                 req.session.cookie.expires = date;
+                req.session.userId = user._id;
                 console.log(req.session);
                 res.json({ status: 'success', message: 'Log in success.', session })
             } else {
@@ -78,4 +80,25 @@ app.post('/api/register', jsonParser, async function (req, res) {
         })
 
     console.log(user)
+});
+
+// Create a Game entry
+app.post('/api/record', jsonParser, async function (req, res) {
+
+    const game = new Game({
+        userId: req.body.userId,
+        date: req.body.date,
+        result: req.body.result
+    })
+
+    await game.save()
+        .then(data => {
+            res.json({ status: 'success', message: 'Game save success.' })
+        })
+        .catch(error => {
+            res.json({ status: 'error', message: 'Game save failure. Error: ', error })
+            console.error('Database Error (game save).')
+        })
+
+    console.log(game)
 });

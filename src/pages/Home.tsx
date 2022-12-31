@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { Button, Container } from "react-bootstrap"
 import GameContext from "../context/GameContext"
 import HexToRgb from "../utilities/HexToRGB"
@@ -6,10 +6,48 @@ import { AnswerToast } from "../components/AnswerToast"
 import CheckGuess from "../components/CheckGuess"
 import GuessDisplay from "../components/GuessDisplay"
 import { GuessEntry } from "../components/GuessEntry"
+import LoginContext from "../context/LoginContext"
 
 export const Home = () => {
 
     const { dispatch, gamePlaying, gameWon, correctAnswer, guesses } = useContext(GameContext);
+    const { userId } = useContext(LoginContext);
+
+
+
+    const recordResult = async () => {
+
+        const result = {
+            userId: userId,
+            date: new Date().toUTCString(),
+            result: { status: gameWon ? 1 : 0, guesses: guesses }
+        }
+
+        const response = await fetch(`http://localhost:5000/api/record`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(result)
+            }
+        )
+        const data = await response.json()
+        if (data.status === "success") {
+            console.log(data)
+            alert("Recorded result!");
+        } else {
+            console.log(data)
+            alert("Unable to record result.");
+        }
+    }
+
+    useEffect(() => {
+        if (!gamePlaying) {
+            recordResult();
+        }
+    }, [gamePlaying, guesses, recordResult])
+
 
     const recordGuess = (hexValue: string) => {
         console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
