@@ -5,7 +5,7 @@ require('./database/conn')
 const PORT = process.env.PORT || 5000;
 var url = process.env.ATLAS_URI;
 const User = require('./models/user.model');
-const Game = require('./models/game.model');
+const History = require('./models/history.model');
 const { default: mongoose } = require('mongoose');
 const PasswordUtils = require('../utilities/PasswordUtils');
 const session = require('express-session');
@@ -85,20 +85,30 @@ app.post('/api/register', jsonParser, async function (req, res) {
 // Create a Game entry
 app.post('/api/record', jsonParser, async function (req, res) {
 
-    const game = new Game({
-        userId: req.body.userId,
-        date: req.body.date,
-        result: req.body.result
-    })
+    // TODO: Search for an existing history with this userId. 
+    // If it exists, update it by adding to the existing "history" var
 
-    await game.save()
-        .then(data => {
-            res.json({ status: 'success', message: 'Game save success.' })
-        })
-        .catch(error => {
-            res.json({ status: 'error', message: 'Game save failure. Error: ', error })
-            console.error('Database Error (game save).')
-        })
-
-    console.log(game)
+    try {
+        const entry = await History.findOne({
+            userId: req.body.userId
+        });
+        entry.history.push(req.body.result);
+        await entry.save()
+            .then(() => {
+                res.json({ status: 'success', message: 'History save success.' })
+            })
+    } catch (error) {
+        const entry = new History({
+            userId: req.body.userId,
+            history: [req.body.result]
+        });
+        await entry.save()
+            .then(() => {
+                res.json({ status: 'success', message: 'History save success.' })
+            })
+            .catch((error) => {
+                res.json({ status: 'error', message: 'History save failure. Error: ', error })
+                console.error(error)
+            })
+    }
 });

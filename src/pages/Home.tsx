@@ -19,8 +19,11 @@ export const Home = () => {
 
         const result = {
             userId: userId,
-            date: new Date().toUTCString(),
-            result: { status: gameWon ? 1 : 0, guesses: guesses }
+            result: {
+                status: gameWon ? 1 : 0,
+                date: new Date().toUTCString(),
+                guesses: guesses
+            }
         }
 
         const response = await fetch(`http://localhost:5000/api/record`,
