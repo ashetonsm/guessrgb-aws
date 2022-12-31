@@ -6,6 +6,11 @@ const loginReducer = (state, action) => {
                 ...state,
                 isLoading: action.payload,
             };
+        case 'SET_USERID':
+            return {
+                ...state,
+                userId: action.payload,
+            };
         default:
             return state
     };

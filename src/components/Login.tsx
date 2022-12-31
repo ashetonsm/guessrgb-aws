@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import LoginContext from "../context/LoginContext";
 
 export const Login = () => {
+
+    const { dispatch } = useContext(LoginContext);
 
     const [validated, setValidated] = useState(false);
     const [inputs, setInputs] = useState({
@@ -41,6 +44,7 @@ export const Login = () => {
         const data = await response.json()
         if (data.status === "success") {
             document.cookie = `username=${inputs.email}; expires=${new Date(data.session.cookie.expires).toUTCString()}; path=${data.session.cookie.path}; secure`;
+            dispatch({ type: 'SET_USERID', payload: data.session.userId });
             console.log(data)
             alert("Log in successful!");
         } else {

@@ -6,6 +6,7 @@ const LoginContext = createContext();
 export const LoginProvider = ({ children }) => {
     const initialState = {
         isLoading: false,
+        userId: null,
     };
 
     const [state, dispatch] = useReducer(loginReducer, initialState);
