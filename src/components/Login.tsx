@@ -43,7 +43,7 @@ export const Login = () => {
         )
         const data = await response.json()
         if (data.status === "success") {
-            document.cookie = `username=${inputs.email}; expires=${new Date(data.session.cookie.expires).toUTCString()}; path=${data.session.cookie.path}; secure`;
+            document.cookie = `userId=${data.session.userId}; expires=${new Date(data.session.cookie.expires).toUTCString()}; path=${data.session.cookie.path}; secure`;
             dispatch({ type: 'SET_USERID', payload: data.session.userId });
             console.log(data)
             alert("Log in successful!");

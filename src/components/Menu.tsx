@@ -1,11 +1,14 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Login } from './Login'
 import { Register } from './Register'
 import { Button, Container, Nav } from 'react-bootstrap'
 import { Link, Outlet } from 'react-router-dom'
+import LoginContext from '../context/LoginContext'
 
 export const Menu = () => {
+
+    const { dispatch } = useContext(LoginContext);
 
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
@@ -16,24 +19,31 @@ export const Menu = () => {
         var checked = false;
         while (!checked) {
             if (!loggedIn) {
-                var loggedInEmail = document.cookie.split(';')[0].split('username=')[1]
+                var loggedInEmail = document.cookie.split(';')[0].split('userId=')[1]
                 if (loggedInEmail !== undefined) {
                     console.log(loggedInEmail)
                     setLoggedIn(true)
                     console.log('Logged in')
                 } else {
-                    console.log('no login cookie')
+                    return console.log('no login cookie')
                 }
             }
             checked = true;
         }
     }
 
+    useEffect(() => {
+        if (loggedIn) {
+            dispatch({ type: 'SET_USERID', payload: document.cookie.split(';')[0].split('userId=')[1] });
+        }
+
+    }, [loggedIn])
+
     const logOut = () => {
         if (loggedIn) {
             var date: Date = new Date();
             date.setTime(date.getTime() - (24 * 60 * 60 * 1000));
-            document.cookie = `username=; expires=${date.toUTCString()}; path=/`;
+            document.cookie = `userId=; expires=${date.toUTCString()}; path=/`;
             setLoggedIn(false)
             console.log('Logged out')
         } else {
