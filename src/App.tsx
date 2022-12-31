@@ -1,11 +1,14 @@
 import './App.css';
-import { Home } from "./components/Home";
+import { Home } from "./pages/Home";
+import { Profile } from './pages/Profile';
+import { Menu } from './components/Menu';
 
 function App() {
 
   return (
     <>
-      <h1 className="text-center">guessRGB</h1>
+      <Menu />
+      <Profile />
       <Home />
     </>
   );

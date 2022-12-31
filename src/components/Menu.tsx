@@ -1,18 +1,59 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Login } from './Login'
 import { Register } from './Register'
-import { Button, Nav } from 'react-bootstrap'
+import { Button, Container, Nav } from 'react-bootstrap'
+import { Link, Outlet } from 'react-router-dom'
+import LoginContext from '../context/LoginContext'
 
 export const Menu = () => {
+
+    const { dispatch } = useContext(LoginContext);
 
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
-    var loggedIn = false
+    const [loggedIn, setLoggedIn] = useState(false)
 
-    return (
+    const checkCookies = () => {
+        var checked = false;
+        while (!checked) {
+            if (!loggedIn) {
+                var loggedInEmail = document.cookie.split(';')[0].split('userId=')[1]
+                if (loggedInEmail !== undefined) {
+                    console.log(loggedInEmail)
+                    setLoggedIn(true)
+                    console.log('Logged in')
+                } else {
+                    return console.log('no login cookie')
+                }
+            }
+            checked = true;
+        }
+    }
+
+    useEffect(() => {
+        if (loggedIn) {
+            dispatch({ type: 'SET_USERID', payload: document.cookie.split(';')[0].split('userId=')[1] });
+        }
+
+    }, [loggedIn])
+
+    const logOut = () => {
+        if (loggedIn) {
+            var date: Date = new Date();
+            date.setTime(date.getTime() - (24 * 60 * 60 * 1000));
+            document.cookie = `userId=; expires=${date.toUTCString()}; path=/`;
+            setLoggedIn(false)
+            console.log('Logged out')
+        } else {
+            console.log('Already logged out.')
+        }
+    }
+
+    return (checkCookies(),
         <>
+            <h1 className="text-center">guessRGB</h1>
             <Button onClick={() => setShowMenu(true)}
                 style={{
                     cursor: 'pointer',
@@ -27,15 +68,15 @@ export const Menu = () => {
                 <Offcanvas.Body className='flex-row text-center'>
                     <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn ? undefined : "login"}>
                         <Nav.Item>
-                            <Nav.Link>Home</Nav.Link>
+                            <Link to={"/guessRGB/home"} className="nav-link">Home</Link>
                         </Nav.Item>
                         {loggedIn ?
                             <div>
                                 <Nav.Item>
-                                    <Nav.Link>Profile</Nav.Link>
+                                    <Link to={"/guessRGB/profile"} className="nav-link">Profile</Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link>Log out</Nav.Link>
+                                    <Nav.Link onClick={() => logOut()}>Log out</Nav.Link>
                                 </Nav.Item>
                             </div>
                             :
@@ -44,15 +85,15 @@ export const Menu = () => {
                                     <Nav.Link eventKey="login" onClick={(e) => {
                                         setShowRegister(false)
                                         setShowLogin(true)
-                                        }}>Log in</Nav.Link>
+                                    }}>Log in</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link eventKey="register" onClick={(e) => {
                                         setShowLogin(false)
                                         setShowRegister(true)
-                                        }}>Register</Nav.Link>
+                                    }}>Register</Nav.Link>
                                 </Nav.Item>
-                                <hr/>
+                                <hr />
                                 {showLogin ? <Login /> : null}
 
                                 {showRegister ? <Register /> : null}
@@ -65,6 +106,9 @@ export const Menu = () => {
                     <p>Built by <a href="https://github.com/ashetonsm">Asheton S. M.</a></p>
                 </Offcanvas.Body>
             </Offcanvas>
+            <Container>
+                <Outlet />
+            </Container>
         </>
     )
 }

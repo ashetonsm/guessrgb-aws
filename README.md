@@ -12,15 +12,15 @@ This application is currently in development. It's being completely rewritten an
 
 ### To do:
 - General
-    - [ ] Move to a global app context (useContext)
+    - [x] Move to a global app context (useContext)
 - Navigation
-    - [ ] Integrate log in session info with app navigation
+    - [x] Integrate log in session info with app navigation
 - Styling
     - [ ] Finish styling
 - Login and registration
     - [ ] Redirect after logging in
     - [ ] Add retry cooldown
-    - [ ] Rework login with better salt/hash protocols
+    - [x] Rework login with better salt/hash protocols
 - Profile page
     - [ ] Show win/lose stats
     - [ ] Show winning color swatches

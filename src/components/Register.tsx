@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap"
+import { Button, Form } from "react-bootstrap";
 
 export const Register = () => {
 
+    const [validated, setValidated] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: ""
@@ -18,6 +19,13 @@ export const Register = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        setValidated(true);
+        const form = e.currentTarget.parentElement;
+        if (form.checkValidity() === false) {
+            console.log(form.checkValidity());
+            return e.stopPropagation();
+        }
+
         const response = await fetch(`http://localhost:5000/api/register`,
             {
                 method: 'POST',
@@ -28,18 +36,21 @@ export const Register = () => {
             }
         )
         const data = await response.json()
-        if (data.status == "success") {
+        if (data.status === "success") {
+            console.log(data)
             alert("Registration successful!");
         } else {
+            console.log(data)
             alert("Registration unsuccessful.");
         }
     }
 
     return (
-        <Form validated>
+        <Form noValidate validated={validated}>
             <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                    required
                     type="email"
                     id="email"
                     minLength={6}
@@ -52,6 +63,7 @@ export const Register = () => {
             <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                    required
                     type="password"
                     id="password"
                     minLength={8}
