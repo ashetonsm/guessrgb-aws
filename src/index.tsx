@@ -13,15 +13,15 @@ const root = createRoot(container!)
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/guessRGB",
     element: <Menu />,
     children: [
       {
-        path: "/home",
+        path: "/guessRGB/home",
         element: <Home />,
       },
       {
-        path: "/profile",
+        path: "/guessRGB/profile",
         element: <Profile />,
       },
     ],

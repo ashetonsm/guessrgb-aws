@@ -58,12 +58,12 @@ export const Menu = () => {
                 <Offcanvas.Body className='flex-row text-center'>
                     <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn ? undefined : "login"}>
                         <Nav.Item>
-                            <Link to={"/home"} className="nav-link">Home</Link>
+                            <Link to={"/guessRGB/home"} className="nav-link">Home</Link>
                         </Nav.Item>
                         {loggedIn ?
                             <div>
                                 <Nav.Item>
-                                    <Link to={"/profile"} className="nav-link">Profile</Link>
+                                    <Link to={"/guessRGB/profile"} className="nav-link">Profile</Link>
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link onClick={() => logOut()}>Log out</Nav.Link>
