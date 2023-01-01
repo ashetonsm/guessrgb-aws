@@ -85,9 +85,6 @@ app.post('/api/register', jsonParser, async function (req, res) {
 // Create a Game entry
 app.post('/api/record', jsonParser, async function (req, res) {
 
-    // TODO: Search for an existing history with this userId. 
-    // If it exists, update it by adding to the existing "history" var
-
     try {
         const entry = await History.findOne({
             userId: req.body.userId
@@ -110,5 +107,21 @@ app.post('/api/record', jsonParser, async function (req, res) {
                 res.json({ status: 'error', message: 'History save failure. Error: ', error })
                 console.error(error)
             })
+    }
+});
+
+// Search for Games associated with ObjectId (userId)
+app.get('/api/games/:userId', jsonParser, async function (req, res) {
+
+    try {
+        await History.findOne({
+            userId: req.params.userId
+        })
+            .then((history) => {
+                res.json({ status: 'success', message: 'Search game success.', data: history })
+            })
+    } catch (error) {
+        res.json({ status: 'error', message: 'History save failure. Error: ', error })
+        console.error(error)
     }
 });
