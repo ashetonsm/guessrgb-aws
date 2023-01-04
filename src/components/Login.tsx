@@ -1,10 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import LoginContext from "../context/LoginContext";
 
 export const Login = () => {
-
-    const { dispatch } = useContext(LoginContext);
 
     const [validated, setValidated] = useState(false);
     const [inputs, setInputs] = useState({
@@ -32,25 +29,23 @@ export const Login = () => {
 
         // console.log(form.checkValidity());
 
-        const response = await fetch(`http://localhost:5000/api/login`,
+        await fetch(`http://localhost:5000/api/login`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(inputs)
-            }
-        )
-        const data = await response.json()
-        if (data.status === "success") {
-            document.cookie = `userId=${data.session.userId}; expires=${new Date(data.session.cookie.expires).toUTCString()}; path=${data.session.cookie.path}; secure`;
-            dispatch({ type: 'SET_USERID', payload: data.session.userId });
-            console.log(data)
-            alert("Log in successful!");
-        } else {
-            console.log(data)
-            alert("Log in unsuccessful.");
-        }
+            })
+            .then((response) => {
+                console.log(response);
+                if (response.status == 200) {
+                    alert("Log in successful!");
+                } else {
+                    alert("Log in unsuccessful.");
+                }
+            })
     }
 
     return (
