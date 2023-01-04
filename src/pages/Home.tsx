@@ -59,7 +59,8 @@ export const Home = () => {
             r: rgbValue!.r,
             g: rgbValue!.g,
             b: rgbValue!.b,
-            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b })
+            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b }),
+            answer: correctAnswer
         }
 
         var numCorrect = 0
