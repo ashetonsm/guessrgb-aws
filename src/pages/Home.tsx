@@ -22,7 +22,8 @@ export const Home = () => {
             result: {
                 status: gameWon ? 1 : 0,
                 date: new Date().toUTCString(),
-                guesses: guesses
+                guesses: guesses,
+                answer: correctAnswer
             }
         }
 
@@ -59,8 +60,7 @@ export const Home = () => {
             r: rgbValue!.r,
             g: rgbValue!.g,
             b: rgbValue!.b,
-            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b }),
-            answer: correctAnswer
+            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b })
         }
 
         var numCorrect = 0
