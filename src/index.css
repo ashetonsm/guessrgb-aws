@@ -9,13 +9,24 @@ body {
   animation: rainbow 20s infinite;
 }
 
-div[id^="guessContainer"], #answerText {
+div[id^="guessContainer"], #answerText, .guessContainer {
   color: white;
   font-size: 1.5em;
   text-shadow: 1px 0px 0px #000000,
     -1px -0px 0px #000000,
     0px 1px 0px #000000,
     0px -1px 0px #000000;
+}
+
+.historyHeader {
+  color: #000000;
+  font-size: 1.5em;
+  font-variant: small-caps;
+  font-weight: bolder;
+  text-shadow: 1px 0px 0px rgba(255, 255, 255, 0.5),
+    -1px -0px 0px  rgba(255, 255, 255, 0.5),
+    0px 1px 0px  rgba(255, 255, 255, 0.5),
+    0px -1px 0px  rgba(255, 255, 255, 0.5);
 }
 
 .slideDown {
