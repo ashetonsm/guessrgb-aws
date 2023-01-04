@@ -117,8 +117,9 @@ app.get('/api/games/:userId', jsonParser, async function (req, res) {
         await History.findOne({
             userId: req.params.userId
         })
-            .then((history) => {
-                res.json({ status: 'success', message: 'Search game success.', data: history })
+            .then((result) => {
+                console.log(result.history)
+                res.json({ status: 'success', message: 'Search game success.', history: result.history })
             })
     } catch (error) {
         res.json({ status: 'error', message: 'History save failure. Error: ', error })
