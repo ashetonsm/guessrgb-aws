@@ -40,6 +40,14 @@ app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
 
+app.get('/', (req, res) => {
+    if (req.session.userId) {
+        console.log("User is logged in from session.")
+    } else {
+        console.log("User is NOT logged in from session.")
+    }
+})
+
 app.get('/api/logout', (req, res) => {
     console.log(req.session);
     req.session.destroy(error => {
