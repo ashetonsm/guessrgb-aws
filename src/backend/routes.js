@@ -1,32 +1,71 @@
-const express = require('express');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-require('./database/conn')
-const PORT = process.env.PORT || 5000;
-var url = process.env.ATLAS_URI;
-const User = require('./models/user.model');
+require('./database/conn');
+
 const History = require('./models/history.model');
+const User = require('./models/user.model');
+
+const bcrypt = require('bcryptjs');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const { default: mongoose } = require('mongoose');
+const express = require('express');
 const PasswordUtils = require('../utilities/PasswordUtils');
 const session = require('express-session');
 const { sessionOptions } = require('./database/session');
-const app = express();
-var bcrypt = require('bcryptjs');
-var saltRounds = parseInt(process.env.SALT_ROUNDS);
-var saltStart = parseInt(process.env.SALT_START);
-var saltEnd = parseInt(process.env.SALT_END);
-app.use(cors(), session(sessionOptions));
 
-var jsonParser = bodyParser.json()
-// var urlencodedParser = bodyParser.urlencoded({extended: true})
+const PORT = process.env.PORT || 5000;
+const saltRounds = parseInt(process.env.SALT_ROUNDS);
+const saltStart = parseInt(process.env.SALT_START);
+const saltEnd = parseInt(process.env.SALT_END);
+const url = process.env.ATLAS_URI;
+
+const app = express();
+
+app.use(
+    cors({
+        origin: [
+            'http://localhost:3000',
+            'http://localhost:5000'
+        ],
+        credentials: true
+    }),
+    express.json(),
+    cookieParser(),
+    session(sessionOptions),
+    express.urlencoded({ extended: true })
+);
+
 mongoose.connect(url)
 
 app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
 
+app.get('/', (req, res) => {
+    if (req.session.userId) {
+        console.log("User is logged in from session.")
+    } else {
+        console.log("User is NOT logged in from session.")
+    }
+})
+
+app.get('/api/logout', (req, res) => {
+    console.log(req.session);
+    req.session.destroy(error => {
+        if (error) {
+            console.log(error);
+            res.status(403)
+        } else {
+            res.cookie('connect.sid', null, {
+                expires: new Date('Wed, 01 Jan 1969 00:00:00 UTC'),
+                httpOnly: true,
+            });
+            res.send();
+        }
+    })
+})
+
 // Log into the application
-app.post('/api/login', jsonParser, async function (req, res) {
+app.post('/api/login', async function (req, res) {
 
     await User.findOne({
         email: req.body.email,
@@ -38,7 +77,6 @@ app.post('/api/login', jsonParser, async function (req, res) {
             const match = PasswordUtils.compare(hashedPassword, user.password);
 
             if (match === true) {
-                var session = req.session;
                 var date = new Date(req.session.cookie.expires);
                 if (req.body.rememberUser == "true") {
                     // Plus one week from the time the session was generated
@@ -50,9 +88,10 @@ app.post('/api/login', jsonParser, async function (req, res) {
                 req.session.cookie.expires = date;
                 req.session.userId = user._id;
                 console.log(req.session);
-                res.json({ status: 'success', message: 'Log in success.', session })
+                res.send();
             } else {
-                res.json({ status: 'error', message: 'Log in error.' })
+                res.status(401);
+                res.send();
             }
         })
         .catch(error => {
@@ -62,7 +101,7 @@ app.post('/api/login', jsonParser, async function (req, res) {
 });
 
 // Create a new User
-app.post('/api/register', jsonParser, async function (req, res) {
+app.post('/api/register', async function (req, res) {
 
     const hash = await bcrypt.hash(req.body.password, saltRounds);
     const user = new User({
@@ -83,10 +122,7 @@ app.post('/api/register', jsonParser, async function (req, res) {
 });
 
 // Create a Game entry
-app.post('/api/record', jsonParser, async function (req, res) {
-
-    // TODO: Search for an existing history with this userId. 
-    // If it exists, update it by adding to the existing "history" var
+app.post('/api/record', async function (req, res) {
 
     try {
         const entry = await History.findOne({
@@ -110,5 +146,22 @@ app.post('/api/record', jsonParser, async function (req, res) {
                 res.json({ status: 'error', message: 'History save failure. Error: ', error })
                 console.error(error)
             })
+    }
+});
+
+// Search for Games associated with ObjectId (userId)
+app.get('/api/games/:userId', async function (req, res) {
+
+    try {
+        await History.findOne({
+            userId: req.params.userId
+        })
+            .then((result) => {
+                console.log(result.history)
+                res.json({ status: 'success', message: 'Search game success.', history: result.history })
+            })
+    } catch (error) {
+        res.json({ status: 'error', message: 'History save failure. Error: ', error })
+        console.error(error)
     }
 });

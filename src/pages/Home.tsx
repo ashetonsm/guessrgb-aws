@@ -22,7 +22,8 @@ export const Home = () => {
             result: {
                 status: gameWon ? 1 : 0,
                 date: new Date().toUTCString(),
-                guesses: guesses
+                guesses: guesses,
+                answer: correctAnswer
             }
         }
 

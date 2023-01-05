@@ -13,45 +13,29 @@ export const Menu = () => {
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(true)
 
-    const checkCookies = () => {
-        var checked = false;
-        while (!checked) {
-            if (!loggedIn) {
-                var loggedInEmail = document.cookie.split(';')[0].split('userId=')[1]
-                if (loggedInEmail !== undefined) {
-                    console.log(loggedInEmail)
-                    setLoggedIn(true)
-                    console.log('Logged in')
+
+    const logOut = async () => {
+        await fetch(`http://localhost:5000/api/logout`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            .then((response) => {
+                console.log(response);
+                if (response.status == 200) {
+                    alert("Log out successful!");
                 } else {
-                    return console.log('no login cookie')
+                    alert("Log out unsuccessful.");
                 }
-            }
-            checked = true;
-        }
+            })
     }
 
-    useEffect(() => {
-        if (loggedIn) {
-            dispatch({ type: 'SET_USERID', payload: document.cookie.split(';')[0].split('userId=')[1] });
-        }
-
-    }, [loggedIn])
-
-    const logOut = () => {
-        if (loggedIn) {
-            var date: Date = new Date();
-            date.setTime(date.getTime() - (24 * 60 * 60 * 1000));
-            document.cookie = `userId=; expires=${date.toUTCString()}; path=/`;
-            setLoggedIn(false)
-            console.log('Logged out')
-        } else {
-            console.log('Already logged out.')
-        }
-    }
-
-    return (checkCookies(),
+    return (
         <>
             <h1 className="text-center">guessRGB</h1>
             <Button onClick={() => setShowMenu(true)}
