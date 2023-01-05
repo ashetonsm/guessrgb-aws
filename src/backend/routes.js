@@ -40,9 +40,20 @@ app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
 
-app.get('/', (req, res) => {
-    console.log(req.session)
-
+app.get('/api/logout', (req, res) => {
+    console.log(req.session);
+    req.session.destroy(error => {
+        if (error) {
+            console.log(error);
+            res.status(403)
+        } else {
+            res.cookie('connect.sid', null, {
+                expires: new Date('Wed, 01 Jan 1969 00:00:00 UTC'),
+                httpOnly: true,
+            });
+            res.send();
+        }
+    })
 })
 
 // Log into the application
