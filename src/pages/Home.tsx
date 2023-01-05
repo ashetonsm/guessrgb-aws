@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Container } from "react-bootstrap"
 import GameContext from "../context/GameContext"
 import HexToRgb from "../utilities/HexToRGB"
@@ -12,6 +12,7 @@ export const Home = () => {
 
     const { dispatch, gamePlaying, gameWon, correctAnswer, guesses } = useContext(GameContext);
     const { userId } = useContext(LoginContext);
+    const [recordedResult, setRecordedResult] = useState(false);
 
 
 
@@ -39,17 +40,20 @@ export const Home = () => {
         const data = await response.json()
         if (data.status === "success") {
             console.log(data)
-            alert("Recorded result!");
+            return alert("Recorded result!");
         } else {
             console.log(data)
-            alert("Unable to record result.");
+            return alert("Unable to record result.");
         }
     }
 
     useEffect(() => {
-        if (!gamePlaying) {
-            recordResult();
-        }
+        if (!gamePlaying &&
+            userId !== null &&
+            recordedResult !== true) {
+                recordResult();
+                setRecordedResult(true);
+            }
     }, [gamePlaying, guesses, recordResult])
 
 
@@ -89,6 +93,7 @@ export const Home = () => {
         });
         dispatch({ type: 'SET_GAMEWON', payload: false });
         dispatch({ type: 'SET_GAMEPLAYING', payload: true });
+        setRecordedResult(false);
     }
 
     return (
