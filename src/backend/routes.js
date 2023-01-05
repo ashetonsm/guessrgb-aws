@@ -2,6 +2,7 @@ require('./database/conn');
 
 const History = require('./models/history.model');
 const User = require('./models/user.model');
+const Session = require('./models/session.model');
 
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
@@ -40,12 +41,21 @@ app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
 
-app.get('/', (req, res) => {
-    if (req.session.userId) {
-        console.log("User is logged in from session.")
-    } else {
-        console.log("User is NOT logged in from session.")
-    }
+app.post('/api/auth', async (req, res) => {
+    console.log(req.body.userId)
+    console.log(req.session.cookie)
+
+    await Session.findOne({
+        session: { $regex: req.body.userId },
+    }).then((session) => {
+        console.log("found a session")
+        console.log(session)
+        res.json({ userId: req.session.userId });
+    })
+        .catch((error) => {
+            console.log("Did not find a session")
+            res.json({ userId: null });
+        })
 })
 
 app.get('/api/logout', (req, res) => {
@@ -58,6 +68,10 @@ app.get('/api/logout', (req, res) => {
             res.cookie('connect.sid', null, {
                 expires: new Date('Wed, 01 Jan 1969 00:00:00 UTC'),
                 httpOnly: true,
+            });
+            res.cookie('userId', null, {
+                expires: new Date('Wed, 01 Jan 1969 00:00:00 UTC'),
+                httpOnly: false,
             });
             res.send();
         }
@@ -88,9 +102,9 @@ app.post('/api/login', async function (req, res) {
                 req.session.cookie.expires = date;
                 req.session.userId = user._id;
                 console.log(req.session);
-                res.send();
+                res.send({ status: 'success', session: req.session });
             } else {
-                res.status(401);
+                res.status('error');
                 res.send();
             }
         })
@@ -157,11 +171,15 @@ app.get('/api/games/:userId', async function (req, res) {
             userId: req.params.userId
         })
             .then((result) => {
-                console.log(result.history)
-                res.json({ status: 'success', message: 'Search game success.', history: result.history })
+                if (result !== null) {
+                    console.log(result.history)
+                    res.json({ status: 'success', message: 'Search game success.', history: result.history })
+                } else {
+                    res.json({ status: 'success', message: 'Search game success.', history: null })
+                }
             })
     } catch (error) {
-        res.json({ status: 'error', message: 'History save failure. Error: ', error })
+        res.json({ status: 'error', message: 'Search game failure. Error: ', error, history: null })
         console.error(error)
     }
 });
