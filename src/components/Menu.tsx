@@ -8,12 +8,59 @@ import LoginContext from '../context/LoginContext'
 
 export const Menu = () => {
 
-    const { dispatch } = useContext(LoginContext);
+    const { dispatch, userId } = useContext(LoginContext);
 
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(true)
+    const [loggedIn, setLoggedIn] = useState(false)
+
+    const checkAuth = async () => {
+        var authId = null;
+
+        if (userId == null) {
+            // Check if there's a cookie from a previous login
+            const cookieId = document.cookie.split("=")[1];
+            if (cookieId !== undefined) {
+                // Use the cookie as the context userId
+                authId = cookieId;
+                console.log("There is a login cookie");
+                dispatch({ type: 'SET_USERID', payload: cookieId });
+                setLoggedIn(true);
+            } else {
+                // No cookie found
+                setLoggedIn(false);
+                console.log("There is NOT a login cookie.");
+            }
+        } else {
+            // UserId has already been set. User is already logged in.
+            authId = userId;
+            dispatch({ type: 'SET_USERID', payload: authId });
+            setLoggedIn(true)
+        }
+
+        // Get session from cookie
+        /*
+        if (userId == null && authId !== null) {
+            const request = await fetch(`http://localhost:5000/api/auth`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userId: authId })
+                })
+            const response = await request.json()
+            if (response.userId !== null) {
+                console.log("User is logged in from session.");
+                dispatch({ type: 'SET_USERID', payload: response.userId });
+            } else {
+                console.log("User is NOT logged in from session.");
+                setLoggedIn(false)
+            }
+        }
+        */
+    }
 
 
     const logOut = async () => {
@@ -27,13 +74,19 @@ export const Menu = () => {
             })
             .then((response) => {
                 console.log(response);
-                if (response.status == 200) {
+                if (response.status === 200) {
                     alert("Log out successful!");
+                    dispatch({ type: 'SET_USERID', payload: null });
+                    setLoggedIn(false)
                 } else {
                     alert("Log out unsuccessful.");
                 }
             })
     }
+
+    useEffect(() => {
+        checkAuth();
+    })
 
     return (
         <>
