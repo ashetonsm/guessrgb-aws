@@ -1,17 +1,41 @@
 import './App.css';
 import { Menu } from './components/Menu';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import LoginContext from './context/LoginContext';
-import { useLocation, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Profile } from './pages/Profile';
 import { Home } from './pages/Home';
 
 export default function App() {
 
-  const { userId } = useContext(LoginContext);
+  const { dispatch, userId } = useContext(LoginContext);
+
+  useEffect(() => {
+
+    function CheckAuth() {
+      var checked = false;
+      if (!checked) {
+        // Check if there's a cookie from a previous login
+        const cookieId = document.cookie.split("=")[1];
+        if (cookieId !== undefined) {
+          // Use the cookie as the context userId
+          console.log("There is a login cookie.");
+          dispatch({ type: 'SET_USERID', payload: cookieId });
+        } else {
+          // No cookie found
+          console.log("There is NOT a login cookie.");
+          dispatch({ type: 'SET_USERID', payload: null });
+        }
+        checked = true;
+      }
+    }
+
+    CheckAuth()
+  }, [dispatch, userId])
+
+
 
   function RequireAuth({ children }: { children: JSX.Element }) {
-    let location = useLocation();
 
     if (!userId) {
       // Redirect to home
@@ -23,7 +47,7 @@ export default function App() {
 
   return (
     <Routes>
-      <Route element={<Menu loggedIn={userId ? true : false}/>}>
+      <Route element={<Menu loggedIn={userId ? true : false} />}>
         <Route path="guessRGB/" element={<Home />} />
         <Route path="guessRGB/profile"
           element={
