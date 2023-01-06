@@ -7,6 +7,8 @@ export const LoginProvider = ({ children }) => {
     const initialState = {
         isLoading: false,
         userId: null,
+        fetchComplete: null,
+        fetchedHistory: null,
     };
 
     const [state, dispatch] = useReducer(loginReducer, initialState);
