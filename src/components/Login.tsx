@@ -41,11 +41,10 @@ export const Login = () => {
         const response = await request.json()
         console.log(response);
         if (response.status === 'success') {
-            alert("Log in successful!");
             document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
             dispatch({ type: 'SET_USERID', payload: response.session.userId });
         } else {
-            alert("Log in unsuccessful.");
+            alert("Sorry, we weren't able to log you in with that information!");
         }
     }
 
