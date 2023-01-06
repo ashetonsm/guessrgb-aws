@@ -3,17 +3,16 @@ import { useContext, useEffect, useState } from "react"
 import { Login } from './Login'
 import { Register } from './Register'
 import { Button, Container, Nav } from 'react-bootstrap'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Navigate, Outlet } from 'react-router-dom'
 import LoginContext from '../context/LoginContext'
 
-export const Menu = () => {
+export const Menu = (loggedIn: {loggedIn: boolean}) => {
 
     const { dispatch, userId } = useContext(LoginContext);
 
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(false)
 
     const checkAuth = async () => {
         var authId = null;
@@ -26,17 +25,14 @@ export const Menu = () => {
                 authId = cookieId;
                 console.log("There is a login cookie");
                 dispatch({ type: 'SET_USERID', payload: cookieId });
-                setLoggedIn(true);
             } else {
                 // No cookie found
-                setLoggedIn(false);
                 console.log("There is NOT a login cookie.");
             }
         } else {
             // UserId has already been set. User is already logged in.
             authId = userId;
             dispatch({ type: 'SET_USERID', payload: authId });
-            setLoggedIn(true)
         }
 
         // Get session from cookie
@@ -76,8 +72,7 @@ export const Menu = () => {
                 console.log(response);
                 if (response.status === 200) {
                     alert("Log out successful!");
-                    dispatch({ type: 'SET_USERID', payload: null });
-                    setLoggedIn(false)
+                    return dispatch({ type: 'SET_USERID', payload: null });
                 } else {
                     alert("Log out unsuccessful.");
                 }
@@ -86,7 +81,7 @@ export const Menu = () => {
 
     useEffect(() => {
         checkAuth();
-    })
+    }, [dispatch])
 
     return (
         <>
@@ -103,11 +98,11 @@ export const Menu = () => {
                     <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className='flex-row text-center'>
-                    <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn ? undefined : "login"}>
+                    <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn.loggedIn ? undefined : "login"}>
                         <Nav.Item>
-                            <Link to={"/guessRGB/home"} className="nav-link">Home</Link>
+                            <Link to={"/guessRGB"} className="nav-link">Home</Link>
                         </Nav.Item>
-                        {loggedIn ?
+                        {loggedIn.loggedIn ?
                             <div>
                                 <Nav.Item>
                                     <Link to={"/guessRGB/profile"} className="nav-link">Profile</Link>
@@ -119,13 +114,13 @@ export const Menu = () => {
                             :
                             <div>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="login" onClick={(e) => {
+                                    <Nav.Link eventKey="login" onClick={() => {
                                         setShowRegister(false)
                                         setShowLogin(true)
                                     }}>Log in</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="register" onClick={(e) => {
+                                    <Nav.Link eventKey="register" onClick={() => {
                                         setShowLogin(false)
                                         setShowRegister(true)
                                     }}>Register</Nav.Link>
