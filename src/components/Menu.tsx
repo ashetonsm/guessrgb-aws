@@ -71,8 +71,9 @@ export const Menu = (loggedIn: {loggedIn: boolean}) => {
             .then((response) => {
                 console.log(response);
                 if (response.status === 200) {
-                    alert("Log out successful!");
-                    return dispatch({ type: 'SET_USERID', payload: null });
+                    dispatch({ type: 'SET_USERID', payload: null });
+                    dispatch({ type: 'SET_FETCHED_HISTORY', payload: null });
+                    return dispatch({ type: 'SET_FETCH_COMPLETE', payload: false });
                 } else {
                     alert("Log out unsuccessful.");
                 }

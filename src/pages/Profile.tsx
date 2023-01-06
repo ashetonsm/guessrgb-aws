@@ -41,7 +41,7 @@ export const Profile = () => {
             <h3>{userId ? `Hello!` : "You're not logged in!"}</h3>
 
             <h4>This is your game history:</h4> <Button onClick={() => fetchHistory()}>Reload</Button>
-            {fetchComplete && fetchedHistory ? <GuessDisplayH games={fetchedHistory} /> : <div>No games found.</div>}
+            {fetchComplete ? (fetchedHistory ? <GuessDisplayH games={fetchedHistory} /> : <div>No games found.</div>) : <div>Loading...</div>}
         </Container>
     )
 }
