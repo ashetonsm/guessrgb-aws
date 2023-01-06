@@ -10,10 +10,8 @@ import LoginContext from "../context/LoginContext"
 
 export const Home = () => {
 
-    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses } = useContext(GameContext);
+    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses, recordedResult } = useContext(GameContext);
     const { userId } = useContext(LoginContext);
-
-
 
     const recordResult = async () => {
 
@@ -39,19 +37,21 @@ export const Home = () => {
         const data = await response.json()
         if (data.status === "success") {
             console.log(data)
-            alert("Recorded result!");
+            return alert("Recorded result!");
         } else {
             console.log(data)
-            alert("Unable to record result.");
+            return alert("Unable to record result.");
         }
     }
 
     useEffect(() => {
-        if (!gamePlaying) {
+        if (!gamePlaying &&
+            userId !== null &&
+            recordedResult !== true) {
             recordResult();
+            dispatch({ type: 'SET_RECORDED_RESULT', payload: true });
         }
-    }, [gamePlaying, guesses, recordResult])
-
+    })
 
     const recordGuess = (hexValue: string) => {
         console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
@@ -89,6 +89,7 @@ export const Home = () => {
         });
         dispatch({ type: 'SET_GAMEWON', payload: false });
         dispatch({ type: 'SET_GAMEPLAYING', payload: true });
+        dispatch({ type: 'SET_RECORDED_RESULT', payload: false });
     }
 
     return (

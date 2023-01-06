@@ -12,18 +12,27 @@ This application is currently in development. It's being completely rewritten an
 
 ### To do:
 - General
-    - [x] Move to a global app context (useContext)
+    - [ ] Add an info/about page or modal
+    - [ ] Adjust handicap (default: a value within 25pts of the target is correct)
+    - [ ] Select a color family to streamline guessing
+    - [ ] Add a social/sharing feature for results
+    - [x] Move local variables to useContext
 - Navigation
     - [x] Integrate log in session info with app navigation
 - Styling
+    - [ ] Sound effectss
     - [ ] Finish styling
+    - [ ] More feedback in general
 - Login and registration
-    - [ ] Redirect after logging in
     - [ ] Add retry cooldown
+    - [ ] Add more feedback/info to login/registration
     - [x] Rework login with better salt/hash protocols
 - Profile page
-    - [ ] Show win/lose stats
-    - [ ] Show winning color swatches
+    - [ ] Display by newest to oldest
+    - [ ] Paginate results
+    - [ ] View others' profiles
+    - [x] Show win/lose stats
+    - [x] Show winning color swatches
 
 ---
 

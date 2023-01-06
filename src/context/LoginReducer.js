@@ -11,6 +11,16 @@ const loginReducer = (state, action) => {
                 ...state,
                 userId: action.payload,
             };
+        case 'SET_FETCH_COMPLETE':
+            return {
+                ...state,
+                fetchComplete: action.payload,
+            };
+        case 'SET_FETCHED_HISTORY':
+            return {
+                ...state,
+                fetchedHistory: action.payload,
+            };
         default:
             return state
     };

@@ -7,6 +7,7 @@ export const GameProvider = ({ children }) => {
     const initialState = {
         gamePlaying: true,
         gameWon: false,
+        recordedResult: false,
         guesses: [],
         correctAnswer: {
             r: Math.round(Math.random() * 255),

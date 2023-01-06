@@ -1,51 +1,47 @@
-import { useContext, useState } from "react"
-import { Container } from "react-bootstrap"
+import { useContext, useEffect } from "react"
+import { Button, Container } from "react-bootstrap"
 import { GuessDisplayH } from "../components/GuessDisplayH";
 import LoginContext from "../context/LoginContext";
 
 export const Profile = () => {
-    const [gameHistory, setGameHistory] = useState(null);
+    const { dispatch, userId, fetchedHistory, fetchComplete } = useContext(LoginContext);
 
-    const { dispatch, userId } = useContext(LoginContext);
+    useEffect(() => {
+        if (!fetchComplete) {
+            fetchHistory()
+            dispatch({ type: 'SET_FETCH_COMPLETE', payload: true });
+        }
+    })
 
     const fetchHistory = async () => {
-        var result;
-
-        if (gameHistory == null) {
-
-        if (userId !== null) {
-            const response = await fetch(`http://localhost:5000/api/games/${userId}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+        const response = await fetch(`http://localhost:5000/api/games/${userId}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            )
-            const data = await response.json()
-            if (data.status === "success") {
-                result = data;
-                console.log(data.history)
-                setGameHistory(data.history)
-
-            } else {
-                result = data;
             }
+        )
+        const data = await response.json()
+        if (data.status === "success") {
+            if (data.history) {
+                dispatch({ type: 'SET_FETCHED_HISTORY', payload: data.history });
+            } else {
+                console.log("No games found.")
+            }
+
+        } else {
+            console.log("No games found.")
         }
-        // console.log(gameHistory)
-        return console.log(result)
+        return console.log(data)
     }
-}
 
+    return (
+        <Container>
+            <h3>{userId ? `Hello!` : "You're not logged in!"}</h3>
 
-    return (fetchHistory(),
-        <>
-            <Container>
-                <h3>{userId ? `Hello!` : "You're not logged in!"}</h3>
-
-                <h4>This is your game history:</h4>
-                {gameHistory !== null ? <GuessDisplayH games={gameHistory}/> : null}
-            </Container>
-        </>
+            <h4>This is your game history:</h4> <Button onClick={() => fetchHistory()}>Reload</Button>
+            {fetchComplete ? (fetchedHistory ? <GuessDisplayH games={fetchedHistory} /> : <div>No games found.</div>) : <div>Loading...</div>}
+        </Container>
     )
 }

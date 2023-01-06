@@ -18,6 +18,7 @@ const saltStart = parseInt(process.env.SALT_START);
 const saltEnd = parseInt(process.env.SALT_END);
 const url = process.env.ATLAS_URI;
 
+mongoose.set('strictQuery', false);
 const app = express();
 
 app.use(
@@ -40,16 +41,7 @@ app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
 
-app.get('/', (req, res) => {
-    if (req.session.userId) {
-        console.log("User is logged in from session.")
-    } else {
-        console.log("User is NOT logged in from session.")
-    }
-})
-
 app.get('/api/logout', (req, res) => {
-    console.log(req.session);
     req.session.destroy(error => {
         if (error) {
             console.log(error);
@@ -58,6 +50,10 @@ app.get('/api/logout', (req, res) => {
             res.cookie('connect.sid', null, {
                 expires: new Date('Wed, 01 Jan 1969 00:00:00 UTC'),
                 httpOnly: true,
+            });
+            res.cookie('userId', null, {
+                expires: new Date('Wed, 01 Jan 1969 00:00:00 UTC'),
+                httpOnly: false,
             });
             res.send();
         }
@@ -88,9 +84,9 @@ app.post('/api/login', async function (req, res) {
                 req.session.cookie.expires = date;
                 req.session.userId = user._id;
                 console.log(req.session);
-                res.send();
+                res.send({ status: 'success', session: req.session });
             } else {
-                res.status(401);
+                res.status('error');
                 res.send();
             }
         })
@@ -110,7 +106,7 @@ app.post('/api/register', async function (req, res) {
     })
 
     await user.save()
-        .then(data => {
+        .then(() => {
             res.json({ status: 'success', message: 'Registration success.' })
         })
         .catch(error => {
@@ -151,17 +147,22 @@ app.post('/api/record', async function (req, res) {
 
 // Search for Games associated with ObjectId (userId)
 app.get('/api/games/:userId', async function (req, res) {
-
+    console.log("Checking games for this session:")
+    console.log(req.session)
     try {
         await History.findOne({
             userId: req.params.userId
         })
             .then((result) => {
-                console.log(result.history)
-                res.json({ status: 'success', message: 'Search game success.', history: result.history })
+                if (result !== null) {
+                    console.log(result.history)
+                    res.json({ status: 'success', message: 'Search game success.', history: result.history })
+                } else {
+                    res.json({ status: 'success', message: 'Search game success.', history: null })
+                }
             })
     } catch (error) {
-        res.json({ status: 'error', message: 'History save failure. Error: ', error })
+        res.json({ status: 'error', message: 'Search game failure. Error: ', error, history: null })
         console.error(error)
     }
 });

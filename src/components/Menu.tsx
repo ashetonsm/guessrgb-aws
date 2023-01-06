@@ -1,20 +1,18 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { Login } from './Login'
 import { Register } from './Register'
 import { Button, Container, Nav } from 'react-bootstrap'
 import { Link, Outlet } from 'react-router-dom'
 import LoginContext from '../context/LoginContext'
 
-export const Menu = () => {
+export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
     const { dispatch } = useContext(LoginContext);
 
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(true)
-
 
     const logOut = async () => {
         await fetch(`http://localhost:5000/api/logout`,
@@ -27,10 +25,12 @@ export const Menu = () => {
             })
             .then((response) => {
                 console.log(response);
-                if (response.status == 200) {
-                    alert("Log out successful!");
+                if (response.status === 200) {
+                    dispatch({ type: 'SET_USERID', payload: null });
+                    dispatch({ type: 'SET_FETCHED_HISTORY', payload: null });
+                    return dispatch({ type: 'SET_FETCH_COMPLETE', payload: false });
                 } else {
-                    alert("Log out unsuccessful.");
+                    console.error("Log out unsuccessful.");
                 }
             })
     }
@@ -50,29 +50,33 @@ export const Menu = () => {
                     <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className='flex-row text-center'>
-                    <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn ? undefined : "login"}>
+                    <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn.loggedIn ? undefined : "login"}>
                         <Nav.Item>
-                            <Link to={"/guessRGB/home"} className="nav-link">Home</Link>
+                            <Link to={"/guessRGB"} className="nav-link">Home</Link>
                         </Nav.Item>
-                        {loggedIn ?
+                        {loggedIn.loggedIn ?
                             <div>
                                 <Nav.Item>
                                     <Link to={"/guessRGB/profile"} className="nav-link">Profile</Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link onClick={() => logOut()}>Log out</Nav.Link>
+                                    <Nav.Link onClick={() => {
+                                        setShowRegister(false)
+                                        setShowLogin(true)
+                                        logOut()
+                                    }}>Log out</Nav.Link>
                                 </Nav.Item>
                             </div>
                             :
                             <div>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="login" onClick={(e) => {
+                                    <Nav.Link eventKey="login" onClick={() => {
                                         setShowRegister(false)
                                         setShowLogin(true)
                                     }}>Log in</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="register" onClick={(e) => {
+                                    <Nav.Link eventKey="register" onClick={() => {
                                         setShowLogin(false)
                                         setShowRegister(true)
                                     }}>Register</Nav.Link>

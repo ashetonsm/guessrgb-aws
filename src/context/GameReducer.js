@@ -21,6 +21,11 @@ const gameReducer = (state, action) => {
                 ...state,
                 correctAnswer: action.payload,
             };
+        case 'SET_RECORDED_RESULT':
+            return {
+                ...state,
+                recordedResult: action.payload,
+            };
         default:
             return state
     };
