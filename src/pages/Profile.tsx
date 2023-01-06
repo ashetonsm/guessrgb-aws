@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react"
-import { Container } from "react-bootstrap"
+import { Button, Container } from "react-bootstrap"
 import { GuessDisplayH } from "../components/GuessDisplayH";
 import LoginContext from "../context/LoginContext";
 
@@ -40,7 +40,7 @@ export const Profile = () => {
         <Container>
             <h3>{userId ? `Hello!` : "You're not logged in!"}</h3>
 
-            <h4>This is your game history:</h4>
+            <h4>This is your game history:</h4> <Button onClick={() => fetchHistory()}>Reload</Button>
             {fetchComplete && fetchedHistory ? <GuessDisplayH games={fetchedHistory} /> : <div>No games found.</div>}
         </Container>
     )
