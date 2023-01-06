@@ -20,7 +20,7 @@ This application is currently in development. It's being completely rewritten an
 - Navigation
     - [x] Integrate log in session info with app navigation
 - Styling
-    - [ ] Sound effectss
+    - [ ] Sound effects
     - [ ] Finish styling
     - [ ] More feedback in general
 - Login and registration
