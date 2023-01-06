@@ -2,7 +2,6 @@ require('./database/conn');
 
 const History = require('./models/history.model');
 const User = require('./models/user.model');
-const Session = require('./models/session.model');
 
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
@@ -19,6 +18,7 @@ const saltStart = parseInt(process.env.SALT_START);
 const saltEnd = parseInt(process.env.SALT_END);
 const url = process.env.ATLAS_URI;
 
+mongoose.set('strictQuery', false);
 const app = express();
 
 app.use(
@@ -41,25 +41,7 @@ app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`)
 })
 
-app.post('/api/auth', async (req, res) => {
-    console.log(req.body.userId)
-    console.log(req.session.cookie)
-
-    await Session.findOne({
-        session: { $regex: req.body.userId },
-    }).then((session) => {
-        console.log("found a session")
-        console.log(session)
-        res.json({ userId: req.session.userId });
-    })
-        .catch((error) => {
-            console.log("Did not find a session")
-            res.json({ userId: null });
-        })
-})
-
 app.get('/api/logout', (req, res) => {
-    console.log(req.session);
     req.session.destroy(error => {
         if (error) {
             console.log(error);
@@ -124,7 +106,7 @@ app.post('/api/register', async function (req, res) {
     })
 
     await user.save()
-        .then(data => {
+        .then(() => {
             res.json({ status: 'success', message: 'Registration success.' })
         })
         .catch(error => {
@@ -165,7 +147,8 @@ app.post('/api/record', async function (req, res) {
 
 // Search for Games associated with ObjectId (userId)
 app.get('/api/games/:userId', async function (req, res) {
-
+    console.log("Checking games for this session:")
+    console.log(req.session)
     try {
         await History.findOne({
             userId: req.params.userId
