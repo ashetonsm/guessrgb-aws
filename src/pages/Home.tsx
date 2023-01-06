@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { Button, Container } from "react-bootstrap"
 import GameContext from "../context/GameContext"
 import HexToRgb from "../utilities/HexToRGB"
@@ -10,11 +10,8 @@ import LoginContext from "../context/LoginContext"
 
 export const Home = () => {
 
-    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses } = useContext(GameContext);
+    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses, recordedResult } = useContext(GameContext);
     const { userId } = useContext(LoginContext);
-    const [recordedResult, setRecordedResult] = useState(false);
-
-
 
     const recordResult = async () => {
 
@@ -51,11 +48,10 @@ export const Home = () => {
         if (!gamePlaying &&
             userId !== null &&
             recordedResult !== true) {
-                recordResult();
-                setRecordedResult(true);
-            }
-    }, [gamePlaying, guesses, recordResult])
-
+            recordResult();
+            dispatch({ type: 'SET_RECORDED_RESULT', payload: true });
+        }
+    })
 
     const recordGuess = (hexValue: string) => {
         console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
@@ -93,7 +89,7 @@ export const Home = () => {
         });
         dispatch({ type: 'SET_GAMEWON', payload: false });
         dispatch({ type: 'SET_GAMEPLAYING', payload: true });
-        setRecordedResult(false);
+        dispatch({ type: 'SET_RECORDED_RESULT', payload: false });
     }
 
     return (
