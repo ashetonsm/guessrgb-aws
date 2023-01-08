@@ -40,29 +40,42 @@ export const Profile = () => {
 
     return (
         <Container>
-            <h3>{userId ? `Hello!` : "You're not logged in!"}</h3>
-
-            <h4>This is your game history:</h4>
-            <Button >Reload</Button>
-            <div>
-                <Button onClick={() => {
-                    if ((pageNumber - 1) > 0) {
-                        setPageNumber(pageNumber - 1)
-                    } else {
-                        alert("Out of page range!")
-                    }
-                }}>Prev. Page</Button>
-                <span>Page {pageNumber}</span>
-                <Button onClick={() => {
-                    if (pageNumber + 1 <= fetchedHistory.length) {
-                        setPageNumber(pageNumber + 1)
-                    } else {
-                        alert("Out of page range!")
-                    }
-                }}>Next Page</Button>
-
+            <div className="text-center d-flex flex-wrap justify-content-center"
+            >
+                <h3>{userId ? `Hello! This is your game history:` : "You're not logged in!"}</h3>
             </div>
-            {fetchComplete ? (fetchedHistory ? <GuessDisplayH games={Paginate(fetchedHistory, 1, pageNumber)} /> : <div>No games found.</div>) : <div>Loading...</div>}
+            <div className="d-flex flex-wrap justify-content-center gap-3">
+                <Button
+                    onClick={() => fetchHistory()}
+                    className="btn-light btn-outline-light">🔄</Button>
+            </div>
+
+            {fetchComplete ? (fetchedHistory ?
+                <Container>
+                    <div className="d-flex flex-wrap justify-content-center gap-3">
+                        <Button
+                            disabled={pageNumber - 1 > 0 ? false : true}
+                            onClick={() => {
+                                if ((pageNumber - 1) > 0) {
+                                    setPageNumber(pageNumber - 1)
+                                }
+                            }}>Prev. Page</Button>
+
+                        <span>Page {pageNumber}</span>
+
+                        <Button
+                            disabled={pageNumber + 1 <= fetchedHistory.length ? false : true}
+                            onClick={() => {
+                                if (pageNumber + 1 <= fetchedHistory.length) {
+                                    setPageNumber(pageNumber + 1)
+                                }
+                            }}>Next Page</Button>
+                    </div>
+
+                    <GuessDisplayH games={Paginate(fetchedHistory, 1, pageNumber)} />
+
+                </Container>
+                : <div>No games found.</div>) : <div>Loading...</div>}
         </Container>
     )
 }
