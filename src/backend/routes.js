@@ -64,7 +64,7 @@ app.get('/api/logout', (req, res) => {
 app.post('/api/login', async function (req, res) {
 
     await User.findOne({
-        email: req.body.email,
+        email: { $regex: `${req.body.email}`, $options: 'i' },
     })
         .then(async (user) => {
             res.status(200)
@@ -98,22 +98,32 @@ app.post('/api/login', async function (req, res) {
 // Create a new User
 app.post('/api/register', async function (req, res) {
 
-    const hash = await bcrypt.hash(req.body.password, saltRounds);
-    const user = new User({
-        email: req.body.email,
-        password: hash
+    var userExists = await User.findOne({
+        email: { $regex: `${req.body.email}`, $options: 'i' },
     })
 
-    await user.save()
-        .then(() => {
-            res.json({ status: 'success', message: 'Registration success.' })
-        })
-        .catch(error => {
-            res.json({ status: 'error', message: 'Registration failure. Error: ', error })
-            console.error('Database Error (registration).')
+    if (userExists) {
+        console.error('Database Error (Email in use).')
+        return res.json({ status: 'error', message: 'Registration failure. Email in use.' })
+    } else {
+        const hash = await bcrypt.hash(req.body.password, saltRounds);
+        const user = new User({
+            email: req.body.email.toLowerCase(),
+            password: hash
         })
 
-    console.log(user)
+        await user.save()
+            .then(() => {
+                res.json({ status: 'success', message: 'Registration success.' })
+            })
+            .catch(error => {
+                res.json({ status: 'error', message: 'Registration failure. Error: ', error })
+                console.error('Database Error (registration).')
+            })
+
+        console.log(user)
+    }
+
 });
 
 // Create a Game entry
