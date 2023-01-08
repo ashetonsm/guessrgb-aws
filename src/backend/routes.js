@@ -86,12 +86,11 @@ app.post('/api/login', async function (req, res) {
                 console.log(req.session);
                 res.send({ status: 'success', session: req.session });
             } else {
-                res.status('error');
-                res.send();
+                res.send({ status: 'error', message: 'Log in failure. Credential mismatch.' })
             }
         })
         .catch(error => {
-            res.json({ status: 'error', message: 'Log in failure. Error: ', error })
+            res.send({ status: 'error', message: 'Log in failure. Database error. Error: ', error })
             console.error('Database Error (login).')
         })
 });
