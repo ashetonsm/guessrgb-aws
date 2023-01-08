@@ -1,10 +1,12 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Container } from "react-bootstrap"
 import { GuessDisplayH } from "../components/GuessDisplayH";
 import LoginContext from "../context/LoginContext";
+import Paginate from "../utilities/PaginateArray";
 
 export const Profile = () => {
     const { dispatch, userId, fetchedHistory, fetchComplete } = useContext(LoginContext);
+    const [pageNumber, setPageNumber] = useState(1)
 
     useEffect(() => {
         if (!fetchComplete) {
@@ -25,7 +27,7 @@ export const Profile = () => {
         const data = await response.json()
         if (data.status === "success") {
             if (data.history) {
-                dispatch({ type: 'SET_FETCHED_HISTORY', payload: data.history });
+                dispatch({ type: 'SET_FETCHED_HISTORY', payload: data.history.reverse() });
             } else {
                 console.log("No games found.")
             }
@@ -40,8 +42,27 @@ export const Profile = () => {
         <Container>
             <h3>{userId ? `Hello!` : "You're not logged in!"}</h3>
 
-            <h4>This is your game history:</h4> <Button onClick={() => fetchHistory()}>Reload</Button>
-            {fetchComplete ? (fetchedHistory ? <GuessDisplayH games={fetchedHistory} /> : <div>No games found.</div>) : <div>Loading...</div>}
+            <h4>This is your game history:</h4>
+            <Button >Reload</Button>
+            <div>
+                <Button onClick={() => {
+                    if ((pageNumber - 1) > 0) {
+                        setPageNumber(pageNumber - 1)
+                    } else {
+                        alert("Out of page range!")
+                    }
+                }}>Prev. Page</Button>
+                <span>Page {pageNumber}</span>
+                <Button onClick={() => {
+                    if (pageNumber + 1 <= fetchedHistory.length) {
+                        setPageNumber(pageNumber + 1)
+                    } else {
+                        alert("Out of page range!")
+                    }
+                }}>Next Page</Button>
+
+            </div>
+            {fetchComplete ? (fetchedHistory ? <GuessDisplayH games={Paginate(fetchedHistory, 1, pageNumber)} /> : <div>No games found.</div>) : <div>Loading...</div>}
         </Container>
     )
 }
