@@ -28,9 +28,9 @@ This application is currently in development. It's being completely rewritten an
     - [ ] Add more feedback/info to login/registration
     - [x] Rework login with better salt/hash protocols
 - Profile page
-    - [ ] Display by newest to oldest
-    - [ ] Paginate results
     - [ ] View others' profiles
+    - [x] Display by newest to oldest
+    - [x] Paginate results
     - [x] Show win/lose stats
     - [x] Show winning color swatches
 
