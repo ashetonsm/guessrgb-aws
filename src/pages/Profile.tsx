@@ -1,10 +1,12 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Container } from "react-bootstrap"
 import { GuessDisplayH } from "../components/GuessDisplayH";
 import LoginContext from "../context/LoginContext";
+import Paginate from "../utilities/PaginateArray";
 
 export const Profile = () => {
     const { dispatch, userId, fetchedHistory, fetchComplete } = useContext(LoginContext);
+    const [pageNumber, setPageNumber] = useState(1)
 
     useEffect(() => {
         if (!fetchComplete) {
@@ -25,7 +27,7 @@ export const Profile = () => {
         const data = await response.json()
         if (data.status === "success") {
             if (data.history) {
-                dispatch({ type: 'SET_FETCHED_HISTORY', payload: data.history });
+                dispatch({ type: 'SET_FETCHED_HISTORY', payload: data.history.reverse() });
             } else {
                 console.log("No games found.")
             }
@@ -38,10 +40,42 @@ export const Profile = () => {
 
     return (
         <Container>
-            <h3>{userId ? `Hello!` : "You're not logged in!"}</h3>
+            <div className="text-center d-flex flex-wrap justify-content-center"
+            >
+                <h3>{userId ? `Hello! This is your game history:` : "You're not logged in!"}</h3>
+            </div>
+            <div className="d-flex flex-wrap justify-content-center gap-3">
+                <Button
+                    onClick={() => fetchHistory()}
+                    className="btn-light btn-outline-light">🔄</Button>
+            </div>
 
-            <h4>This is your game history:</h4> <Button onClick={() => fetchHistory()}>Reload</Button>
-            {fetchComplete ? (fetchedHistory ? <GuessDisplayH games={fetchedHistory} /> : <div>No games found.</div>) : <div>Loading...</div>}
+            {fetchComplete ? (fetchedHistory ?
+                <Container>
+                    <div className="d-flex flex-wrap justify-content-center gap-3">
+                        <Button
+                            disabled={pageNumber - 1 > 0 ? false : true}
+                            onClick={() => {
+                                if ((pageNumber - 1) > 0) {
+                                    setPageNumber(pageNumber - 1)
+                                }
+                            }}>Prev. Page</Button>
+
+                        <span>Page {pageNumber}</span>
+
+                        <Button
+                            disabled={pageNumber + 1 <= fetchedHistory.length ? false : true}
+                            onClick={() => {
+                                if (pageNumber + 1 <= fetchedHistory.length) {
+                                    setPageNumber(pageNumber + 1)
+                                }
+                            }}>Next Page</Button>
+                    </div>
+
+                    <GuessDisplayH games={Paginate(fetchedHistory, 1, pageNumber)} />
+
+                </Container>
+                : <div>No games found.</div>) : <div>Loading...</div>}
         </Container>
     )
 }
