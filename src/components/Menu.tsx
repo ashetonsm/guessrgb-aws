@@ -5,11 +5,13 @@ import { Register } from './Register'
 import { Button, Container, Nav } from 'react-bootstrap'
 import { Link, Outlet } from 'react-router-dom'
 import LoginContext from '../context/LoginContext'
+import { InfoBox } from './InfoBox'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
     const { dispatch } = useContext(LoginContext);
 
+    const [showInfoBox, setShowInfoBox] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
@@ -37,13 +39,23 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
     return (
         <>
-            <h1 className="text-center">guessRGB</h1>
+            <span onClick={() => setShowInfoBox(true)}
+                style={{
+                    cursor: 'help',
+                    position: 'sticky',
+                    top: '2vh',
+                    left: '95vw'
+                }}>❔</span>
+            <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} />
             <Button onClick={() => setShowMenu(true)}
                 style={{
                     cursor: 'pointer',
                     position: 'sticky',
+                    top: '2vh',
                     left: '2vw'
                 }}>MENU</Button>
+
+            <h1 className="text-center">guessRGB</h1>
 
             <Offcanvas show={showMenu} onHide={() => setShowMenu(false)} className="d-flex justify-content-center">
                 <Offcanvas.Header closeButton>
