@@ -2,15 +2,17 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useContext, useState } from "react"
 import { Login } from './Login'
 import { Register } from './Register'
-import { Button, Container, Nav } from 'react-bootstrap'
+import { Button, Col, Container, Nav, Row } from 'react-bootstrap'
 import { Link, Outlet } from 'react-router-dom'
 import LoginContext from '../context/LoginContext'
 import { InfoBox } from './InfoBox'
+import { Settings } from './Settings'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
     const { dispatch } = useContext(LoginContext);
 
+    const [showSettings, setShowSettings] = useState(false)
     const [showInfoBox, setShowInfoBox] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
     const [showLogin, setShowLogin] = useState(true)
@@ -39,23 +41,35 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
     return (
         <>
-            <span onClick={() => setShowInfoBox(true)}
-                style={{
-                    cursor: 'help',
-                    position: 'sticky',
-                    top: '2vh',
-                    left: '95vw'
-                }}>❔</span>
-            <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} />
-            <Button onClick={() => setShowMenu(true)}
-                style={{
-                    cursor: 'pointer',
-                    position: 'sticky',
-                    top: '2vh',
-                    left: '2vw'
-                }}>MENU</Button>
+            <Container>
+                <Row>
+                    <Col className="mt-2 mx-2">
+                        <Button onClick={() => setShowMenu(true)}
+                            style={{
+                                cursor: 'pointer',
+                                position: 'sticky',
+                                top: '2vh',
+                            }}>MENU</Button>
+                    </Col>
+                    <Col className='d-flex justify-content-end mt-2 mx-2'>
+                        <span onClick={() => setShowInfoBox(true)}
+                        className='mx-4'
+                            style={{
+                                cursor: 'help',
+                            }}>❔</span>
 
-            <h1 className="text-center">guessRGB</h1>
+                        <span onClick={() => setShowSettings(true)}
+                            style={{
+                                cursor: 'pointer',
+                            }}>🔧</span>
+                    </Col>
+                </Row>
+                <h1 className="text-center">guessRGB</h1>
+            </Container>
+
+            <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} />
+            <Settings show={showSettings} onHide={() => setShowSettings(false)} />
+
 
             <Offcanvas show={showMenu} onHide={() => setShowMenu(false)} className="d-flex justify-content-center">
                 <Offcanvas.Header closeButton>
