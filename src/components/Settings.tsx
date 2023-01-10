@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, HTMLAttributes, RefObject, ReactNode, useState, useContext } from "react"
+import { DetailedHTMLProps, HTMLAttributes, RefObject, ReactNode, useContext } from "react"
 import { Button, ButtonGroup, Modal, ModalProps, ToggleButton } from "react-bootstrap"
 import { Omit, BsPrefixProps } from "react-bootstrap/esm/helpers"
 import GameContext from "../context/GameContext"
@@ -10,7 +10,7 @@ export const Settings = (props: JSX.IntrinsicAttributes & Omit<Pick<DetailedHTML
     const difficulties = [
         { name: 'Easy', value: 50 },
         { name: 'Medium', value: 25 },
-        { name: 'Hard', value: 2 },
+        { name: 'Hard', value: 5 },
     ];
 
     return (
