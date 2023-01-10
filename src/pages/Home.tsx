@@ -10,7 +10,7 @@ import LoginContext from "../context/LoginContext"
 
 export const Home = () => {
 
-    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses, recordedResult } = useContext(GameContext);
+    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses, recordedResult, difficulty } = useContext(GameContext);
     const { userId } = useContext(LoginContext);
 
     const recordResult = async () => {
@@ -60,7 +60,7 @@ export const Home = () => {
             r: rgbValue!.r,
             g: rgbValue!.g,
             b: rgbValue!.b,
-            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b })
+            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b }, difficulty)
         }
 
         var numCorrect = 0
