@@ -26,6 +26,11 @@ const gameReducer = (state, action) => {
                 ...state,
                 recordedResult: action.payload,
             };
+        case 'SET_DIFFICULTY':
+            return {
+                ...state,
+                difficulty: action.payload,
+            };
         default:
             return state
     };

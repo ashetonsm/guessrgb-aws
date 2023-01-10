@@ -36,7 +36,28 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
         return output;
     }
 
-    var output = games.map((entry: { status: number, date: Date, guesses: Array<any>, answer: { r: number; g: number; b: number } }, idx: number) =>
+    const returnDifficulty = (input: number) => {
+        var textDifficulty;
+
+        switch (input) {
+            case 50:
+                textDifficulty = "Easy"
+                break;
+            case 25:
+                textDifficulty = "Medium"
+                break;
+            case 5:
+                textDifficulty = "Hard"
+                break;
+            default:
+                textDifficulty = "N/A"
+                break;        
+            }
+
+        return <div className="col text-center"><p>{textDifficulty}</p></div>
+    }
+
+    var output = games.map((entry: { status: number, date: Date, guesses: Array<any>, answer: { r: number; g: number; b: number }, difficulty: number }, idx: number) =>
         <Card key={idx}
             id={`guessHistory-${idx}`}
             className="mb-3"
@@ -50,11 +71,12 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
                         <p>R: {entry.answer.r}, G: {entry.answer.g}, B: {entry.answer.b}  </p>
                     </div>
                     <div className="col text-center">
-                        <p>{entry.date}</p>
+                        <p>{new Date(entry.date).toLocaleDateString()}</p>
                     </div>
                     <div className="col text-center">
-                        <p>{entry.status == 0 ? "LOST" : "WON"}</p>
+                        <p>{entry.status === 0 ? "Lost" : "Won"}</p>
                     </div>
+                    {returnDifficulty(entry.difficulty)}
                 </div>
 
                 <Card.Body

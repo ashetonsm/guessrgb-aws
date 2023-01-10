@@ -9,6 +9,7 @@ export const GameProvider = ({ children }) => {
         gameWon: false,
         recordedResult: false,
         guesses: [],
+        difficulty: 25,
         correctAnswer: {
             r: Math.round(Math.random() * 255),
             g: Math.round(Math.random() * 255),

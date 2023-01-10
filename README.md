@@ -12,10 +12,10 @@ This application is currently in development. It's being completely rewritten an
 
 ### To do:
 - General
-    - [ ] Add an info/about page or modal
-    - [ ] Adjust handicap (default: a value within 25pts of the target is correct)
     - [ ] Select a color family to streamline guessing
     - [ ] Add a social/sharing feature for results
+    - [x] Adjust handicap (default: a value within 25pts of the target is correct)
+    - [x] Add an info/about page or modal
     - [x] Move local variables to useContext
 - Navigation
     - [x] Integrate log in session info with app navigation

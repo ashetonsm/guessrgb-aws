@@ -10,7 +10,7 @@ import LoginContext from "../context/LoginContext"
 
 export const Home = () => {
 
-    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses, recordedResult } = useContext(GameContext);
+    const { dispatch, gamePlaying, gameWon, correctAnswer, guesses, recordedResult, difficulty } = useContext(GameContext);
     const { userId } = useContext(LoginContext);
 
     const recordResult = async () => {
@@ -21,7 +21,8 @@ export const Home = () => {
                 status: gameWon ? 1 : 0,
                 date: new Date().toUTCString(),
                 guesses: guesses,
-                answer: correctAnswer
+                answer: correctAnswer,
+                difficulty: difficulty
             }
         }
 
@@ -60,7 +61,7 @@ export const Home = () => {
             r: rgbValue!.r,
             g: rgbValue!.g,
             b: rgbValue!.b,
-            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b })
+            correct: CheckGuess(correctAnswer, { r: rgbValue!.r, g: rgbValue!.g, b: rgbValue!.b }, difficulty)
         }
 
         var numCorrect = 0
@@ -93,29 +94,26 @@ export const Home = () => {
     }
 
     return (
-        <>
-            <Container>
-                {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
-                <div className="d-flex justify-content-center">
-                    <div className="flex-column text-center">
-                        <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
-                        <GuessEntry recordGuess={recordGuess} gamePlaying={gamePlaying} />
-                        <div className="mt-2 mb-2 px-2 ">
-                            <Button
-                                style={{ visibility: gamePlaying ? 'hidden' : 'visible' }}
-                                onClick={() => {
-                                    resetGame()
-                                }}>
-                                Play Again
-                            </Button>
-                        </div>
-                        <div className="d-flex gap-3">
-                            <GuessDisplay guesses={guesses} />
-                        </div>
+        <Container>
+            {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
+            <div className="d-flex justify-content-center">
+                <div className="flex-column text-center">
+                    <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
+                    <GuessEntry recordGuess={recordGuess} gamePlaying={gamePlaying} />
+                    <div className="mt-2 mb-2 px-2 ">
+                        <Button
+                            style={{ visibility: gamePlaying ? 'hidden' : 'visible' }}
+                            onClick={() => {
+                                resetGame()
+                            }}>
+                            Play Again
+                        </Button>
+                    </div>
+                    <div className="d-flex gap-3">
+                        <GuessDisplay guesses={guesses} />
                     </div>
                 </div>
-
-            </Container>
-        </>
+            </div>
+        </Container>
     )
 }
