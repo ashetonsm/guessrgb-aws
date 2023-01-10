@@ -74,7 +74,7 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
                         <p>{new Date(entry.date).toLocaleDateString()}</p>
                     </div>
                     <div className="col text-center">
-                        <p>{entry.status == 0 ? "Lost" : "Won"}</p>
+                        <p>{entry.status === 0 ? "Lost" : "Won"}</p>
                     </div>
                     {returnDifficulty(entry.difficulty)}
                 </div>
