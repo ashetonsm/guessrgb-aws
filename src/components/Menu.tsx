@@ -43,33 +43,36 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
         <>
             <Container>
                 <Row>
-                    <Col className="mt-2 mx-2">
+                    <Col className="justify-content-start mt-2">
                         <Button onClick={() => setShowMenu(true)}
                             style={{
                                 cursor: 'pointer',
                                 position: 'sticky',
-                                top: '2vh',
                             }}>MENU</Button>
                     </Col>
-                    <Col className='d-flex justify-content-end mt-2 mx-2'>
+                    <Col className='d-flex justify-content-center mt-2'>
+                        <h1 className="text-center" id="title">guessRGB</h1>
+                    </Col>
+                    <Col className='d-flex justify-content-end mt-2'>
                         <span onClick={() => setShowInfoBox(true)}
-                        className='mx-4'
+                            className='mx-4'
                             style={{
                                 cursor: 'help',
+                                fontSize: '1em'
                             }}>❔</span>
 
                         <span onClick={() => setShowSettings(true)}
                             style={{
                                 cursor: 'pointer',
+                                fontSize: '1em'
                             }}>🔧</span>
                     </Col>
                 </Row>
-                <h1 className="text-center">guessRGB</h1>
             </Container>
+            <hr />
 
             <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} />
             <Settings show={showSettings} onHide={() => setShowSettings(false)} />
-
 
             <Offcanvas show={showMenu} onHide={() => setShowMenu(false)} className="d-flex justify-content-center">
                 <Offcanvas.Header closeButton>
@@ -120,9 +123,8 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                     <p>Built by <a href="https://github.com/ashetonsm">Asheton S. M.</a></p>
                 </Offcanvas.Body>
             </Offcanvas>
-            <Container>
-                <Outlet />
-            </Container>
+            <Outlet />
         </>
+
     )
 }
