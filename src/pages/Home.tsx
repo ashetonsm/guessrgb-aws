@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react"
-import { Button, Container } from "react-bootstrap"
+import { Button, Col, Container, Row } from "react-bootstrap"
 import GameContext from "../context/GameContext"
 import HexToRgb from "../utilities/HexToRGB"
 import { AnswerToast } from "../components/AnswerToast"
@@ -96,24 +96,38 @@ export const Home = () => {
     return (
         <Container>
             {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
-            <div className="d-flex justify-content-center">
-                <div className="flex-column text-center">
-                    <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
-                    <GuessEntry recordGuess={recordGuess} gamePlaying={gamePlaying} />
-                    <div className="mt-2 mb-2 px-2 ">
+            <div className="row text-center d-flex flex-wrap justify-content-center">
+                <Row>
+                    <Col>
+                        <h5>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <GuessEntry recordGuess={recordGuess} gamePlaying={gamePlaying} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
                         <Button
+                            className="mb-3"
                             style={{ visibility: gamePlaying ? 'hidden' : 'visible' }}
                             onClick={() => {
                                 resetGame()
                             }}>
                             Play Again
                         </Button>
-                    </div>
-                    <div className="d-flex gap-3">
-                        <GuessDisplay guesses={guesses} />
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
+
+            <Row>
+                <Col
+                    className="d-flex flex-wrap justify-content-center gap-3 mb-3">
+                    <GuessDisplay guesses={guesses} />
+                </Col>
+            </Row>
+
         </Container>
     )
 }
