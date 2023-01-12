@@ -15,7 +15,7 @@ export const GuessEntry = ({ recordGuess, gamePlaying }) => {
                     }}
                 />
             </div>
-            <div className="text-center">
+            <div className="text-center mt-2 mb-2">
                 <Button
                     disabled={!gamePlaying}
                     onClick={() => {
