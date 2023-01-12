@@ -8,6 +8,23 @@ body {
   background-color: white;
 }
 
+#colorPicker {
+  margin-left: auto;
+  margin-right: auto;
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+input[type="color" i] {
+  border: 0;
+  padding: 0;
+  width: 3.5em;
+  height: 3.5em;
+  cursor: pointer;
+}
+
 div[id^="guessContainer"], #answerText, .guessContainer {
   color: white;
   font-size: 1.5em;
@@ -23,9 +40,9 @@ div[id^="guessContainer"], #answerText, .guessContainer {
   font-variant: small-caps;
   font-weight: bolder;
   text-shadow: 1px 0px 0px rgba(0, 0, 0),
-    -1px -0px 0px  rgba(0, 0, 0),
-    0px 1px 0px  rgba(0, 0, 0),
-    0px -1px 0px  rgba(0, 0, 0);
+    -1px -0px 0px rgba(0, 0, 0),
+    0px 1px 0px rgba(0, 0, 0),
+    0px -1px 0px rgba(0, 0, 0);
 }
 
 .slideDown {
