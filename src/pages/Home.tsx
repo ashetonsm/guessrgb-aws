@@ -7,6 +7,7 @@ import CheckGuess from "../components/CheckGuess"
 import GuessDisplay from "../components/GuessDisplay"
 import { GuessEntry } from "../components/GuessEntry"
 import LoginContext from "../context/LoginContext"
+import { Delay } from "../utilities/Delay"
 
 export const Home = () => {
 
@@ -79,8 +80,13 @@ export const Home = () => {
         }
     }
 
-    const resetGame = () => {
+    const resetGame = async () => {
         dispatch({ type: 'SET_GUESSES', payload: [] });
+        dispatch({ type: 'SET_GAMEWON', payload: false });
+        dispatch({ type: 'SET_RECORDED_RESULT', payload: false });
+        dispatch({ type: 'SET_GAMEPLAYING', payload: true });
+        // Delay generating the next correct answer so the box doesn't spoil it
+        await Delay(200);
         dispatch({
             type: 'SET_CORRECTANSWER', payload: {
                 r: Math.round(Math.random() * 255),
@@ -88,14 +94,11 @@ export const Home = () => {
                 b: Math.round(Math.random() * 255)
             }
         });
-        dispatch({ type: 'SET_GAMEWON', payload: false });
-        dispatch({ type: 'SET_GAMEPLAYING', payload: true });
-        dispatch({ type: 'SET_RECORDED_RESULT', payload: false });
     }
 
     return (
         <Container>
-            {!gamePlaying && <AnswerToast correctAnswer={correctAnswer} />}
+            <AnswerToast />
             <div className="row text-center d-flex flex-wrap justify-content-center">
                 <Row>
                     <Col>
