@@ -31,7 +31,7 @@ export const Settings = (props: JSX.IntrinsicAttributes & Omit<Pick<DetailedHTML
                 <ul>
                     <li>Easy: within 50pts</li>
                     <li>Medium: within 25pts</li>
-                    <li>Hard: within 2pts</li>
+                    <li>Hard: within 5pts</li>
                 </ul>
                 <ButtonGroup>
                     {difficulties.map((level, idx) => (

@@ -1,128 +1,96 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useContext, useState } from "react"
-import { Login } from './Login'
-import { Register } from './Register'
-import { Button, Col, Container, Nav, Row } from 'react-bootstrap'
-import { Link, Outlet } from 'react-router-dom'
-import LoginContext from '../context/LoginContext'
+import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Outlet } from 'react-router-dom'
 import { InfoBox } from './InfoBox'
 import { Settings } from './Settings'
+import { MenuLinks } from './MenuLinks'
+import LoginContext from '../context/LoginContext'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
-    const { dispatch } = useContext(LoginContext);
-
+    const { dispatch, darkMode } = useContext(LoginContext)
     const [showSettings, setShowSettings] = useState(false)
     const [showInfoBox, setShowInfoBox] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
-    const [showLogin, setShowLogin] = useState(true)
-    const [showRegister, setShowRegister] = useState(false)
-
-    const logOut = async () => {
-        await fetch(`http://localhost:5000/api/logout`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'
-            })
-            .then((response) => {
-                console.log(response);
-                if (response.status === 200) {
-                    dispatch({ type: 'SET_USERID', payload: null });
-                    dispatch({ type: 'SET_FETCHED_HISTORY', payload: null });
-                    return dispatch({ type: 'SET_FETCH_COMPLETE', payload: false });
-                } else {
-                    console.error("Log out unsuccessful.");
-                }
-            })
-    }
 
     return (
         <>
+            {/* Begin header area */}
             <Container>
                 <Row>
-                    <Col className="mt-2 mx-2">
+                    <Col className="justify-content-start">
                         <Button onClick={() => setShowMenu(true)}
                             style={{
+                                marginTop: '1em',
                                 cursor: 'pointer',
                                 position: 'sticky',
-                                top: '2vh',
                             }}>MENU</Button>
                     </Col>
-                    <Col className='d-flex justify-content-end mt-2 mx-2'>
+                    <Col className='d-flex justify-content-center' style={{ marginTop: '1em', padding: 0 }}>
+                        <h1 className="text-center" id="title" style={{ margin: '0' }} >guessRGB</h1>
+                    </Col>
+                    <Col className='d-flex justify-content-end'>
                         <span onClick={() => setShowInfoBox(true)}
-                        className='mx-4'
+                            className='mx-2'
                             style={{
+                                marginTop: 'auto',
+                                marginBottom: 'auto',
                                 cursor: 'help',
+                                fontSize: '1em'
                             }}>❔</span>
 
                         <span onClick={() => setShowSettings(true)}
+                            className='mx-2'
                             style={{
+                                marginTop: 'auto',
+                                marginBottom: 'auto', 
                                 cursor: 'pointer',
+                                fontSize: '1em'
                             }}>🔧</span>
+
+                        <span onClick={() => {
+                            dispatch({ type: 'SET_DARK_MODE', payload: !darkMode });
+                        }}
+                            className='mx-2'
+                            style={{
+                                marginTop: 'auto',
+                                marginBottom: 'auto', 
+                                cursor: 'pointer',
+                                fontSize: '1em'
+                            }}>{darkMode.toString() === "true" ? "🌑" : "☀"}</span>
                     </Col>
                 </Row>
-                <h1 className="text-center">guessRGB</h1>
             </Container>
+            <hr style={{ marginTop: '1em' }} />
 
             <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} />
             <Settings show={showSettings} onHide={() => setShowSettings(false)} />
+            {/* End header area */}
 
 
-            <Offcanvas show={showMenu} onHide={() => setShowMenu(false)} className="d-flex justify-content-center">
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Menu</Offcanvas.Title>
+            {/* Begin menu area */}
+            <Offcanvas
+                show={showMenu}
+                onHide={() => setShowMenu(false)}
+                className="d-flex justify-content-center">
+                <Offcanvas.Header id="menuHeader"
+                    className={`${darkMode ? "darkMode" : ""}`}
+                    closeButton>
+                    <Offcanvas.Title id="menuTitle">Menu</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body className='flex-row text-center'>
-                    <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn.loggedIn ? undefined : "login"}>
-                        <Nav.Item>
-                            <Link to={"/guessRGB"} className="nav-link">Home</Link>
-                        </Nav.Item>
-                        {loggedIn.loggedIn ?
-                            <div>
-                                <Nav.Item>
-                                    <Link to={"/guessRGB/profile"} className="nav-link">Profile</Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link onClick={() => {
-                                        setShowRegister(false)
-                                        setShowLogin(true)
-                                        logOut()
-                                    }}>Log out</Nav.Link>
-                                </Nav.Item>
-                            </div>
-                            :
-                            <div>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="login" onClick={() => {
-                                        setShowRegister(false)
-                                        setShowLogin(true)
-                                    }}>Log in</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="register" onClick={() => {
-                                        setShowLogin(false)
-                                        setShowRegister(true)
-                                    }}>Register</Nav.Link>
-                                </Nav.Item>
-                                <hr />
-                                {showLogin ? <Login /> : null}
-
-                                {showRegister ? <Register /> : null}
-
-                            </div>
-                        }
-                    </Nav>
+                <Offcanvas.Body className={`flex-row text-center ${darkMode ? "darkMode" : ""}`} id="menu">
+                    <MenuLinks loggedIn={loggedIn.loggedIn} />
 
                     <hr />
                     <p>Built by <a href="https://github.com/ashetonsm">Asheton S. M.</a></p>
                 </Offcanvas.Body>
             </Offcanvas>
-            <Container>
-                <Outlet />
-            </Container>
+            {/* End menu area */}
+
+            {/* Page content area */}
+            <Outlet />
         </>
+
     )
 }

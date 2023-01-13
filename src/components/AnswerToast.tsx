@@ -1,23 +1,35 @@
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-import { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import GameContext from '../context/GameContext';
 
-export const AnswerToast = (c: { correctAnswer: { r: number; g: number; b: number; }; }) => {
+export const AnswerToast = () => {
 
-    const [showToast, setShowToast] = useState(true);
+    const { gamePlaying, correctAnswer } = useContext(GameContext);
+
+    const [showToast, setShowToast] = useState(false);
+
+    useEffect(() => {
+        if (gamePlaying === true) {
+            setShowToast(false)
+        } else {
+            setShowToast(true)
+        }
+    }, [gamePlaying])
 
     return (
-        <ToastContainer position='top-end' className='mb-2 mt-2 px-2 text-center'>
+        <ToastContainer position='bottom-center' className='mb-2 mt-2 px-2 text-center'>
             <Toast
                 style={{
-                    backgroundColor: `rgb(${c.correctAnswer.r}, ${c.correctAnswer.g}, ${c.correctAnswer.b})`
+                    backgroundColor: `rgb(${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b})`, 
+                    borderColor: `rgb(${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b})`
                 }}
                 show={showToast}
                 onClose={() => setShowToast(false)}>
                 <Toast.Header>
                     <h5 className="me-auto">The answer was...</h5>
                 </Toast.Header>
-                <Toast.Body id='answerText'>{c.correctAnswer.r}, {c.correctAnswer.g}, {c.correctAnswer.b}</Toast.Body>
+                <Toast.Body id='answerText'>{`${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b}`}</Toast.Body>
             </Toast>
         </ToastContainer>
     )

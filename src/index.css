@@ -5,8 +5,29 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: white;
-  animation: rainbow 20s infinite;
+}
+
+#root {
+  height: 100vh;
+}
+
+#colorPicker {
+  margin-left: auto;
+  margin-right: auto;
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+input[type="color" i] {
+  border: 0;
+  padding: 0;
+  width: 3.7em;
+  height: 3.7em;
+  cursor: pointer;
+  transform: translate(-1px, -1px);
+  background-color: transparent;
 }
 
 div[id^="guessContainer"], #answerText, .guessContainer {
@@ -24,13 +45,33 @@ div[id^="guessContainer"], #answerText, .guessContainer {
   font-variant: small-caps;
   font-weight: bolder;
   text-shadow: 1px 0px 0px rgba(0, 0, 0),
-    -1px -0px 0px  rgba(0, 0, 0),
-    0px 1px 0px  rgba(0, 0, 0),
-    0px -1px 0px  rgba(0, 0, 0);
+    -1px -0px 0px rgba(0, 0, 0),
+    0px 1px 0px rgba(0, 0, 0),
+    0px -1px 0px rgba(0, 0, 0);
 }
 
 .slideDown {
   animation: 0.5s ease-out 0s 1 slideDown;
+}
+
+.darkMode {
+  color: #fff;
+  background-color: #0e001c;
+}
+
+#title {
+  font-family: 'Modak', cursive;
+  animation: rainbow 10s infinite;
+  margin: 0;
+  font-size: 2em;
+}
+
+#menuTitle {
+  padding-left: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Modak', cursive;
+  font-size: 2em;
 }
 
 @keyframes slideDown {
@@ -47,27 +88,27 @@ div[id^="guessContainer"], #answerText, .guessContainer {
 
 @keyframes rainbow {
   0% {
-    background-color: #ffb0d2;
+    color: #ff006f;
   }
 
   20% {
-    background-color: #ffcbb0;
+    color: #ff5900;
   }
 
   40% {
-    background-color: #ffefb0;
+    color: #ffcc00;
   }
 
   60% {
-    background-color: #caffb0;
+    color: #5ee100;
   }
 
   80% {
-    background-color: #b0eeff;
+    color: #00c8ff;
   }
 
   100% {
-    background-color: #ffb0d2;
+    color: #ff006f;
 
   }
 }

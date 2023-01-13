@@ -47,12 +47,12 @@ export const Profile = () => {
             <div className="d-flex flex-wrap justify-content-center gap-3">
                 <Button
                     onClick={() => fetchHistory()}
-                    className="btn-light btn-outline-light">🔄</Button>
+                    className="btn-light btn-outline-light mb-2">🔄</Button>
             </div>
 
             {fetchComplete ? (fetchedHistory ?
                 <Container>
-                    <div className="d-flex flex-wrap justify-content-center gap-3">
+                    <div className="d-flex flex-wrap justify-content-center gap-3 mb-2">
                         <Button
                             disabled={pageNumber - 1 > 0 ? false : true}
                             onClick={() => {

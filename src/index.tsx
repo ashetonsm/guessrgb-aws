@@ -5,6 +5,7 @@ import { LoginProvider } from './context/LoginContext';
 import { GameProvider } from './context/GameContext';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import './custom.scss';
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

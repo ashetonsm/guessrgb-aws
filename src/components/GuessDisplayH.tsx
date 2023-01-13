@@ -6,14 +6,22 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
         var output = input.map((guess: { r: number, g: number, b: number, correct: Array<number> }, idx: number) =>
 
             <Card key={idx}
-                style={{ minWidth: '5.5em' }}
+                style={{
+                    minWidth: '5.5em'
+                }}
             >
-                <Card.Header as="h5" >Guess {idx + 1}</Card.Header>
+                <Card.Header as="h5"
+                    style={{
+                        color: "#000",
+                        backgroundColor: `rgba(${guess.r}, ${guess.g}, ${guess.b}, 0.5)`,
+                        borderColor: `rgb(${guess.r}, ${guess.g}, ${guess.b})`
+                    }}>Guess {idx + 1}</Card.Header>
                 <ListGroup
                     className="guessContainer"
                     variant="flush"
                     style={{ backgroundColor: `rgb(${guess.r}, ${guess.g}, ${guess.b})` }}>
-                    <ListGroup.Item style={{ backgroundColor: "inherit" }}>
+                    <ListGroup.Item
+                        style={{ backgroundColor: "inherit" }}>
                         <span style={{ color: guess.correct[0] === 1 ? '#9dff00' : '#FFF' }}>
                             {guess.r}
                         </span>
@@ -51,8 +59,8 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
                 break;
             default:
                 textDifficulty = "N/A"
-                break;        
-            }
+                break;
+        }
 
         return <div className="col text-center"><p>{textDifficulty}</p></div>
     }
@@ -61,12 +69,10 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
         <Card key={idx}
             id={`guessHistory-${idx}`}
             className="mb-3"
-        >
+            style={{ backgroundColor: "#ff000000", borderColor: `rgb(${entry.answer.r}, ${entry.answer.g}, ${entry.answer.b})` }}>
             <div className="row g-0">
                 <div className="row g-0 gap-3 rounded-top historyHeader"
-                    style={{ backgroundColor: `rgb(${entry.answer.r}, ${entry.answer.g}, ${entry.answer.b})` }}
-                >
-
+                    style={{ backgroundColor: `rgb(${entry.answer.r}, ${entry.answer.g}, ${entry.answer.b})` }}>
                     <div className="col text-center">
                         <p>R: {entry.answer.r}, G: {entry.answer.g}, B: {entry.answer.b}  </p>
                     </div>
@@ -80,10 +86,8 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
                 </div>
 
                 <Card.Body
-                    className="text-center d-flex flex-wrap justify-content-center"
-                    style={{ maxWidth: 'inherit' }}
-
-                >
+                    className="text-center d-flex flex-wrap justify-content-center gap-2"
+                    style={{ maxWidth: 'inherit' }}>
                     {returnGuesses(entry.guesses)}
                 </Card.Body>
             </div>

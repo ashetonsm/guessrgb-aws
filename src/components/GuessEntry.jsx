@@ -6,22 +6,23 @@ export const GuessEntry = ({ recordGuess, gamePlaying }) => {
     const [currentColor, setCurrentColor] = useState("#000000")
 
     return (
-        <div className="mt-2 mb-2 px-2">
-            <input
-                id="colorPicker"
-                type="color"
-                onChange={(e) => {
-                    setCurrentColor(e.target.value)
-                }}
-            />
-            <div className="text-center">
+        <>
+            <div id="colorPicker" className="mt-2 mb-2">
+                <input
+                    type="color"
+                    onChange={(e) => {
+                        setCurrentColor(e.target.value)
+                    }}
+                />
+            </div>
+            <div className="text-center mt-2 mb-2">
                 <Button
                     disabled={!gamePlaying}
                     onClick={() => {
                         recordGuess(currentColor)
                     }}>Submit Guess</Button>
             </div>
-        </div>
+        </>
     )
 }
 
