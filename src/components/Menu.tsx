@@ -1,13 +1,15 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { Outlet } from 'react-router-dom'
 import { InfoBox } from './InfoBox'
 import { Settings } from './Settings'
 import { MenuLinks } from './MenuLinks'
+import LoginContext from '../context/LoginContext'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
+    const { dispatch, darkMode } = useContext(LoginContext)
     const [showSettings, setShowSettings] = useState(false)
     const [showInfoBox, setShowInfoBox] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
@@ -29,17 +31,27 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                     </Col>
                     <Col className='d-flex justify-content-end mt-2'>
                         <span onClick={() => setShowInfoBox(true)}
-                            className='mx-4'
+                            className='mx-2'
                             style={{
                                 cursor: 'help',
                                 fontSize: '1em'
                             }}>❔</span>
 
                         <span onClick={() => setShowSettings(true)}
+                            className='mx-2'
                             style={{
                                 cursor: 'pointer',
                                 fontSize: '1em'
                             }}>🔧</span>
+
+                        <span onClick={() => {
+                            dispatch({ type: 'SET_DARK_MODE', payload: !darkMode });
+                        }}
+                            className='mx-2'
+                            style={{
+                                cursor: 'pointer',
+                                fontSize: '1em'
+                            }}>{darkMode.toString() == "true" ? "🌑" : "☀"}</span>
                     </Col>
                 </Row>
             </Container>
