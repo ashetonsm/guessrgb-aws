@@ -63,11 +63,16 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
 
             {/* Begin menu area */}
-            <Offcanvas show={showMenu} onHide={() => setShowMenu(false)} className="d-flex justify-content-center">
-                <Offcanvas.Header closeButton>
+            <Offcanvas
+                show={showMenu}
+                onHide={() => setShowMenu(false)}
+                className="d-flex justify-content-center">
+                <Offcanvas.Header id="menuHeader"
+                    className={`${darkMode ? "darkMode" : ""}`}
+                    closeButton>
                     <Offcanvas.Title>Menu</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body className='flex-row text-center'>
+                <Offcanvas.Body className={`flex-row text-center ${darkMode ? "darkMode" : ""}`} id="menu">
                     <MenuLinks loggedIn={loggedIn.loggedIn} />
 
                     <hr />
