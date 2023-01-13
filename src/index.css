@@ -7,10 +7,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5 {
-  color: #000000;
-}
-
 #root {
   height: 100vh;
 }
@@ -67,6 +63,15 @@ div[id^="guessContainer"], #answerText, .guessContainer {
   font-family: 'Modak', cursive;
   animation: rainbow 10s infinite;
   margin: 0;
+  font-size: 2em;
+}
+
+#menuTitle {
+  padding-left: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Modak', cursive;
+  font-size: 2em;
 }
 
 @keyframes slideDown {
