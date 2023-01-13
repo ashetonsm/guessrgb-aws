@@ -37,7 +37,7 @@ export default function App() {
 
     const appBG = document.getElementById('root')
 
-    if (darkMode == true) {
+    if (darkMode === true) {
       appBG?.classList.toggle("darkMode")    
     } else {
       appBG?.classList.toggle("darkMode")    

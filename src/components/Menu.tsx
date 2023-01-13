@@ -51,7 +51,7 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                             style={{
                                 cursor: 'pointer',
                                 fontSize: '1em'
-                            }}>{darkMode.toString() == "true" ? "🌑" : "☀"}</span>
+                            }}>{darkMode.toString() === "true" ? "🌑" : "☀"}</span>
                     </Col>
                 </Row>
             </Container>
