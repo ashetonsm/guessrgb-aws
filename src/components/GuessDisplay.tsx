@@ -9,7 +9,10 @@ export const GuessDisplay = ({ guesses }: { guesses: any }) => {
             className="text-center slideDown d-flex flex-wrap"
             style={{ minWidth: '5.5em', maxWidth: '1em' }}
         >
-            <Card.Header as="h5" >Guess {idx + 1}</Card.Header>
+            <Card.Header as="h5"
+                style={{ color: "#000", backgroundColor: `rgba(${RGB.r}, ${RGB.g}, ${RGB.b}, 0.5)` }}>
+                Guess {idx + 1}
+            </Card.Header>
             <ListGroup
                 id={`guessContainer-${idx}`}
                 variant="flush"
