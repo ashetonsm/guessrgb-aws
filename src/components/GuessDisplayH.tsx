@@ -7,8 +7,7 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
 
             <Card key={idx}
                 style={{
-                    minWidth: '5.5em',
-                    borderColor: `rgb(${guess.r}, ${guess.g}, ${guess.b})`
+                    minWidth: '5.5em'
                 }}
             >
                 <Card.Header as="h5"

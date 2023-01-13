@@ -8,8 +8,7 @@ export const GuessDisplay = ({ guesses }: { guesses: any }) => {
             key={idx}
             className="text-center slideDown d-flex flex-wrap"
             style={{
-                minWidth: '1em',
-                borderColor: `rgb(${RGB.r}, ${RGB.g}, ${RGB.b})`
+                minWidth: '1em'
             }}
         >
             <Card.Header as="h5"
