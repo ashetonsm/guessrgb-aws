@@ -23,9 +23,11 @@ body {
 input[type="color" i] {
   border: 0;
   padding: 0;
-  width: 3.5em;
-  height: 3.5em;
+  width: 3.7em;
+  height: 3.7em;
   cursor: pointer;
+  transform: translate(-1px, -1px);
+  background-color: transparent;
 }
 
 div[id^="guessContainer"], #answerText, .guessContainer {
@@ -54,12 +56,13 @@ div[id^="guessContainer"], #answerText, .guessContainer {
 
 .darkMode {
   color: #fff;
-  background-color: #000000;
+  background-color: #0e001c;
 }
 
 #title {
   font-family: 'Modak', cursive;
   animation: rainbow 10s infinite;
+  margin: 0;
 }
 
 @keyframes slideDown {
