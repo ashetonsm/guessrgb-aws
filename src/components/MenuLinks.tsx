@@ -34,11 +34,11 @@ export const MenuLinks = (loggedIn: { loggedIn: boolean }) => {
 
     return (
         <Nav variant="pills" className='d-inline' justify defaultActiveKey={loggedIn.loggedIn ? undefined : "login"}>
-            <Nav.Item>
-                <Link to={"/guessRGB"} className="nav-link">Home</Link>
-            </Nav.Item>
             {loggedIn.loggedIn ?
                 <div>
+                    <Nav.Item>
+                        <Link to={"/guessRGB"} className="nav-link">Home</Link>
+                    </Nav.Item>
                     <Nav.Item>
                         <Link to={"/guessRGB/profile"} className="nav-link">Profile</Link>
                     </Nav.Item>
