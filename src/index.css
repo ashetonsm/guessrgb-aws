@@ -5,7 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: white;
+}
+
+#root {
+  height: 100vh;
 }
 
 #colorPicker {
@@ -47,6 +50,11 @@ div[id^="guessContainer"], #answerText, .guessContainer {
 
 .slideDown {
   animation: 0.5s ease-out 0s 1 slideDown;
+}
+
+.darkMode {
+  color: #fff;
+  background-color: #000000;
 }
 
 #title {
