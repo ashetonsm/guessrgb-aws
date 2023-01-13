@@ -8,7 +8,7 @@ import { Home } from './pages/Home';
 
 export default function App() {
 
-  const { dispatch, userId, darkMode } = useContext(LoginContext);
+  const { dispatch, userId, darkMode, darkModeChecked } = useContext(LoginContext);
 
   useEffect(() => {
 
@@ -29,20 +29,36 @@ export default function App() {
         checked = true;
       }
     }
+
+    // Check for darkMode
+    if (window.localStorage.getItem('darkMode')) {
+      const appBG = document.getElementById('root')
+      // Dark mode cookie exists (darkMode is on already)
+      appBG!.classList.toggle('darkMode')
+      dispatch({ type: 'SET_DARK_MODE', payload: true });
+      console.log("Already set darkMode")
+    }
+    dispatch({ type: 'SET_DARK_MODE_CHECKED', payload: true });
+
     CheckAuth()
   }, [dispatch, userId])
 
   useEffect(() => {
-    // TODO: Check for dark mode localstorage entry
 
-    const appBG = document.getElementById('root')
+    if (darkModeChecked) {
+      const appBG = document.getElementById('root')
+      if (darkMode === true) {
+        appBG!.classList.add('darkMode')
+        window.localStorage.setItem('darkMode', 'true')
 
-    if (darkMode === true) {
-      appBG?.classList.toggle("darkMode")    
-    } else {
-      appBG?.classList.toggle("darkMode")    
+      } else {
+        appBG!.classList.remove('darkMode')
+        window.localStorage.removeItem('darkMode')
+        dispatch({ type: 'SET_DARK_MODE', payload: false });
+      }
     }
-  }, [darkMode])
+
+  }, [darkMode, darkModeChecked, dispatch, userId])
 
 
   function RequireAuth({ children }: { children: JSX.Element }) {

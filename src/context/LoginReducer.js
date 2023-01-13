@@ -26,6 +26,11 @@ const loginReducer = (state, action) => {
                 ...state,
                 darkMode: action.payload,
             };
+        case 'SET_DARK_MODE_CHECKED':
+            return {
+                ...state,
+                darkModeChecked: action.payload,
+            };
         default:
             return state
     };

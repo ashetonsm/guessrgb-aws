@@ -10,6 +10,7 @@ export const LoginProvider = ({ children }) => {
         fetchComplete: null,
         fetchedHistory: null,
         darkMode: false,
+        darkModeChecked: false,
     };
 
     const [state, dispatch] = useReducer(loginReducer, initialState);
