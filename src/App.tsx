@@ -8,7 +8,7 @@ import { Home } from './pages/Home';
 
 export default function App() {
 
-  const { dispatch, userId } = useContext(LoginContext);
+  const { dispatch, userId, darkMode } = useContext(LoginContext);
 
   useEffect(() => {
 
@@ -29,10 +29,20 @@ export default function App() {
         checked = true;
       }
     }
-
     CheckAuth()
   }, [dispatch, userId])
 
+  useEffect(() => {
+    // TODO: Check for dark mode localstorage entry
+
+    const appBG = document.getElementById('root')
+
+    if (darkMode == true) {
+      appBG?.classList.toggle("darkMode")    
+    } else {
+      appBG?.classList.toggle("darkMode")    
+    }
+  }, [darkMode])
 
 
   function RequireAuth({ children }: { children: JSX.Element }) {
