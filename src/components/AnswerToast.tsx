@@ -18,10 +18,11 @@ export const AnswerToast = () => {
     }, [gamePlaying])
 
     return (
-        <ToastContainer position='top-end' className='mb-2 mt-2 px-2 text-center'>
+        <ToastContainer position='bottom-center' className='mb-2 mt-2 px-2 text-center'>
             <Toast
                 style={{
-                    backgroundColor: `rgb(${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b})`
+                    backgroundColor: `rgb(${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b})`, 
+                    borderColor: `rgb(${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b})`
                 }}
                 show={showToast}
                 onClose={() => setShowToast(false)}>

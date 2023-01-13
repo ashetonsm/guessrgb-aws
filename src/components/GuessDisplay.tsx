@@ -7,10 +7,17 @@ export const GuessDisplay = ({ guesses }: { guesses: any }) => {
         <Card
             key={idx}
             className="text-center slideDown d-flex flex-wrap"
-            style={{ minWidth: '5.5em', maxWidth: '1em' }}
+            style={{
+                minWidth: '1em',
+                borderColor: `rgb(${RGB.r}, ${RGB.g}, ${RGB.b})`
+            }}
         >
             <Card.Header as="h5"
-                style={{ color: "#000", backgroundColor: `rgba(${RGB.r}, ${RGB.g}, ${RGB.b}, 0.5)` }}>
+                style={{
+                    color: "#000",
+                    backgroundColor: `rgba(${RGB.r}, ${RGB.g}, ${RGB.b}, 0.5)`,
+                    borderColor: `rgb(${RGB.r}, ${RGB.g}, ${RGB.b})`
+                }}>
                 Guess {idx + 1}
             </Card.Header>
             <ListGroup
