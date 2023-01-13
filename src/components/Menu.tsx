@@ -19,20 +19,23 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
             {/* Begin header area */}
             <Container>
                 <Row>
-                    <Col className="justify-content-start mt-2">
+                    <Col className="justify-content-start">
                         <Button onClick={() => setShowMenu(true)}
                             style={{
+                                marginTop: '1em',
                                 cursor: 'pointer',
                                 position: 'sticky',
                             }}>MENU</Button>
                     </Col>
-                    <Col className='d-flex justify-content-center mt-2'>
-                        <h1 className="text-center" id="title">guessRGB</h1>
+                    <Col className='d-flex justify-content-center' style={{ marginTop: '1em', padding: 0 }}>
+                        <h1 className="text-center" id="title" style={{ margin: '0' }} >guessRGB</h1>
                     </Col>
-                    <Col className='d-flex justify-content-end mt-2'>
+                    <Col className='d-flex justify-content-end'>
                         <span onClick={() => setShowInfoBox(true)}
                             className='mx-2'
                             style={{
+                                marginTop: 'auto',
+                                marginBottom: 'auto',
                                 cursor: 'help',
                                 fontSize: '1em'
                             }}>❔</span>
@@ -40,6 +43,8 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                         <span onClick={() => setShowSettings(true)}
                             className='mx-2'
                             style={{
+                                marginTop: 'auto',
+                                marginBottom: 'auto', 
                                 cursor: 'pointer',
                                 fontSize: '1em'
                             }}>🔧</span>
@@ -49,13 +54,15 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                         }}
                             className='mx-2'
                             style={{
+                                marginTop: 'auto',
+                                marginBottom: 'auto', 
                                 cursor: 'pointer',
                                 fontSize: '1em'
                             }}>{darkMode.toString() === "true" ? "🌑" : "☀"}</span>
                     </Col>
                 </Row>
             </Container>
-            <hr />
+            <hr style={{ marginTop: '1em' }} />
 
             <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} />
             <Settings show={showSettings} onHide={() => setShowSettings(false)} />
@@ -70,7 +77,7 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                 <Offcanvas.Header id="menuHeader"
                     className={`${darkMode ? "darkMode" : ""}`}
                     closeButton>
-                    <Offcanvas.Title>Menu</Offcanvas.Title>
+                    <Offcanvas.Title id="menuTitle">Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className={`flex-row text-center ${darkMode ? "darkMode" : ""}`} id="menu">
                     <MenuLinks loggedIn={loggedIn.loggedIn} />
