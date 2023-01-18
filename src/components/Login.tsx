@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoginContext from "../context/LoginContext";
+import { ReCaptcha } from "./ReCaptcha";
 
 export const Login = () => {
 
@@ -91,6 +92,7 @@ return (
                 }}
             />
         </Form.Group>
+        <ReCaptcha/>
         <Button type="submit" onClick={handleSubmit}>Log in</Button>
     </Form>
 )
