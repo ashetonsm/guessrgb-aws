@@ -11,7 +11,7 @@ const container = document.getElementById('root')
 const root = createRoot(container!)
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <LoginProvider>
       <GameProvider>
         <BrowserRouter>
@@ -19,5 +19,5 @@ root.render(
         </BrowserRouter>
       </GameProvider>
     </LoginProvider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )
