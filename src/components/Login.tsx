@@ -33,23 +33,51 @@ export const Login = () => {
             inputs.token === '') {
             return e.stopPropagation();
         }
-        const request = await fetch(`http://localhost:5000/api/login`,
+        var verifiedToken = false;
+
+        verifiedToken = await verifyToken()
+        console.log(verifiedToken)
+
+        if (verifiedToken) {
+            const request = await fetch(`http://localhost:5000/api/login`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(inputs)
+                })
+
+            const response = await request.json()
+            console.log(response);
+            if (response.status === 'success') {
+                document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
+                dispatch({ type: 'SET_USERID', payload: response.session.userId });
+            } else {
+                alert("Sorry, we weren't able to log you in with that information!");
+            }
+
+        }
+    }
+
+    const verifyToken = async () => {
+        const request = await fetch(`http://localhost:5000/api/verify`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include',
-                body: JSON.stringify(inputs)
+                body: JSON.stringify({ token: inputs.token })
             })
 
         const response = await request.json()
         console.log(response);
         if (response.status === 'success') {
-            document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
-            dispatch({ type: 'SET_USERID', payload: response.session.userId });
+            return true
         } else {
-            alert("Sorry, we weren't able to log you in with that information!");
+            return false
         }
     }
 
