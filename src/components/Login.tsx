@@ -1,16 +1,19 @@
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoginContext from "../context/LoginContext";
+import { ReCaptcha } from "./ReCaptcha";
 
 export const Login = () => {
 
     const { dispatch } = useContext(LoginContext);
 
     const [validated, setValidated] = useState(false);
+    const [recaptchaWarning, setRecaptchaWarning] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
         rememberUser: "false",
+        token: ''
     });
 
     const handleChange = (e: { target: { id: string; value: any; }; }) => {
@@ -23,75 +26,122 @@ export const Login = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        console.log(inputs)
         setValidated(true);
         const form = e.currentTarget.parentElement;
-        if (form.checkValidity() === false) {
+        if (form.checkValidity() === false ||
+            inputs.token === null ||
+            inputs.token === '') {
+            if (inputs.token === null || inputs.token === '') {
+                setRecaptchaWarning(true);
+            } else {
+                setRecaptchaWarning(false);
+            }
             return e.stopPropagation();
         }
-        const request = await fetch(`http://localhost:5000/api/login`,
+        var verifiedToken = false;
+
+        verifiedToken = await verifyToken()
+        console.log(verifiedToken)
+
+        if (verifiedToken) {
+            const request = await fetch(`http://localhost:5000/api/login`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(inputs)
+                })
+
+            const response = await request.json()
+            console.log(response);
+            if (response.status === 'success') {
+                document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
+                dispatch({ type: 'SET_USERID', payload: response.session.userId });
+            } else {
+                alert("Sorry, we weren't able to log you in with that information!");
+            }
+
+        }
+    }
+
+    const verifyToken = async () => {
+        const request = await fetch(`http://localhost:5000/api/verify`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include',
-                body: JSON.stringify(inputs)
+                body: JSON.stringify({ token: inputs.token })
             })
 
         const response = await request.json()
         console.log(response);
         if (response.status === 'success') {
-            document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
-            dispatch({ type: 'SET_USERID', payload: response.session.userId });
+            return true
         } else {
-            alert("Sorry, we weren't able to log you in with that information!");
+            return false
         }
     }
 
 
-return (
-    <Form noValidate validated={validated}>
-        <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-                required
-                type="email"
-                id="email"
-                minLength={6}
-                maxLength={50}
-                value={inputs.email}
-                onChange={handleChange} />
-            <Form.Text>Please enter your email address.</Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-                required
-                type="password"
-                id="password"
-                minLength={8}
-                maxLength={12}
-                value={inputs.password}
-                onChange={handleChange} />
-            <Form.Text>Please enter your password.</Form.Text>
-        </Form.Group>
+    return (
+        <Form noValidate validated={validated}>
+            <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                    required
+                    type="email"
+                    id="email"
+                    minLength={6}
+                    maxLength={50}
+                    value={inputs.email}
+                    onChange={handleChange} />
+                <Form.Text>Please enter your email address.</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                    required
+                    type="password"
+                    id="password"
+                    minLength={8}
+                    maxLength={12}
+                    value={inputs.password}
+                    onChange={handleChange} />
+                <Form.Text>Please enter your password.</Form.Text>
+            </Form.Group>
 
-        <Form.Group className="mb-3 text-start">
-            <Form.Check
-                type="checkbox"
-                id="rememberUser"
-                label="Remember me"
-                value={inputs.rememberUser}
-                onChange={(e) => {
-                    const { id, value } = e.target
-                    setInputs((inputs) => ({
-                        ...inputs,
-                        [id]: value === "false" ? "true" : "false",
-                    }))
-                }}
-            />
-        </Form.Group>
-        <Button type="submit" onClick={handleSubmit}>Log in</Button>
-    </Form>
-)
+            <Form.Group className="mb-3 text-start">
+                <Form.Check
+                    type="checkbox"
+                    id="rememberUser"
+                    label="Remember me"
+                    value={inputs.rememberUser}
+                    onChange={(e) => {
+                        const { id, value } = e.target
+                        setInputs((inputs) => ({
+                            ...inputs,
+                            [id]: value === "false" ? "true" : "false",
+                        }))
+                    }}
+                />
+            </Form.Group>
+            <div id="reCaptcha-box"
+                className="mb-3"
+                style={{
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    backgroundColor: `${recaptchaWarning ? '#dc3545' : validated ? '#198754' : 'transparent'}`,
+                    borderRadius: 5,
+                    width: 'fit-content'
+                }}>
+                <ReCaptcha setInputs={setInputs} />
+            </div>
+            <Button type="submit" onClick={handleSubmit}>Log in</Button>
+        </Form>
+    )
 }

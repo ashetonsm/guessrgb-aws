@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 const saltStart = parseInt(process.env.SALT_START);
 const saltEnd = parseInt(process.env.SALT_END);
+const recaptchaSecret = process.env.RECAPTCHA_SECRET;
 const url = process.env.ATLAS_URI;
 
 mongoose.set('strictQuery', false);
@@ -93,6 +94,30 @@ app.post('/api/login', async function (req, res) {
             res.send({ status: 'error', message: 'Log in failure. Database error. Error: ', error })
             console.error('Database Error (login).')
         })
+});
+
+// Log into the application
+app.post('/api/verify', async function (req, res) {
+
+    const token = req.body.token
+    const request = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${token}`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        })
+
+    const response = await request.json()
+    console.log(response);
+    if (response.success === true) {
+        console.log("Token was valid!");
+        res.json({ status: 'success', message: 'Token is valid.' })
+    } else {
+        console.log("Token was invalid!");
+        res.json({ status: 'error', message: 'Token is NOT valid.', body: response })
+    }
 });
 
 // Create a new User
