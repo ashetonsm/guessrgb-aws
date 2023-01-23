@@ -15,6 +15,10 @@ export const Register = () => {
         token: ''
     });
 
+    /**
+     * Changes the input values 
+     * @param e The event and its relevant properties
+     */
     const handleChange = (e: { target: { id: string; value: string; }; }) => {
         const { id, value } = e.target
         setInputs((inputs) => ({
@@ -23,6 +27,11 @@ export const Register = () => {
         }))
     }
 
+    /**
+     * Checks the form's validity, applies styles, and registers a user.
+     * @param e The event - needed for preventDefault
+     * @returns setInfoToast(true)
+     */
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         setValidated(true);
@@ -61,6 +70,10 @@ export const Register = () => {
         }
     }
 
+    /**
+     * Verifies provided ReCaptcha token
+     * @returns boolean
+     */
     const verifyToken = async () => {
         const request = await fetch(`http://localhost:5000/api/verify`,
             {

@@ -18,6 +18,10 @@ export const Login = () => {
         token: ''
     });
 
+    /**
+     * Changes the input values 
+     * @param e The event and its relevant properties
+     */
     const handleChange = (e: { target: { id: string; value: any; }; }) => {
         const { id, value } = e.target
         setInputs((inputs) => ({
@@ -26,6 +30,11 @@ export const Login = () => {
         }))
     }
 
+    /**
+     * Checks the form's validity, applies styles, and logs the user in.
+     * @param e The event - needed for preventDefault
+     * @returns setInfoToast(true)
+     */
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         setValidated(true);
@@ -67,6 +76,10 @@ export const Login = () => {
         }
     }
 
+    /**
+     * Verifies provided ReCaptcha token
+     * @returns boolean
+     */
     const verifyToken = async () => {
         const request = await fetch(`http://localhost:5000/api/verify`,
             {
