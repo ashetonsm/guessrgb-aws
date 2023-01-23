@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Col, Container, Row } from "react-bootstrap"
 import GameContext from "../context/GameContext"
 import HexToRgb from "../utilities/HexToRGB"
@@ -8,12 +8,19 @@ import GuessDisplay from "../components/GuessDisplay"
 import { GuessEntry } from "../components/GuessEntry"
 import LoginContext from "../context/LoginContext"
 import { Delay } from "../utilities/Delay"
+import { InfoToast } from "../components/InfoToast"
 
 export const Home = () => {
 
     const { dispatch, gamePlaying, gameWon, correctAnswer, guesses, recordedResult, difficulty } = useContext(GameContext);
+    const [showInfoToast, setShowInfoToast] = useState(false);
+    const [toastMsg, setToastMsg] = useState("...");
     const { userId } = useContext(LoginContext);
 
+    /**
+     * Records a logged in user's game result to their history.
+     * @returns A new toastMsg string
+     */
     const recordResult = async () => {
 
         const result = {
@@ -37,12 +44,11 @@ export const Home = () => {
             }
         )
         const data = await response.json()
+        setShowInfoToast(true)
         if (data.status === "success") {
-            console.log(data)
-            return alert("Recorded result!");
+            return setToastMsg("Game saved to history!");
         } else {
-            console.log(data)
-            return alert("Unable to record result.");
+            return setToastMsg("Unable to save game to history!");
         }
     }
 
@@ -99,6 +105,7 @@ export const Home = () => {
     return (
         <Container>
             <AnswerToast />
+            <InfoToast msg={toastMsg} show={showInfoToast} onHide={() => setShowInfoToast(false)} />
             <div className="row text-center d-flex flex-wrap justify-content-center">
                 <Row>
                     <Col>
