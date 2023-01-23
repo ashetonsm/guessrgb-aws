@@ -8,6 +8,7 @@ export const Login = () => {
     const { dispatch } = useContext(LoginContext);
 
     const [validated, setValidated] = useState(false);
+    const [recaptchaWarning, setRecaptchaWarning] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
@@ -31,6 +32,11 @@ export const Login = () => {
         if (form.checkValidity() === false ||
             inputs.token === null ||
             inputs.token === '') {
+            if (inputs.token === null || inputs.token === '') {
+                setRecaptchaWarning(true);
+            } else {
+                setRecaptchaWarning(false);
+            }
             return e.stopPropagation();
         }
         var verifiedToken = false;
@@ -124,7 +130,17 @@ export const Login = () => {
                     }}
                 />
             </Form.Group>
-            <ReCaptcha setInputs={setInputs} />
+            <div id="reCaptcha-box"
+                className="mb-3"
+                style={{
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    backgroundColor: `${recaptchaWarning ? '#dc3545' : validated ? '#198754' : 'transparent'}`,
+                    borderRadius: 5,
+                    width: 'fit-content'
+                }}>
+                <ReCaptcha setInputs={setInputs} />
+            </div>
             <Button type="submit" onClick={handleSubmit}>Log in</Button>
         </Form>
     )
