@@ -8,6 +8,9 @@ export const Profile = () => {
     const { dispatch, userId, fetchedHistory, fetchComplete } = useContext(LoginContext);
     const [pageNumber, setPageNumber] = useState(1)
 
+    /**
+     * Auto-fetches history once on page load.
+     */
     useEffect(() => {
         if (!fetchComplete) {
             fetchHistory()
@@ -15,6 +18,9 @@ export const Profile = () => {
         }
     })
 
+    /**
+     * Retrieves the user's game history.
+     */
     const fetchHistory = async () => {
         const response = await fetch(`http://localhost:5000/api/games/${userId}`,
             {
@@ -28,14 +34,8 @@ export const Profile = () => {
         if (data.status === "success") {
             if (data.history) {
                 dispatch({ type: 'SET_FETCHED_HISTORY', payload: data.history.reverse() });
-            } else {
-                console.log("No games found.")
             }
-
-        } else {
-            console.log("No games found.")
         }
-        return console.log(data)
     }
 
     return (
