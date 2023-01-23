@@ -9,6 +9,9 @@ export const AnswerToast = () => {
 
     const [showToast, setShowToast] = useState(false);
 
+    /**
+     * Shows or hides the toast based on gamePlaying status.
+     */
     useEffect(() => {
         if (gamePlaying === true) {
             setShowToast(false)
