@@ -52,6 +52,9 @@ export const Home = () => {
         }
     }
 
+    /**
+     * Records a result when !gamePlaying, userId !== null, and !recordedResult.
+     */
     useEffect(() => {
         if (!gamePlaying &&
             userId !== null &&
@@ -61,8 +64,13 @@ export const Home = () => {
         }
     })
 
+    /**
+     * Records a guess by creating a userAnswer with the RGB value and a "correct" array. 
+     * All 1s = correct answer.
+     * Ends the game after 5 turns (when guesses.length >= 4)
+     * @param hexValue string
+     */
     const recordGuess = (hexValue: string) => {
-        console.log(`The correct answer is: ${correctAnswer.r}, ${correctAnswer.g}, ${correctAnswer.b} `)
         const rgbValue = HexToRgb(hexValue)
         const userAnswer = {
             r: rgbValue!.r,
@@ -86,6 +94,9 @@ export const Home = () => {
         }
     }
 
+    /**
+     * Resets all relevant game state values via dispatch
+     */
     const resetGame = async () => {
         dispatch({ type: 'SET_GUESSES', payload: [] });
         dispatch({ type: 'SET_GAMEWON', payload: false });
