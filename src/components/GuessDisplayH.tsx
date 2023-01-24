@@ -2,6 +2,11 @@ import { Card, ListGroup } from "react-bootstrap";
 
 export const GuessDisplayH = ({ games }: { games: any }) => {
 
+    /**
+     * Turns the user's guesses for a game into cards.
+     * @param input The array of guesses
+     * @returns An array of Card
+     */
     const returnGuesses = (input: any[]) => {
         var output = input.map((guess: { r: number, g: number, b: number, correct: Array<number> }, idx: number) =>
 
@@ -38,12 +43,15 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
                     </ListGroup.Item>
                 </ListGroup>
             </Card>
-
         )
-
         return output;
     }
 
+    /**
+     * Converts numerical difficulty to text value
+     * @param input number
+     * @returns A div with the text difficulty value
+     */
     const returnDifficulty = (input: number) => {
         var textDifficulty;
 
@@ -93,7 +101,6 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
             </div>
 
         </Card>
-
     )
     return (output)
 }

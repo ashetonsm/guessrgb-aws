@@ -11,6 +11,9 @@ export const MenuLinks = (loggedIn: { loggedIn: boolean }) => {
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
 
+    /**
+     * Logs the user out via session.destroy on the backend. Deletes the connect.sid and userId cookies.
+     */
     const logOut = async () => {
         await fetch(`http://localhost:5000/api/logout`,
             {
@@ -21,13 +24,10 @@ export const MenuLinks = (loggedIn: { loggedIn: boolean }) => {
                 credentials: 'include'
             })
             .then((response) => {
-                console.log(response);
                 if (response.status === 200) {
                     dispatch({ type: 'SET_USERID', payload: null });
                     dispatch({ type: 'SET_FETCHED_HISTORY', payload: null });
                     return dispatch({ type: 'SET_FETCH_COMPLETE', payload: false });
-                } else {
-                    console.error("Log out unsuccessful.");
                 }
             })
     }

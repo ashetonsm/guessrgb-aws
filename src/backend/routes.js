@@ -91,7 +91,7 @@ app.post('/api/login', async function (req, res) {
             }
         })
         .catch(error => {
-            res.send({ status: 'error', message: 'Log in failure. Database error. Error: ', error })
+            res.send({ status: 'error', message: 'Log in failure. Database error.', error })
             console.error('Database Error (login).')
         })
 });
@@ -142,7 +142,7 @@ app.post('/api/register', async function (req, res) {
                 res.json({ status: 'success', message: 'Registration success.' })
             })
             .catch(error => {
-                res.json({ status: 'error', message: 'Registration failure. Error: ', error })
+                res.json({ status: 'error', message: 'Registration failure.', error })
                 console.error('Database Error (registration).')
             })
 
@@ -173,7 +173,7 @@ app.post('/api/record', async function (req, res) {
                 res.json({ status: 'success', message: 'History save success.' })
             })
             .catch((error) => {
-                res.json({ status: 'error', message: 'History save failure. Error: ', error })
+                res.json({ status: 'error', message: 'History save failure.', error })
                 console.error(error)
             })
     }
@@ -196,7 +196,7 @@ app.get('/api/games/:userId', async function (req, res) {
                 }
             })
     } catch (error) {
-        res.json({ status: 'error', message: 'Search game failure. Error: ', error, history: null })
+        res.json({ status: 'error', message: 'Search game failure.', error, history: null })
         console.error(error)
     }
 });
