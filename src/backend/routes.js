@@ -1,7 +1,7 @@
 require('./database/conn');
 
-const History = require('./models/history.model');
-const User = require('./models/user.model');
+const History = require('../../backend/models/history.model');
+const User = require('../../backend/models/user.model');
 
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
