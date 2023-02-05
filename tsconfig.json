@@ -10,13 +10,27 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
-      "@/data/*": ["data/*"],
-      "@/layouts/*": ["layouts/*"],
-      "@/lib/*": ["lib/*"],
-      "@/styles/*": ["styles/*"],
-      "@/types": ["types/index"],
-      "@/types/*": ["types/*"]
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/data/*": [
+        "data/*"
+      ],
+      "@/layouts/*": [
+        "layouts/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@/styles/*": [
+        "styles/*"
+      ],
+      "@/types": [
+        "types/index"
+      ],
+      "@/types/*": [
+        "types/*"
+      ]
     },
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -29,9 +43,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "incremental": true
   },
   "include": [
-    "src"
-, "backend/models", "pages", "components"  ]
+    "src",
+    "backend/models",
+    "pages",
+    "components"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
