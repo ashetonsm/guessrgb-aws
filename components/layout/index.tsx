@@ -9,16 +9,14 @@ export default function Layout({ meta, children }: { meta: MetaProps; children: 
   const router = useRouter();
   if (router.isFallback) {
     return (
-      <div className="h-screen w-screen flex justify-center items-center bg-black">
-        <LoadingDots color="white" />
-      </div>
+      <LoadingDots color="white" />
     );
   }
 
   return (
     <>
       {/* The metadata */}
-      <Meta props={meta} />
+      {/* <Meta props={meta} /> */}
       <CustomFonts />
 
       <Menu loggedIn={false} />
