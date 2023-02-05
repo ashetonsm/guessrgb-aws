@@ -48,9 +48,9 @@
   },
   "include": [
     "src",
-    "backend/models",
     "pages",
-    "components"
+    "components",
+    "lib"
   ],
   "exclude": [
     "node_modules"
