@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { Button, Container } from "react-bootstrap"
 import { GuessDisplayH } from "../components/GuessDisplayH";
-import LoginContext from "../context/LoginContext";
-import Paginate from "../utilities/PaginateArray";
+import LoginContext from "../src/context/LoginContext";
+import Paginate from "../src/utilities/PaginateArray";
 
 export const Profile = () => {
     const { dispatch, userId, fetchedHistory, fetchComplete } = useContext(LoginContext);
