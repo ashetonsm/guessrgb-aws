@@ -26,3 +26,4 @@ src/backend/database/.env
 .vercel
 .next
 backend/node_modules/
+.vscode
