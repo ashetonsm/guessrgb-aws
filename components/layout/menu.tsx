@@ -1,18 +1,16 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { Button, Col, Container, Row } from 'react-bootstrap'
-import { Outlet } from 'react-router-dom'
-import { InfoBox } from './InfoBox'
-import { Settings } from './Settings'
-import { MenuLinks } from './MenuLinks'
-import LoginContext from '../context/LoginContext'
+import { InfoBox } from '../InfoBox'
+import { Settings } from '../Settings'
+import { MenuLinks } from '../MenuLinks'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
-    const { dispatch, darkMode } = useContext(LoginContext)
     const [showSettings, setShowSettings] = useState(false)
     const [showInfoBox, setShowInfoBox] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
+    var darkMode = true;
 
     return (
         <>
@@ -50,7 +48,7 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                             }}>🔧</span>
 
                         <span onClick={() => {
-                            dispatch({ type: 'SET_DARK_MODE', payload: !darkMode });
+                            darkMode = !darkMode;
                         }}
                             className='mx-2'
                             style={{
@@ -58,14 +56,16 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                                 marginBottom: 'auto', 
                                 cursor: 'pointer',
                                 fontSize: '1em'
-                            }}>{darkMode.toString() === "true" ? "🌑" : "☀"}</span>
+                            }}>
+                                {darkMode === true ? "🌑" : "☀"}
+                                </span>
                     </Col>
                 </Row>
             </Container>
             <hr style={{ marginTop: '1em' }} />
 
-            <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} />
-            <Settings show={showSettings} onHide={() => setShowSettings(false)} />
+            {/* <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} /> */}
+            {/* <Settings show={showSettings} onHide={() => setShowSettings(false)} /> */}
             {/* End header area */}
 
 
@@ -80,7 +80,7 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                     <Offcanvas.Title id="menuTitle">Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className={`flex-row text-center ${darkMode ? "darkMode" : ""}`} id="menu">
-                    <MenuLinks loggedIn={loggedIn.loggedIn} />
+                    {/* <MenuLinks loggedIn={loggedIn.loggedIn} /> */}
 
                     <hr />
                     <p>Built by <a href="https://github.com/ashetonsm">Asheton S. M.</a></p>
@@ -89,7 +89,6 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
             {/* End menu area */}
 
             {/* Page content area */}
-            <Outlet />
         </>
 
     )
