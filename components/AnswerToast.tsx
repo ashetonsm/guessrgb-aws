@@ -1,7 +1,7 @@
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import { useEffect, useState, useContext } from 'react';
-import GameContext from '../src/context/GameContext';
+import GameContext from '@/context/GameContext';
 
 export const AnswerToast = () => {
 

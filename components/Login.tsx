@@ -63,7 +63,7 @@ export const Login = () => {
 
     return (
         <>
-            <InfoToast msg={toastMsg} show={showInfoToast} onHide={() => setShowInfoToast(false)} />
+            <InfoToast msg={toastMsg} show={showInfoToast ? "true" : "false"} onHide={() => setShowInfoToast(false)} />
             <Form noValidate validated={validated}>
                 <Form.Group className="mb-3">
                     <Form.Label>Email</Form.Label>
