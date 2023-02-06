@@ -1,16 +1,17 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { InfoBox } from '../InfoBox'
 import { Settings } from '../Settings'
 import { MenuLinks } from '../MenuLinks'
+import LoginContext from '@/context/LoginContext'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
+    const { dispatch, darkMode } = useContext(LoginContext)
     const [showSettings, setShowSettings] = useState(false)
     const [showInfoBox, setShowInfoBox] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
-    var darkMode = true;
 
     return (
         <>
@@ -42,23 +43,23 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                             className='mx-2'
                             style={{
                                 marginTop: 'auto',
-                                marginBottom: 'auto', 
+                                marginBottom: 'auto',
                                 cursor: 'pointer',
                                 fontSize: '1em'
                             }}>🔧</span>
 
                         <span onClick={() => {
-                            darkMode = !darkMode;
+                            dispatch({ type: 'SET_DARK_MODE', payload: !darkMode });
                         }}
                             className='mx-2'
                             style={{
                                 marginTop: 'auto',
-                                marginBottom: 'auto', 
+                                marginBottom: 'auto',
                                 cursor: 'pointer',
                                 fontSize: '1em'
                             }}>
-                                {darkMode === true ? "🌑" : "☀"}
-                                </span>
+                            {darkMode === true ? "🌑" : "☀"}
+                        </span>
                     </Col>
                 </Row>
             </Container>
