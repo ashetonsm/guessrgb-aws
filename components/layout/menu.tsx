@@ -81,7 +81,7 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                     <Offcanvas.Title id="menuTitle">Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body className={`flex-row text-center ${darkMode ? "darkMode" : ""}`} id="menu">
-                    {/* <MenuLinks loggedIn={loggedIn.loggedIn} /> */}
+                    <MenuLinks />
 
                     <hr />
                     <p>Built by <a href="https://github.com/ashetonsm">Asheton S. M.</a></p>
