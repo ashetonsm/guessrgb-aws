@@ -1,6 +1,12 @@
 import { Card, ListGroup } from "react-bootstrap";
 
-export const GuessDisplay = ({ guesses }: { guesses: any }) => {
+const guesses = [
+    { r: 0, g: 100, b: 200, correct: [0, 0, 0] },
+    { r: 50, g: 50, b: 155, correct: [0, 0, 1] },
+    { r: 200, g: 150, b: 155, correct: [1, 0, 1] },
+    { r: 225, g: 255, b: 155, correct: [1, 1, 1] },
+]
+export const DisplayGuesses = () => {
 
     var output = guesses.map((RGB: { r: number; g: number; b: number; correct: Array<number> }, idx: number) =>
 
@@ -41,7 +47,11 @@ export const GuessDisplay = ({ guesses }: { guesses: any }) => {
             </ListGroup>
         </Card>
     )
-    return (output)
+    return (
+        <>
+            {output}
+        </>
+    )
 }
 
-export default GuessDisplay
+export default DisplayGuesses
