@@ -1,4 +1,4 @@
-const gameReducer = (state, action) => {
+const gameReducer = (state: any, action: { type: string; payload: any; }) => {
     switch (action.type) {
 
         case 'SET_GUESSES':

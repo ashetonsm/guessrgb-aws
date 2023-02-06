@@ -1,12 +1,9 @@
+import GameContext from "@/context/GameContext";
+import { useContext } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 
-const guesses = [
-    { r: 0, g: 100, b: 200, correct: [0, 0, 0] },
-    { r: 50, g: 50, b: 155, correct: [0, 0, 1] },
-    { r: 200, g: 150, b: 155, correct: [1, 0, 1] },
-    { r: 225, g: 255, b: 155, correct: [1, 1, 1] },
-]
 export const DisplayGuesses = () => {
+    const { guesses } = useContext(GameContext);
 
     var output = guesses.map((RGB: { r: number; g: number; b: number; correct: Array<number> }, idx: number) =>
 
@@ -49,7 +46,7 @@ export const DisplayGuesses = () => {
     )
     return (
         <>
-            {output}
+            {output ? output : null}
         </>
     )
 }
