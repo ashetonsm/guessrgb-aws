@@ -1,4 +1,4 @@
-const loginReducer = (state, action) => {
+const loginReducer = (state: any, action: { type: string; payload: any; }) => {
     switch (action.type) {
 
         case 'SET_LOADING':
