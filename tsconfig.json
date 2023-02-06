@@ -13,8 +13,8 @@
       "@/components/*": [
         "components/*"
       ],
-      "@/data/*": [
-        "data/*"
+      "@/context/*": [
+        "context/*"
       ],
       "@/layouts/*": [
         "layouts/*"
@@ -24,12 +24,6 @@
       ],
       "@/styles/*": [
         "styles/*"
-      ],
-      "@/types": [
-        "types/index"
-      ],
-      "@/types/*": [
-        "types/*"
       ]
     },
     "skipLibCheck": true,
@@ -47,10 +41,11 @@
     "incremental": true
   },
   "include": [
-    "src",
     "pages",
     "components",
-    "lib"
+    "lib",
+    "context",
+    "styles"
   ],
   "exclude": [
     "node_modules"
