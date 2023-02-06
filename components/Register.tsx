@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { InfoToast } from "./InfoToast";
-import { ReCaptcha } from "./ReCaptcha";
 
 export const Register = () => {
 
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
     const [validated, setValidated] = useState(false);
-    const [recaptchaWarning, setRecaptchaWarning] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
-        token: ''
     });
 
     /**
@@ -36,61 +33,26 @@ export const Register = () => {
         e.preventDefault();
         setValidated(true);
         const form = e.currentTarget.parentElement;
-        if (form.checkValidity() === false ||
-            inputs.token === null ||
-            inputs.token === '') {
-            if (inputs.token === null || inputs.token === '') {
-                setRecaptchaWarning(true);
-            } else {
-                setRecaptchaWarning(false);
-            }
+        if (form.checkValidity() === false) {
             return e.stopPropagation();
         }
-        var verifiedToken = false;
 
-        verifiedToken = await verifyToken()
-
-        if (verifiedToken) {
-            const response = await fetch(`http://localhost:5000/api/register`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(inputs)
-                }
-            )
-            const data = await response.json()
-            if (data.status === "success") {
-                setToastMsg("Registration successful!");
-            } else {
-                setToastMsg("Registration unsuccessful!");
-            }
-            return setShowInfoToast(true);
-        }
-    }
-
-    /**
-     * Verifies provided ReCaptcha token
-     * @returns boolean
-     */
-    const verifyToken = async () => {
-        const request = await fetch(`http://localhost:5000/api/verify`,
+        const response = await fetch(`http://localhost:5000/api/register`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include',
-                body: JSON.stringify({ token: inputs.token })
-            })
-
-        const response = await request.json()
-        if (response.status === 'success') {
-            return true
+                body: JSON.stringify(inputs)
+            }
+        )
+        const data = await response.json()
+        if (data.status === "success") {
+            setToastMsg("Registration successful!");
         } else {
-            return false
+            setToastMsg("Registration unsuccessful!");
         }
+        return setShowInfoToast(true);
     }
 
     return (
@@ -123,17 +85,6 @@ export const Register = () => {
                         onChange={handleChange} />
                     <Form.Text>Please enter a password (8-12 characters).</Form.Text>
                 </Form.Group>
-                <div id="reCaptcha-box"
-                    className="mb-3"
-                    style={{
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        backgroundColor: `${recaptchaWarning ? '#dc3545' : validated ? '#198754' : 'transparent'}`,
-                        borderRadius: 5,
-                        width: 'fit-content'
-                    }}>
-                    <ReCaptcha setInputs={setInputs} />
-                </div>
                 <Button type="submit" onClick={handleSubmit}>Register</Button>
             </Form>
         </>

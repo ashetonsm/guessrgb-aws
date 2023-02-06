@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoginContext from "../context/LoginContext";
 import { InfoToast } from "./InfoToast";
-import { ReCaptcha } from "./ReCaptcha";
 
 export const Login = () => {
 
@@ -10,12 +9,10 @@ export const Login = () => {
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
     const [validated, setValidated] = useState(false);
-    const [recaptchaWarning, setRecaptchaWarning] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
         rememberUser: "false",
-        token: ''
     });
 
     /**
@@ -39,66 +36,30 @@ export const Login = () => {
         e.preventDefault();
         setValidated(true);
         const form = e.currentTarget.parentElement;
-        if (form.checkValidity() === false ||
-            inputs.token === null ||
-            inputs.token === '') {
-            if (inputs.token === null || inputs.token === '') {
-                setRecaptchaWarning(true);
-            } else {
-                setRecaptchaWarning(false);
-            }
+        if (form.checkValidity() === false) {
             return e.stopPropagation();
         }
-        var verifiedToken = false;
 
-        verifiedToken = await verifyToken()
-
-        if (verifiedToken) {
-            const request = await fetch(`http://localhost:5000/api/login`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify(inputs)
-                })
-
-            const response = await request.json()
-            if (response.status === 'success') {
-                document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
-                dispatch({ type: 'SET_USERID', payload: response.session.userId });
-                setToastMsg("Log in successful!");
-            } else {
-                setToastMsg("Sorry, we weren't able to log you in with that information!");
-            }
-            return setShowInfoToast(true);
-        }
-    }
-
-    /**
-     * Verifies provided ReCaptcha token
-     * @returns boolean
-     */
-    const verifyToken = async () => {
-        const request = await fetch(`http://localhost:5000/api/verify`,
+        const request = await fetch(`http://localhost:5000/api/login`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include',
-                body: JSON.stringify({ token: inputs.token })
+                body: JSON.stringify(inputs)
             })
 
         const response = await request.json()
         if (response.status === 'success') {
-            return true
+            document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
+            dispatch({ type: 'SET_USERID', payload: response.session.userId });
+            setToastMsg("Log in successful!");
         } else {
-            return false
+            setToastMsg("Sorry, we weren't able to log you in with that information!");
         }
+        return setShowInfoToast(true);
     }
-
 
     return (
         <>
@@ -144,17 +105,6 @@ export const Login = () => {
                         }}
                     />
                 </Form.Group>
-                <div id="reCaptcha-box"
-                    className="mb-3"
-                    style={{
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        backgroundColor: `${recaptchaWarning ? '#dc3545' : validated ? '#198754' : 'transparent'}`,
-                        borderRadius: 5,
-                        width: 'fit-content'
-                    }}>
-                    <ReCaptcha setInputs={setInputs} />
-                </div>
                 <Button type="submit" onClick={handleSubmit}>Log in</Button>
             </Form>
         </>
