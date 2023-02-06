@@ -1,12 +1,12 @@
 import { GetStaticProps } from 'next';
 import { defaultMetaProps } from '@/components/layout/meta';
-import GuessEntry from '@/components/guessEntry';
+import EnterGuess from '@/components/enterGuess';
 import DisplayGuesses from '@/components/displayGuesses';
 
 export default function Home() {
   return (
     <>
-      <GuessEntry />
+      <EnterGuess />
       <DisplayGuesses />
     </>
   );

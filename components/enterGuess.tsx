@@ -2,7 +2,7 @@ import { useState } from "react"
 import getRGBValue from '@/lib/hexToRGB'
 import CheckGuess from "./checkGuess"
 
-export const GuessEntry = () => {
+export const EnterGuess = () => {
 
     const gamePlaying = true;
     const [currentColor, setCurrentColor] = useState("#000000");
@@ -65,4 +65,4 @@ const recordGuess = (hexValue: string) => {
     // }
 }
 
-export default GuessEntry;
+export default EnterGuess;
