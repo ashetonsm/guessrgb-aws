@@ -1,6 +1,6 @@
 import GameContext from "@/context/GameContext";
 import { useContext } from "react";
-import { Card, ListGroup } from "react-bootstrap";
+import { Card, Col, ListGroup, Row } from "react-bootstrap";
 
 export const DisplayGuesses = () => {
     const { guesses } = useContext(GameContext);
@@ -46,7 +46,12 @@ export const DisplayGuesses = () => {
     )
     return (
         <>
-            {output ? output : null}
+            {output ?
+                <Row>
+                    <Col className="d-flex flex-wrap justify-content-center gap-3 mb-3">
+                        {output}
+                    </Col>
+                </Row> : null}
         </>
     )
 }
