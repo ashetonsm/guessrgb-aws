@@ -1,11 +1,10 @@
-import Meta, { MetaProps } from '@/components/layout/meta';
+import Meta from '@/components/layout/meta';
 import { useRouter } from 'next/router';
 import LoadingDots from '@/components/icons/loading-dots';
 import { ReactNode } from 'react';
-import CustomFonts from './customFonts';
 import { Menu } from './menu';
 
-export default function Layout({ meta, children }: { meta: MetaProps; children: ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
   if (router.isFallback) {
     return (
@@ -15,12 +14,8 @@ export default function Layout({ meta, children }: { meta: MetaProps; children: 
 
   return (
     <>
-      {/* The metadata */}
-      {/* <Meta props={meta} /> */}
-      <CustomFonts />
-
+      <Meta/>
       <Menu loggedIn={false} />
-
       <main>
         {children}
       </main>
