@@ -25,12 +25,14 @@ export const RecordGuess = (hexValue: string,
     userAnswer.correct.forEach(element => {
         if (element === 1) { numCorrect++ }
     })
+    
+    dispatch({ type: 'SET_GUESSES', payload: [...guesses, userAnswer] });
+    
     if (numCorrect === 3) {
         dispatch({ type: 'SET_GAMEWON', payload: true });
         dispatch({ type: 'SET_GAMEPLAYING', payload: false });
     }
 
-    dispatch({ type: 'SET_GUESSES', payload: [...guesses, userAnswer] });
     if (guesses.length >= 4) {
         dispatch({ type: 'SET_GAMEPLAYING', payload: false });
     }
