@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import GameContext from "@/context/GameContext"
 import { RecordGuess } from "./recordGuess"
+import { Button } from "react-bootstrap"
 
 export const EnterGuess = () => {
 
@@ -18,11 +19,11 @@ export const EnterGuess = () => {
                 />
             </div>
             <div className="text-center mt-2 mb-2">
-                <button
+                <Button
                     disabled={!gamePlaying}
                     onClick={() => {
                         RecordGuess(currentColor, dispatch, guesses, difficulty, correctAnswer)
-                    }}>Submit Guess</button>
+                    }}>Submit Guess</Button>
             </div>
         </>
     )

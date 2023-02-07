@@ -1,6 +1,7 @@
 import GameContext from "@/context/GameContext"
 import { delay } from "@/lib/delay"
 import { useContext } from "react"
+import { Button } from "react-bootstrap"
 
 export const ResetButton = () => {
 
@@ -27,14 +28,14 @@ export const ResetButton = () => {
 
     return (
         <div className="text-center mt-2 mb-2">
-            <button
+            <Button
                 className="mb-3"
                 style={{ visibility: gamePlaying ? 'hidden' : 'visible' }}
                 onClick={() => {
                     resetGame()
                 }}>
                 Play Again
-            </button>
+            </Button>
         </div>
     )
 }
