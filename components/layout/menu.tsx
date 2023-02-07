@@ -3,8 +3,8 @@ import { useContext, useState } from "react"
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { MenuLinks } from '../MenuLinks'
 import LoginContext from '@/context/LoginContext'
-import { Info } from '../Info'
-import { Settings } from '../Settings'
+import { Info } from '../info'
+import { Settings } from '../settings'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
