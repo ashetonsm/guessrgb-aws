@@ -1,6 +1,4 @@
-import GameContext from "@/context/GameContext";
 import getRGBValue from "@/lib/hexToRGB";
-import { useContext } from "react";
 import CheckGuess from "./checkGuess";
 
 /**
@@ -9,9 +7,11 @@ import CheckGuess from "./checkGuess";
  * Ends the game after 5 turns (when guesses.length >= 4)
  * @param hexValue string
 */
-export const RecordGuess = (hexValue: string) => {
-
-    const { dispatch, guesses, difficulty, correctAnswer } = useContext(GameContext);
+export const RecordGuess = (hexValue: string,
+    dispatch: { (action: Object): void; (arg0: { type: string; payload: any; }): void; },
+    guesses: any[],
+    difficulty: number,
+    correctAnswer: { r: number; g: number; b: number; }) => {
 
     const rgbValue = getRGBValue(hexValue)
     const userAnswer = {

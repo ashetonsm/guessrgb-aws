@@ -4,7 +4,7 @@ import { RecordGuess } from "./recordGuess"
 
 export const EnterGuess = () => {
 
-    const { gamePlaying } = useContext(GameContext)
+    const { dispatch, gamePlaying, guesses, difficulty, correctAnswer } = useContext(GameContext)
     const [currentColor, setCurrentColor] = useState("#000000");
 
     return (
@@ -21,7 +21,7 @@ export const EnterGuess = () => {
                 <button
                     disabled={!gamePlaying}
                     onClick={() => {
-                        RecordGuess(currentColor)
+                        RecordGuess(currentColor, dispatch, guesses, difficulty, correctAnswer)
                     }}>Submit Guess</button>
             </div>
         </>
