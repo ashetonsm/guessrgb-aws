@@ -1,10 +1,10 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useContext, useState } from "react"
 import { Button, Col, Container, Row } from 'react-bootstrap'
-import { InfoBox } from '../InfoBox'
-import { Settings } from '../Settings'
 import { MenuLinks } from '../MenuLinks'
 import LoginContext from '@/context/LoginContext'
+import { Info } from '../Info'
+import { Settings } from '../Settings'
 
 export const Menu = (loggedIn: { loggedIn: boolean }) => {
 
@@ -65,8 +65,8 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
             </Container>
             <hr style={{ marginTop: '1em' }} />
 
-            {/* <InfoBox show={showInfoBox} onHide={() => setShowInfoBox(false)} /> */}
-            {/* <Settings show={showSettings} onHide={() => setShowSettings(false)} /> */}
+            <Info show={showInfoBox} onHide={() => setShowInfoBox(false)} />
+            <Settings show={showSettings} onHide={() => setShowSettings(false)} />
             {/* End header area */}
 
 
@@ -88,9 +88,6 @@ export const Menu = (loggedIn: { loggedIn: boolean }) => {
                 </Offcanvas.Body>
             </Offcanvas>
             {/* End menu area */}
-
-            {/* Page content area */}
         </>
-
     )
 }

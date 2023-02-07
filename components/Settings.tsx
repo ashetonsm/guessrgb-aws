@@ -1,7 +1,7 @@
+import GameContext from "@/context/GameContext"
 import { DetailedHTMLProps, HTMLAttributes, RefObject, ReactNode, useContext } from "react"
 import { Button, ButtonGroup, Modal, ModalProps, ToggleButton } from "react-bootstrap"
 import { Omit, BsPrefixProps } from "react-bootstrap/esm/helpers"
-import GameContext from "../src/context/GameContext"
 
 export const Settings = (props: JSX.IntrinsicAttributes & Omit<Pick<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "key" | keyof HTMLAttributes<HTMLDivElement>> & { ref?: ((instance: HTMLDivElement | null) => void) | RefObject<HTMLDivElement> | null | undefined }, BsPrefixProps<"div"> & ModalProps> & BsPrefixProps<"div"> & ModalProps & { children?: ReactNode }) => {
 
