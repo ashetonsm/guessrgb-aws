@@ -47,7 +47,8 @@ export const Register = () => {
             }
         )
         const data = await response.json()
-        if (data.status === "success") {
+        console.log(data)
+        if (!data.error) {
             setToastMsg("Registration successful!");
         } else {
             setToastMsg("Registration unsuccessful!");
