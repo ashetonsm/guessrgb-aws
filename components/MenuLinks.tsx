@@ -1,3 +1,4 @@
+import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
 import { useContext, useState } from "react"
 import { Nav } from "react-bootstrap"
@@ -7,6 +8,7 @@ import { Register } from "./Register"
 
 export const MenuLinks = () => {
     const { dispatch, userId } = useContext(LoginContext);
+    const { data: session } = useSession();
 
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
@@ -34,19 +36,19 @@ export const MenuLinks = () => {
 
     return (
         <Nav variant="pills" className='d-inline' justify defaultActiveKey={"login"}>
-            {userId ?
+            {session && session.user ?
                 <div>
                     <Nav.Item>
-                        <Link href={"/guessRGB"} className="nav-link">Home</Link>
+                        <Link href={"/"} className="nav-link">Home</Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Link href={"/guessRGB/profile"} className="nav-link">Profile</Link>
+                        <Link href={"/profile"} className="nav-link">Profile</Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link onClick={() => {
                             setShowRegister(false)
                             setShowLogin(true)
-                            logOut()
+                            signOut()
                         }}>Log out</Nav.Link>
                     </Nav.Item>
                 </div>
