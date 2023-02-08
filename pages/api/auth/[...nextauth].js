@@ -10,5 +10,7 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     })
   ],
+  adapter: MongoDBAdapter(clientPromise),
+  debug: process.env.NODE_ENV === "development",
   secret: process.env.NEXTAUTH_SECRET
 });
