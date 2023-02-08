@@ -12,6 +12,7 @@
     "bootstrap": "^5.2.3",
     "dotenv": "^16.0.3",
     "mongodb": "^4.13.0",
+    "mongoose": "^6.9.1",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
     "next-mdx-remote": "^4.3.0",
