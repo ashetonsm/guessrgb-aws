@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 // Information needed to create a new game History for a User
-const History = new mongoose.Schema(
+const historySchema = new mongoose.Schema(
     {
         userId: { type: String, required: true },
         history: { type: Array, required: true },
@@ -9,6 +9,6 @@ const History = new mongoose.Schema(
     {collection: 'games'}
 )
 
-const model = mongoose.model('GameHistory', History)
+const History = mongoose.models.History || mongoose.model('History', historySchema)
 
-module.exports = model
+export default History
