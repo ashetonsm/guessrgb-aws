@@ -1,4 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import Router from "next/router";
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoginContext from "../context/LoginContext";
@@ -31,6 +32,11 @@ export const Login = () => {
         }))
     }
 
+    const redirectToHome = () => {
+        const { pathname } = Router;
+        if (pathname === "/auth") { Router.push("/") }
+    }
+
     /**
      * Checks the form's validity, applies styles, and logs the user in.
      * @param e The event - needed for preventDefault
@@ -44,31 +50,28 @@ export const Login = () => {
             return e.stopPropagation();
         }
 
-        const request = await fetch(`http://localhost:5000/api/login`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify(inputs)
-            })
+        const res: any = await signIn("credentials", {
+            email: inputs.email,
+            password: inputs.password,
+            redirect: false,
+            callbackUrl: `${window.location.origin}`,
+        });
 
-        const response = await request.json()
-        if (response.status === 'success') {
-            document.cookie = `userId=${response.session.userId}; expires=${new Date(response.session.cookie.expires).toUTCString()}; path=${response.session.cookie.path}`;
-            dispatch({ type: 'SET_USERID', payload: response.session.userId });
-            setToastMsg("Log in successful!");
+        if (res.error) {
+            setToastMsg("Sorry, we weren't able to log you in!");
         } else {
-            setToastMsg("Sorry, we weren't able to log you in with that information!");
+            // dispatch({ type: 'SET_USERID', payload: res.session.userId });
+            setToastMsg("Log in successful!");
         }
+        console.log(res)
+        redirectToHome();
         return setShowInfoToast(true);
     }
 
     return (
         <>
 
-            {/* <InfoToast msg={toastMsg} show={showInfoToast ? "true" : "false"} onHide={() => setShowInfoToast(false)} />
+            <InfoToast msg={toastMsg} show={showInfoToast ? "true" : "false"} onHide={() => setShowInfoToast(false)} />
             <Form noValidate validated={validated}>
                 <Form.Group className="mb-3">
                     <Form.Label>Email</Form.Label>
@@ -111,7 +114,7 @@ export const Login = () => {
                     />
                 </Form.Group>
                 <Button type="submit" onClick={handleSubmit}>Log in</Button>
-            </Form> */}
+            </Form>
 
             {status !== 'loading' &&
                 (session?.user ?
