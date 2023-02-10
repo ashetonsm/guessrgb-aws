@@ -7,9 +7,7 @@ import LoadingDots from "./icons/loading-dots";
 import { InfoToast } from "./InfoToast";
 
 export const Login = () => {
-
-    const { dispatch } = useContext(LoginContext);
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const [loading, setLoading] = useState(false);
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
@@ -70,7 +68,6 @@ export const Login = () => {
 
     return (
         <>
-
             <InfoToast msg={toastMsg} show={showInfoToast ? "true" : "false"} onHide={() => setShowInfoToast(false)} />
             <Form noValidate validated={validated}>
                 <Form.Group className="mb-3">
@@ -116,25 +113,24 @@ export const Login = () => {
                 <Button type="submit" onClick={handleSubmit}>Log in</Button>
             </Form>
 
-            {status !== 'loading' &&
-                (session?.user ?
-                    <div>
-                        Hi, {session.user.name} ({session.user.email})!
-                    </div> : (
-                        <Button
-                            disabled={loading}
-                            onClick={() => {
-                                setLoading(true);
-                                signIn('github', { callbackUrl: `/` });
-                            }}
-                            className={`${loading
-                                ? 'bg-gray-200 border-gray-300'
-                                : 'bg-black hover:bg-white border-black'
-                                } w-36 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
-                        >
-                            {loading ? <LoadingDots color="gray" /> : 'Log in with GitHub'}
-                        </Button>
-                    ))}
+            {status !== 'loading' ?
+                (
+                    <Button
+                        disabled={loading}
+                        onClick={() => {
+                            setLoading(true);
+                            signIn('github', { callbackUrl: `/` });
+                        }}
+                        className={`${loading
+                            ? 'bg-gray-200 border-gray-300'
+                            : 'bg-black hover:bg-white border-black'
+                            } w-36 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
+                    >
+                        {loading ? <LoadingDots color="gray" /> : 'Log in with GitHub'}
+                    </Button>
+                )
+                : <LoadingDots color={"black"} />
+            }
 
         </>
     )
