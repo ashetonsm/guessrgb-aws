@@ -86,7 +86,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
     return {
         props: {
-            session,
             history,
             currentUser
         }
