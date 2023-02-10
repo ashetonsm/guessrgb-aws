@@ -111,12 +111,14 @@ export const Login = () => {
                         }}
                     />
                 </Form.Group>
-                <Button type="submit" onClick={handleSubmit}>Log in</Button>
+                <Button className="mb-3" type="submit" onClick={handleSubmit}>Log in</Button>
             </Form>
+            
+            <hr/>
 
             {status !== 'loading' ?
                 (
-                    <Button
+                    <Button 
                         disabled={loading}
                         onClick={() => {
                             setLoading(true);
