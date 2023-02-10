@@ -47,7 +47,6 @@ export const Register = () => {
             }
         )
         const data = await response.json()
-        console.log(data)
         if (!data.error) {
             setToastMsg("Registration successful!");
         } else {
@@ -71,6 +70,7 @@ export const Register = () => {
                         maxLength={50}
                         value={inputs.email}
                         onChange={handleChange}
+                        autoComplete="username"
                     />
                     <Form.Text>Please enter an email address.</Form.Text>
                 </Form.Group>
@@ -83,7 +83,9 @@ export const Register = () => {
                         minLength={8}
                         maxLength={12}
                         value={inputs.password}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        autoComplete="new-password"
+                    />
                     <Form.Text>Please enter a password (8-12 characters).</Form.Text>
                 </Form.Group>
                 <Button type="submit" onClick={handleSubmit}>Register</Button>

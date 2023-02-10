@@ -61,7 +61,6 @@ export const Login = () => {
             // dispatch({ type: 'SET_USERID', payload: res.session.userId });
             setToastMsg("Log in successful!");
         }
-        console.log(res)
         redirectToHome();
         return setShowInfoToast(true);
     }
@@ -79,7 +78,8 @@ export const Login = () => {
                         minLength={6}
                         maxLength={50}
                         value={inputs.email}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        autoComplete="username" />
                     <Form.Text>Please enter your email address.</Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3">
@@ -91,7 +91,8 @@ export const Login = () => {
                         minLength={8}
                         maxLength={12}
                         value={inputs.password}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        autoComplete="current-password" />
                     <Form.Text>Please enter your password.</Form.Text>
                 </Form.Group>
 
