@@ -30,6 +30,5 @@ export const SaveHistory = async (result: ResultData) => {
     )
     const data = await response.json()
 
-    console.log(`The data: ${data}`)
     return data
 }

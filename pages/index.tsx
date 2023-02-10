@@ -23,8 +23,6 @@ export default function Home() {
   const [toastMsg, setToastMsg] = useState("...");
   const [showInfoToast, setShowInfoToast] = useState(false);
 
-  console.log(session ? `logged in as ${session.user?.email}` : `Not logged in`)
-
   /**
    * Records a result when !gamePlaying, userId !== null, and !recordedResult.
    */
@@ -47,7 +45,7 @@ export default function Home() {
       answer: correctAnswer,
       difficulty: difficulty
     }
-    
+
     const saveStatus = await SaveHistory(result);
     if (!saveStatus.error && saveStatus.message !== 'undefined') {
       return setToastMsg("Game saved to history!");
@@ -56,11 +54,9 @@ export default function Home() {
     }
   }
 
-
   return (
     <Container>
       <InfoToast msg={toastMsg} show={showInfoToast ? "true" : "false"} onHide={() => setShowInfoToast(false)} />
-
       <h5 className='text-center'>{gamePlaying ? "Choose a color:" : gameWon ? "You win!" : "You lose!"}</h5>
       <AnswerToast />
       <EnterGuess />
