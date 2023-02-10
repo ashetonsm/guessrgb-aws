@@ -17,34 +17,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     // Obj that will be used to send a response message or error
     var responseData;
 
-    responseData = { message: `${session?.user?.name}` }
-
     try {
+
+        const newHistory = JSON.parse(req.body)
+
         const entry = await games.findOne({
             email: { $regex: `${session?.user?.email}`, $options: 'i' },
         });
 
         // Found an existy History entry for this email
         if (entry!) {
-            var newHistory = entry.history.push(req.body)
-
-            // Why is this undefined?
-            console.log(`This Request: ${req.body.status}`)
-            // Push our result object onto the array of game history entries
-            await games.updateOne(entry, { $set: { history: [newHistory] } }).then(() => {
+            // Spread our result object onto the array of game history entries
+            await games.updateOne(entry, { $set: { history: [...entry.history, newHistory] } }).then(() => {
                 responseData = { message: 'History save success.' }
                 res.json(responseData as ResponseData)
             })
         } else {
             const entry = new History({
                 email: session!.user!.email!.toString(),
-                history: [{
-                    status: req.body.status,
-                    date: req.body.date,
-                    guesses: req.body.guesses,
-                    answer: req.body.answer,
-                    difficulty: req.body.difficulty
-                }]
+                history: [newHistory]
             });
             await games.insertOne(entry).then(() => {
                 responseData = { message: 'Created a new History entry. History save success.' }
