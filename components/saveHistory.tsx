@@ -19,7 +19,7 @@ export const SaveHistory = async (result: ResultData) => {
     const csrfReq = await fetch(`/api/auth/csrf`, { method: 'GET' })
     const csrfToken = await csrfReq.json()
 
-    const response = await fetch(`http://localhost:3000/api/record`,
+    const response = await fetch(`/api/record`,
         {
             method: 'POST',
             body: JSON.stringify(result),
