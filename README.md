@@ -38,9 +38,9 @@ This application is currently in development. It's being completely rewritten an
 
 ### Tools:
 
-- React Typescript
-- Bootstrap 5/React-Bootstrap
-- MongoDB/Mongoose
+- React + Typescript
+- Bootstrap 5 + React-Bootstrap
+- MongoDB + Mongoose
 - Bcryptjs
-- Express
 - Node.js
+- Next.js + NextAuth
