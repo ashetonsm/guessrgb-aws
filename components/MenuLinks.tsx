@@ -1,38 +1,14 @@
 import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { Nav } from "react-bootstrap"
-import LoginContext from "../context/LoginContext"
 import { Login } from "./Login"
 import { Register } from "./Register"
 
 export const MenuLinks = () => {
-    const { dispatch, userId } = useContext(LoginContext);
     const { data: session } = useSession();
-
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
-
-    /**
-     * Logs the user out via session.destroy on the backend. Deletes the connect.sid and userId cookies.
-     */
-    const logOut = async () => {
-        // await fetch(`http://localhost:5000/api/logout`,
-        //     {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         credentials: 'include'
-        //     })
-        //     .then((response) => {
-        //         if (response.status === 200) {
-        //             dispatch({ type: 'SET_USERID', payload: null });
-        //             dispatch({ type: 'SET_FETCHED_HISTORY', payload: null });
-        //             return dispatch({ type: 'SET_FETCH_COMPLETE', payload: false });
-        //         }
-        //     })
-    }
 
     return (
         <Nav variant="pills" className='d-inline' justify defaultActiveKey={"login"}>
