@@ -1,10 +1,9 @@
-import { getHistory } from "@/lib/api/history";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react"
 
 const Profile = ({ history, currentUser }: { history?: any, currentUser: string }) => {
-        console.log(history)
-        return (`Welcome, ${currentUser}!`)
+    console.log(history.history)
+    return (`Welcome, ${currentUser}!`)
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
@@ -18,7 +17,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         };
     }
 
-    const history = await getHistory();
+    const getHistory = await fetch('http://localhost:3000/api/games', {
+        method: 'GET',
+        headers: {
+            cookie: req.headers.cookie || ""
+        }
+    })
+
+    const history = await getHistory.json()
     const currentUser = session.user?.email?.toString()
 
     return {
