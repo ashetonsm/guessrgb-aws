@@ -6,7 +6,7 @@ import { AnswerToast } from '@/components/AnswerToast';
 import { ResetButton } from '@/components/resetButton';
 import { useContext } from 'react';
 import GameContext from '@/context/GameContext';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 
 export default function Home() {
 
@@ -19,6 +19,9 @@ export default function Home() {
       <EnterGuess />
       <ResetButton />
       <DisplayGuesses />
+      <Button onClick={() => fetch('/api/games', {method: 'GET'})}>
+        GET records
+      </Button>
     </Container>
   );
 }

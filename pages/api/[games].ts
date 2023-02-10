@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     var responseData;
 
     try {
+        console.log(session ? session : "No session found")
         const matchingUser = await users.findOne({
             email: { $regex: `${session?.user?.email}`, $options: 'i' },
         })
@@ -39,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 })
 
         } else {
+            console.log("User not found.")
             responseData = { error: 'User not found. Search aborted.' }
             res.json(responseData as ResponseData)
         }
