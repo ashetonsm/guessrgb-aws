@@ -6,7 +6,7 @@ import LoginContext from '@/context/LoginContext'
 import { Info } from '../info'
 import { Settings } from '../settings'
 
-export const Menu = (loggedIn: { loggedIn: boolean }) => {
+export const Menu = () => {
 
     const { dispatch, darkMode } = useContext(LoginContext)
     const [showSettings, setShowSettings] = useState(false)

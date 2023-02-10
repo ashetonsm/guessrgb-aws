@@ -14,8 +14,8 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <Meta/>
-      <Menu loggedIn={false} />
+      <Meta />
+      <Menu />
       <main>
         {children}
       </main>
