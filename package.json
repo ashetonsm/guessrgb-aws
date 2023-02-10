@@ -2,7 +2,6 @@
   "name": "guessrgb",
   "version": "1.1.0",
   "private": true,
-  "proxy": "https://localhost:5000",
   "homepage": "https://ashetonsm.github.io/guessRGB",
   "dependencies": {
     "@next-auth/mongodb-adapter": "^1.1.1",
@@ -16,13 +15,10 @@
     "mongoose": "^6.9.1",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
-    "next-mdx-remote": "^4.3.0",
     "react": "^18.0.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.0",
-    "remark": "^14.0.2",
-    "remark-mdx": "^2.2.1",
     "sass": "^1.57.1",
     "typescript": "^4.6.3"
   },
@@ -53,7 +49,6 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "@types/react-google-recaptcha": "^2.1.5",
     "gh-pages": "^3.2.3"
   }
 }
