@@ -8,21 +8,12 @@ import { Container, Button } from "react-bootstrap";
 const Profile = ({ history, currentUser }: { history?: any, currentUser: string }) => {
     const [pageNumber, setPageNumber] = useState(1)
 
-    console.log(history)
-
     return (
         <Container>
             <div className="text-center d-flex flex-wrap justify-content-center"
             >
                 <h3>Hello {currentUser}! This is your game history:</h3>
             </div>
-            {/* 
-        <div className="d-flex flex-wrap justify-content-center gap-3">
-            <Button
-                onClick={() => fetchHistory()}
-                className="btn-light btn-outline-light mb-2">🔄</Button>
-        </div> 
-        */}
 
             {history ?
                 <div>
@@ -35,7 +26,7 @@ const Profile = ({ history, currentUser }: { history?: any, currentUser: string 
                                 }
                             }}>Prev. Page</Button>
 
-                        <span>Page {pageNumber}</span>
+                        <span>Page {pageNumber}/{history.length}</span>
 
                         <Button
                             disabled={pageNumber + 1 <= history.length ? false : true}
@@ -79,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
     const historyObj = await getHistory.json()
     var history = null
-    if(historyObj.history) {
+    if (historyObj.history) {
         history = historyObj.history.reverse()
     }
     const currentUser = session.user?.email?.toString()
