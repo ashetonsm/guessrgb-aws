@@ -18,13 +18,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     var responseData;
 
     try {
-        console.log(session ? session : "No session found")
         await games.findOne({
             email: session!.user!.email!.toString()
         })
             .then((result) => {
                 if (result !== null) {
-                    console.log(result.history)
+                    console.log(`Completed games: ${result.history.length}`)
                     responseData = { message: 'Search game success.', history: result.history }
                     res.json(responseData as ResponseData)
                 } else {
