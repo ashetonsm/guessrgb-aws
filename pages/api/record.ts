@@ -13,42 +13,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const session = await getSession({ req })
     const client = await clientPromise;
     const games = client.db('test').collection('games');
-    const users = client.db('test').collection('users');
 
     // Obj that will be used to send a response message or error
     var responseData;
 
     responseData = { message: `${session?.user?.name}` }
-    res.json(responseData as ResponseData)
 
     try {
-        const matchingUser = await users.findOne({
+        const entry = await games.findOne({
             email: { $regex: `${session?.user?.email}`, $options: 'i' },
-        })
-        if (matchingUser!) {
-            const entry = await games.findOne({
-                userId: matchingUser!._id.toString()
-            });
+        });
 
-            if (entry!) {
-                entry?.history.push(req.body.result);
-                await entry?.save().then(() => {
-                        responseData = { message: 'History save success.' }
-                        res.json(responseData as ResponseData)
-                    })
-            } else {
-                const entry = new History({
-                    userId: matchingUser!._id.toString(),
-                    history: [req.body.result]
-                });
-                await entry.save().then(() => {
-                    responseData = { message: 'History save success.' }
-                    res.json(responseData as ResponseData)
-                })
-            }
+        // Found an existy History entry for this email
+        if (entry!) {
+            var newHistory = entry.history.push(req.body)
+
+            // Why is this undefined?
+            console.log(`This Request: ${req.body.status}`)
+            // Push our result object onto the array of game history entries
+            await games.updateOne(entry, { $set: { history: [newHistory] } }).then(() => {
+                responseData = { message: 'History save success.' }
+                res.json(responseData as ResponseData)
+            })
         } else {
-            responseData = { error: 'User not found. Saving aborted.' }
-            res.json(responseData as ResponseData)
+            const entry = new History({
+                email: session!.user!.email!.toString(),
+                history: [{
+                    status: req.body.status,
+                    date: req.body.date,
+                    guesses: req.body.guesses,
+                    answer: req.body.answer,
+                    difficulty: req.body.difficulty
+                }]
+            });
+            await games.insertOne(entry).then(() => {
+                responseData = { message: 'Created a new History entry. History save success.' }
+                res.json(responseData as ResponseData)
+            })
         }
     } catch (error) {
         console.error(error)
