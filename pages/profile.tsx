@@ -1,9 +1,10 @@
 import { GuessDisplayH } from "@/components/GuessDisplayH";
 import Paginate from "@/lib/paginate";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react"
+import { getServerSession } from "next-auth";
 import { useState } from "react";
 import { Container, Button } from "react-bootstrap";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 const Profile = ({ history, currentUser }: { history?: any, currentUser: string }) => {
     const [pageNumber, setPageNumber] = useState(1)
@@ -50,8 +51,8 @@ const Profile = ({ history, currentUser }: { history?: any, currentUser: string 
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const session = await getSession({ req });
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getServerSession(context.req, context.res, authOptions)
     if (!session) {
         return {
             redirect: {
@@ -64,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const getHistory = await fetch(`${process.env.NEXTAUTH_URL}/api/games`, {
         method: 'GET',
         headers: {
-            cookie: req.headers.cookie || ""
+            cookie: context.req.cookies[0] || ""
         }
     })
 
@@ -78,7 +79,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     return {
         props: {
             history,
-            currentUser
+            currentUser,
+            session,
         }
     };
 };
