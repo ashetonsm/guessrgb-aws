@@ -1,4 +1,5 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
+import type { NextAuthOptions } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from 'lib/mongodb';
@@ -28,35 +29,35 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-          const client = await clientPromise;
-          const users = client.db('test').collection('users');
+        const client = await clientPromise;
+        const users = client.db('test').collection('users');
 
-          // Find user with the email
-          const user = await users.findOne({
-            email: { $regex: `${credentials!.email}`, $options: 'i' },
-          });
+        // Find user with the email
+        const user = await users.findOne({
+          email: { $regex: `${credentials!.email}`, $options: 'i' },
+        });
 
-          // Email Not found
-          if (!user) {
-            throw new Error("Email is not registered");
-          }
+        // Email Not found
+        if (!user) {
+          throw new Error("Email is not registered");
+        }
 
-          const passwordCorrect = await compare(
-            credentials!.password,
-            user.password
-          );
+        const passwordCorrect = await compare(
+          credentials!.password,
+          user.password
+        );
 
-          // Incorrect password
-          if (!passwordCorrect) {
-            throw new Error("Password is incorrect");
-          }
+        // Incorrect password
+        if (!passwordCorrect) {
+          throw new Error("Password is incorrect");
+        }
 
-          return new User({
-            name: user.name ? user.name : null,
-            email: user.email,
-            image: null,
-            password: null
-          });
+        return new User({
+          name: user.name ? user.name : null,
+          email: user.email,
+          image: null,
+          password: null
+        });
       },
     }),
   ],
