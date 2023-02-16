@@ -1,19 +1,19 @@
 import { GuessDisplayH } from "@/components/GuessDisplayH";
 import Paginate from "@/lib/paginate";
 import { GetServerSideProps } from "next";
-import { getServerSession } from "next-auth";
+import { getSession, useSession } from "next-auth/react";
 import { useState } from "react";
 import { Container, Button } from "react-bootstrap";
-import { authOptions } from "./api/auth/[...nextauth]";
 
-const Profile = ({ history, currentUser }: { history?: any, currentUser: string }) => {
+const Profile = ({ history }: { history?: any }) => {
+
+    const { data: session } = useSession();
     const [pageNumber, setPageNumber] = useState(1)
 
     return (
         <Container>
-            <div className="text-center d-flex flex-wrap justify-content-center"
-            >
-                <h3>Hello {currentUser}! This is your game history:</h3>
+            <div className="text-center d-flex flex-wrap justify-content-center">
+                <h3>Hello {session?.user?.email}! This is your game history:</h3>
             </div>
 
             {history ?
@@ -51,8 +51,8 @@ const Profile = ({ history, currentUser }: { history?: any, currentUser: string 
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getServerSession(context.req, context.res, authOptions)
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+    const session = await getSession({ req });
     if (!session) {
         return {
             redirect: {
@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const getHistory = await fetch(`${process.env.NEXTAUTH_URL}/api/games`, {
         method: 'GET',
         headers: {
-            cookie: context.req.cookies[0] || ""
+            cookie: req.headers.cookie || ""
         }
     })
 
@@ -74,13 +74,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (historyObj.history) {
         history = historyObj.history.reverse()
     }
-    const currentUser = session.user?.email?.toString()
 
     return {
         props: {
             history,
-            currentUser,
-            session,
+            session
         }
     };
 };
