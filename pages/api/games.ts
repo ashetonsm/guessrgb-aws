@@ -19,8 +19,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     var responseData;
 
     try {
-        
-        console.log(session)
         if (!session) {
             responseData = { message: 'You must be logged in.' }
             res.status(401).json(responseData as ResponseData)
@@ -32,7 +30,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         })
             .then((result) => {
                 if (result !== null) {
-                    console.log(session)
                     console.log(`Completed games: ${result.history.length}`)
                     responseData = { message: 'Search game success.', history: result.history }
                     res.json(responseData as ResponseData)
