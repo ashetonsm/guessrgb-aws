@@ -2,13 +2,13 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useContext, useState } from "react"
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { MenuLinks } from '../MenuLinks'
-import LoginContext from '@/context/LoginContext'
 import { Info } from '../info'
 import { Settings } from '../settings'
+import GameContext from '@/context/GameContext'
 
 export const Menu = () => {
 
-    const { dispatch, darkMode } = useContext(LoginContext)
+    const { dispatch, darkMode } = useContext(GameContext)
     const [showSettings, setShowSettings] = useState(false)
     const [showInfoBox, setShowInfoBox] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
@@ -49,6 +49,11 @@ export const Menu = () => {
                             }}>🔧</span>
 
                         <span onClick={() => {
+                            if (!darkMode == true) {
+                                window.localStorage.setItem('darkMode', 'true')
+                            } else {
+                                window.localStorage.removeItem('darkMode')
+                            }
                             dispatch({ type: 'SET_DARK_MODE', payload: !darkMode });
                         }}
                             className='mx-2'
