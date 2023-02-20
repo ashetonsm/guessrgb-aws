@@ -1,8 +1,7 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Router from "next/router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import LoginContext from "../context/LoginContext";
 import LoadingDots from "./icons/loading-dots";
 import { InfoToast } from "./InfoToast";
 
