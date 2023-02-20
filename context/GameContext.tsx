@@ -12,6 +12,7 @@ const initialState = {
         g: Math.round(Math.random() * 255),
         b: Math.round(Math.random() * 255)
     },
+    darkMode: false,
     dispatch: (action: Object) => {}
 };
 const GameContext = createContext(initialState);

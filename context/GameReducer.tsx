@@ -31,6 +31,11 @@ const gameReducer = (state: any, action: { type: string; payload: any; }) => {
                 ...state,
                 difficulty: action.payload,
             };
+        case 'SET_DARK_MODE':
+            return {
+                ...state,
+                darkMode: action.payload,
+            };
         default:
             return state
     };
