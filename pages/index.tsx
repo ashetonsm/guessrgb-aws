@@ -18,7 +18,8 @@ export default function Home() {
     recordedResult,
     guesses,
     correctAnswer,
-    difficulty
+    difficulty,
+    darkMode
   } = useContext(GameContext);
   const [toastMsg, setToastMsg] = useState("...");
   const [showInfoToast, setShowInfoToast] = useState(false);
@@ -35,6 +36,27 @@ export default function Home() {
       setShowInfoToast(true)
     }
   })
+
+  useEffect(() => {
+    const appBG = document.getElementById('__next')
+
+    // Dark mode was already set on load
+    if (window.localStorage.getItem("darkMode")) {
+      // Update the state to match
+      dispatch({ type: 'SET_DARK_MODE', payload: true })
+      appBG?.classList.add('darkMode')
+    } else {
+      if (darkMode === true) {
+        appBG?.classList.add('darkMode')
+        window.localStorage.setItem('darkMode', 'true')
+
+      } else {
+        appBG?.classList.remove('darkMode')
+        window.localStorage.removeItem('darkMode')
+      }
+    }
+
+  }, [darkMode])
 
   const saveHistory = async () => {
 

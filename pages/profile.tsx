@@ -1,14 +1,37 @@
 import { GuessDisplayH } from "@/components/GuessDisplayH";
+import GameContext from "@/context/GameContext";
 import Paginate from "@/lib/paginate";
 import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
 
 const Profile = ({ history }: { history?: any }) => {
 
     const { data: session } = useSession();
     const [pageNumber, setPageNumber] = useState(1)
+    const { dispatch, darkMode } = useContext(GameContext);
+
+    useEffect(() => {
+        const appBG = document.getElementById('__next')
+
+        // Dark mode was already set on load
+        if (window.localStorage.getItem("darkMode")) {
+            // Update the state to match
+            dispatch({ type: 'SET_DARK_MODE', payload: true })
+            appBG?.classList.add('darkMode')
+        } else {
+            if (darkMode === true) {
+                appBG?.classList.add('darkMode')
+                window.localStorage.setItem('darkMode', 'true')
+
+            } else {
+                appBG?.classList.remove('darkMode')
+                window.localStorage.removeItem('darkMode')
+            }
+        }
+
+    }, [darkMode])
 
     return (
         <Container>
