@@ -8,16 +8,13 @@
       "esnext"
     ],
     "allowJs": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/components/*": [
         "components/*"
       ],
       "@/context/*": [
         "context/*"
-      ],
-      "@/layouts/*": [
-        "layouts/*"
       ],
       "@/lib/*": [
         "lib/*"
