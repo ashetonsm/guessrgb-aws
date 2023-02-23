@@ -25,6 +25,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:digitalocean": "npm install --production=false && npm run build && npm ci",
     "start": "next start",
     "lint": "next lint",
     "deploy": "gh-pages -d build"
