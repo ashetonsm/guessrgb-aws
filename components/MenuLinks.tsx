@@ -2,8 +2,8 @@ import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 import { Nav } from "react-bootstrap"
-import { Login } from "./Login"
-import { Register } from "./Register"
+import { Login } from "@/components/Login"
+import { Register } from "@/components/Register"
 
 export const MenuLinks = () => {
     const { data: session } = useSession();

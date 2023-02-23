@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import gameReducer from "./GameReducer";
+import gameReducer from "@/context/GameReducer";
 
 const initialState = {
     gamePlaying: true,

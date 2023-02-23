@@ -2,7 +2,7 @@ import clientPromise from "@/lib/mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import History from "@/models/history.model";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 interface ResponseData {
     error?: string

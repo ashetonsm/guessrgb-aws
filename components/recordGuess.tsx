@@ -1,5 +1,5 @@
 import getRGBValue from "@/lib/hexToRGB";
-import CheckGuess from "./checkGuess";
+import CheckGuess from "@/components/checkGuess";
 
 /**
  * Records a guess by creating a userAnswer with the RGB value and a "correct" array. 

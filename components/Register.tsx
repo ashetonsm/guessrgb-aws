@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { InfoToast } from "./InfoToast";
+import { InfoToast } from "@/components/InfoToast";
 
 export const Register = () => {
 

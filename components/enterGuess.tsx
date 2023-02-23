@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import GameContext from "@/context/GameContext"
-import { RecordGuess } from "./recordGuess"
+import { RecordGuess } from "@/components/recordGuess"
 import { Button } from "react-bootstrap"
 
 export const EnterGuess = () => {

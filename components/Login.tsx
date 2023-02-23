@@ -2,8 +2,8 @@ import { signIn, useSession } from "next-auth/react";
 import Router from "next/router";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import LoadingDots from "./icons/loading-dots";
-import { InfoToast } from "./InfoToast";
+import LoadingDots from "@/components/icons/loading-dots";
+import { InfoToast } from "@/components/InfoToast";
 
 export const Login = () => {
     const { status } = useSession();
