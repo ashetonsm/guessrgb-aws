@@ -1,10 +1,10 @@
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useContext, useState } from "react"
 import { Button, Col, Container, Row } from 'react-bootstrap'
-import { MenuLinks } from '@/components/MenuLinks'
+import { MenuLinks } from '@/components/menuLinks'
 import { Info } from '@/components/info'
 import GameContext from '@/context/GameContext'
-import { Settings } from '@/components/Settings'
+import { Settings } from '@/components/settings'
 
 export const Menu = () => {
 

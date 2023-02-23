@@ -1,4 +1,4 @@
-import { GuessDisplayH } from "@/components/GuessDisplayH";
+import { GuessDisplayH } from "@/components/guessDisplayH";
 import GameContext from "@/context/GameContext";
 import Paginate from "@/lib/paginate";
 import { GetServerSideProps } from "next";

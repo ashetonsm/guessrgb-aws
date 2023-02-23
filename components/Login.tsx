@@ -3,7 +3,7 @@ import Router from "next/router";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoadingDots from "@/components/icons/loading-dots";
-import { InfoToast } from "@/components/InfoToast";
+import { InfoToast } from "@/components/infoToast";
 
 export const Login = () => {
     const { status } = useSession();
