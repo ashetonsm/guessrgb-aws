@@ -4,7 +4,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap'
 import { MenuLinks } from '@/components/MenuLinks'
 import { Info } from '@/components/info'
 import GameContext from '@/context/GameContext'
-import { Settings } from '@/components/settings'
+import { Settings } from '@/components/Settings'
 
 export const Menu = () => {
 
