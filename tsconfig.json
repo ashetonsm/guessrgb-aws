@@ -25,6 +25,9 @@
       "@/models/*": [
         "models/*"
       ],
+      "@/pages/*": [
+        "pages/*"
+      ],
       "@/styles/*": [
         "styles/*"
       ]
