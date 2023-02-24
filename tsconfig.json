@@ -8,6 +8,27 @@
       "esnext"
     ],
     "allowJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/context/*": [
+        "context/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@/models/*": [
+        "models/*"
+      ],
+      "@/pages/*": [
+        "pages/*"
+      ],
+      "@/styles/*": [
+        "styles/*"
+      ]
+    },
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -19,9 +40,18 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "incremental": true
   },
   "include": [
-    "src"
-, "backend/models"  ]
+    "components",
+    "context",
+    "lib",
+    "models",
+    "pages",
+    "styles"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

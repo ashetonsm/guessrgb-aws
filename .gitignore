@@ -24,4 +24,6 @@ yarn-error.log*
 src/backend/database/.env
 .env
 .vercel
+.next
 backend/node_modules/
+.vscode
