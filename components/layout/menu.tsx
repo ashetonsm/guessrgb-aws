@@ -49,7 +49,7 @@ export const Menu = () => {
                             }}>🔧</span>
 
                         <span onClick={() => {
-                            if (!darkMode == true) {
+                            if (!darkMode === true) {
                                 window.localStorage.setItem('darkMode', 'true')
                             } else {
                                 window.localStorage.removeItem('darkMode')
