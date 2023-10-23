@@ -42,7 +42,5 @@ This application is currently in development. It's being completely rewritten. I
 
 - React + Typescript
 - Bootstrap 5 + React-Bootstrap
-- MongoDB + Mongoose
-- Bcryptjs
 - Node.js
-- Next.js + NextAuth
+- Next.js
