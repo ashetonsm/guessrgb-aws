@@ -110,26 +110,6 @@ export const Login = () => {
                 <Button className="mb-3" type="submit" onClick={handleSubmit}>Log in</Button>
             </Form>
 
-            <hr />
-
-            {status !== 'loading' ?
-                (
-                    <Button
-                        disabled={loading}
-                        onClick={() => {
-                            setLoading(true);
-                        }}
-                        className={`${loading
-                            ? 'bg-gray-200 border-gray-300'
-                            : 'bg-black hover:bg-white border-black'
-                            } w-36 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
-                    >
-                        {loading ? <LoadingDots color="gray" /> : 'Log in with GitHub'}
-                    </Button>
-                )
-                : <LoadingDots color={"black"} />
-            }
-
         </>
     )
 }
