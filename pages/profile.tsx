@@ -34,7 +34,7 @@ const Profile = ({ history, user }: { history?: any, user: any }) => {
     return (
             <Container>
                 <div className="text-center d-flex flex-wrap justify-content-center">
-                    <h3>Hello {user}! This is your game history:</h3>
+                    <h3>Hello {user.attributes.email}! This is your game history:</h3>
                 </div>
 
                 {history ?
