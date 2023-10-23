@@ -8,7 +8,7 @@ import { Container } from 'react-bootstrap';
 import { SaveHistory } from '@/components/saveHistory';
 import { InfoToast } from '@/components/infoToast';
 
-export default function Home({ user }: any) {
+export default function Home() {
   const {
     dispatch,
     isAuthenticated,
@@ -24,7 +24,7 @@ export default function Home({ user }: any) {
   const [showInfoToast, setShowInfoToast] = useState(false);
 
   /**
-   * Records a result when !gamePlaying, userId !== null, and !recordedResult.
+   * Records a result when !gamePlaying, isAuthenticated, and !recordedResult.
    */
   useEffect(() => {
     if (!gamePlaying &&
