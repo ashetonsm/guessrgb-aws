@@ -2,6 +2,7 @@ import { createContext, useReducer } from "react";
 import gameReducer from "@/context/GameReducer";
 
 const initialState = {
+    isAuthenticated: false,
     gamePlaying: true,
     gameWon: false,
     recordedResult: false,

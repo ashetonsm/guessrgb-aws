@@ -36,6 +36,11 @@ const gameReducer = (state: any, action: { type: string; payload: any; }) => {
                 ...state,
                 darkMode: action.payload,
             };
+        case 'SET_IS_AUTHENTICATED':
+            return {
+                ...state,
+                isAuthenticated: action.payload,
+            };
         default:
             return state
     };

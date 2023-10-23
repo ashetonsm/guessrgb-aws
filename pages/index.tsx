@@ -11,6 +11,7 @@ import { InfoToast } from '@/components/infoToast';
 export default function Home({ user }: any) {
   const {
     dispatch,
+    isAuthenticated,
     gamePlaying,
     gameWon,
     recordedResult,
@@ -27,7 +28,7 @@ export default function Home({ user }: any) {
    */
   useEffect(() => {
     if (!gamePlaying &&
-      user &&
+      isAuthenticated &&
       recordedResult !== true) {
       saveHistory()
       dispatch({ type: 'SET_RECORDED_RESULT', payload: true });
