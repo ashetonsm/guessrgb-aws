@@ -5,10 +5,9 @@ import { ResetButton } from '@/components/resetButton';
 import { useContext, useEffect, useState } from 'react';
 import GameContext from '@/context/GameContext';
 import { Container } from 'react-bootstrap';
-import { SaveHistory } from '@/components/saveHistory';
 import { InfoToast } from '@/components/infoToast';
 
-export default function Home() {
+export default function Home({ user }: any) {
   const {
     dispatch,
     isAuthenticated,
@@ -66,13 +65,31 @@ export default function Home() {
       answer: correctAnswer,
       difficulty: difficulty
     }
+    const key = `${user.attributes.email}-${crypto.randomUUID()}`
 
-    const saveStatus = await SaveHistory(result);
-    if (!saveStatus.error && saveStatus.message !== 'undefined') {
-      return setToastMsg("Game saved to history!");
-    } else {
+    const blob = new Blob([JSON.stringify(result)], {type: 'text/plain'})
+
+    console.log(blob)
+    console.log(key)
+    /*
+    // Object must be an instance of Blob
+    try {
+      await Storage.put(key, blob, {
+        resumable: true,
+        completeCallback: (event) => {
+          console.log(`Successfully uploaded ${event.key}`)
+          return setToastMsg("Game saved to history!");
+        },
+        errorCallback: (err) => {
+          console.error('Unexpected error while uploading', err);
+          return setToastMsg("Unable to save game to history!");
+        }
+      })
+    } catch (err) {
+      console.log(err)
       return setToastMsg("Unable to save game to history!");
     }
+    */
   }
 
   return (
