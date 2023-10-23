@@ -1,16 +1,19 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Nav } from "react-bootstrap"
 import { Login } from "@/components/login"
 import { Register } from "@/components/register"
+import GameContext from "@/context/GameContext"
+import { Auth } from 'aws-amplify'
 
-export const MenuLinks = ({user}:any) => {
+export const MenuLinks = () => {
+    const { dispatch, isAuthenticated } = useContext(GameContext);
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
 
     return (
         <Nav variant="pills" className='d-inline' justify defaultActiveKey={"login"}>
-            {user ?
+            {isAuthenticated ?
                 <div>
                     <Nav.Item>
                         <Link href={"/"} className="nav-link">Home</Link>
@@ -22,6 +25,8 @@ export const MenuLinks = ({user}:any) => {
                         <Nav.Link onClick={() => {
                             setShowRegister(false)
                             setShowLogin(true)
+                            Auth.signOut()
+                            dispatch({ type: 'SET_IS_AUTHENTICATED', payload: false })
                         }}>Log out</Nav.Link>
                     </Nav.Item>
                 </div>

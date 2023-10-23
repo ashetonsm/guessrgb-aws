@@ -1,10 +1,13 @@
 import Router from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoadingDots from "@/components/icons/loading-dots";
 import { InfoToast } from "@/components/infoToast";
+import { Auth } from 'aws-amplify';
+import GameContext from "@/context/GameContext";
 
 export const Login = () => {
+    const { dispatch } = useContext(GameContext);
     const [loading, setLoading] = useState(false);
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
@@ -45,6 +48,15 @@ export const Login = () => {
             return e.stopPropagation();
         }
 
+        try {
+            await Auth.signIn(inputs.email, inputs.password);
+            dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
+            setToastMsg("Log in successful!");
+        } catch (err) {
+            setToastMsg("Sorry, we weren't able to log you in!");
+            console.log(err);
+        }
+        console.log('Success!');
         redirectToHome();
         return setShowInfoToast(true);
     }
@@ -97,12 +109,12 @@ export const Login = () => {
                 </Form.Group>
                 <Button className="mb-3" type="submit" onClick={handleSubmit}>Log in</Button>
             </Form>
-            
-            <hr/>
+
+            <hr />
 
             {status !== 'loading' ?
                 (
-                    <Button 
+                    <Button
                         disabled={loading}
                         onClick={() => {
                             setLoading(true);

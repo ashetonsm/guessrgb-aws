@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
+import { Auth } from 'aws-amplify';
 
 export const Register = () => {
 
@@ -37,17 +38,14 @@ export const Register = () => {
             return e.stopPropagation();
         }
 
-        const response = await fetch(`/api/register`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(inputs)
-            }
-        )
-        const data = await response.json()
-        if (!data.error) {
+        const { user } = await Auth.signUp({
+            username: inputs.email,
+            password: inputs.password
+        })
+
+
+        console.log(user)
+        if (user) {
             setToastMsg("Registration successful!");
         } else {
             setToastMsg("Registration unsuccessful!");
