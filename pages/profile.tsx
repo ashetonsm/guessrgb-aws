@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import { useContext, useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
 
-const Profile = ({ history, user }: { history?: any, user:any }) => {
+const Profile = ({ history, user }: { history?: any, user: any }) => {
 
     const [pageNumber, setPageNumber] = useState(1)
     const { dispatch, darkMode } = useContext(GameContext);
@@ -32,47 +32,48 @@ const Profile = ({ history, user }: { history?: any, user:any }) => {
     }, [darkMode])
 
     return (
-        <Container>
-            <div className="text-center d-flex flex-wrap justify-content-center">
-                <h3>Hello {user}! This is your game history:</h3>
-            </div>
+            <Container>
+                <div className="text-center d-flex flex-wrap justify-content-center">
+                    <h3>Hello {user}! This is your game history:</h3>
+                </div>
 
-            {history ?
-                <div>
-                    <div className="d-flex flex-wrap justify-content-center gap-3 mb-2">
-                        <Button
-                            disabled={pageNumber - 1 > 0 ? false : true}
-                            onClick={() => {
-                                if ((pageNumber - 1) > 0) {
-                                    setPageNumber(pageNumber - 1)
-                                }
-                            }}>Prev. Page</Button>
+                {history ?
+                    <div>
+                        <div className="d-flex flex-wrap justify-content-center gap-3 mb-2">
+                            <Button
+                                disabled={pageNumber - 1 > 0 ? false : true}
+                                onClick={() => {
+                                    if ((pageNumber - 1) > 0) {
+                                        setPageNumber(pageNumber - 1)
+                                    }
+                                }}>Prev. Page</Button>
 
-                        <span>Page {pageNumber}/{history.length}</span>
+                            <span>Page {pageNumber}/{history.length}</span>
 
-                        <Button
-                            disabled={pageNumber + 1 <= history.length ? false : true}
-                            onClick={() => {
-                                if (pageNumber + 1 <= history.length) {
-                                    setPageNumber(pageNumber + 1)
-                                }
-                            }}>Next Page</Button>
+                            <Button
+                                disabled={pageNumber + 1 <= history.length ? false : true}
+                                onClick={() => {
+                                    if (pageNumber + 1 <= history.length) {
+                                        setPageNumber(pageNumber + 1)
+                                    }
+                                }}>Next Page</Button>
 
+                        </div>
+                        <GuessDisplayH games={Paginate(history, 1, pageNumber)} />
                     </div>
-                    <GuessDisplayH games={Paginate(history, 1, pageNumber)} />
-                </div>
-                :
-                <div className="d-flex flex-wrap justify-content-center gap-3 mb-2">
-                    <h4>
-                        No games found!
-                    </h4>
-                </div>
-            }
-        </Container>
+                    :
+                    <div className="d-flex flex-wrap justify-content-center gap-3 mb-2">
+                        <h4>
+                            No games found!
+                        </h4>
+                    </div>
+                }
+            </Container>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+    /*
     const session = false;
     if (!session) {
         return {
@@ -95,11 +96,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     if (historyObj.history) {
         history = historyObj.history.reverse()
     }
-
+    
+    */
     return {
         props: {
-            history,
-            session
+            // history,
+            // session
         }
     };
 };
