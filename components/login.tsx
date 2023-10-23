@@ -1,4 +1,3 @@
-import { signIn, useSession } from "next-auth/react";
 import Router from "next/router";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
@@ -6,7 +5,6 @@ import LoadingDots from "@/components/icons/loading-dots";
 import { InfoToast } from "@/components/infoToast";
 
 export const Login = () => {
-    const { status } = useSession();
     const [loading, setLoading] = useState(false);
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
@@ -47,19 +45,6 @@ export const Login = () => {
             return e.stopPropagation();
         }
 
-        const res: any = await signIn("credentials", {
-            email: inputs.email,
-            password: inputs.password,
-            redirect: false,
-            callbackUrl: `${window.location.origin}`,
-        });
-
-        if (res.error) {
-            setToastMsg("Sorry, we weren't able to log you in!");
-        } else {
-            // dispatch({ type: 'SET_USERID', payload: res.session.userId });
-            setToastMsg("Log in successful!");
-        }
         redirectToHome();
         return setShowInfoToast(true);
     }
@@ -121,7 +106,6 @@ export const Login = () => {
                         disabled={loading}
                         onClick={() => {
                             setLoading(true);
-                            signIn('github', { callbackUrl: `/` });
                         }}
                         className={`${loading
                             ? 'bg-gray-200 border-gray-300'

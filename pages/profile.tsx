@@ -2,13 +2,11 @@ import { GuessDisplayH } from "@/components/guessDisplayH";
 import GameContext from "@/context/GameContext";
 import Paginate from "@/lib/paginate";
 import { GetServerSideProps } from "next";
-import { getSession, useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
 
-const Profile = ({ history }: { history?: any }) => {
+const Profile = ({ history, user }: { history?: any, user:any }) => {
 
-    const { data: session } = useSession();
     const [pageNumber, setPageNumber] = useState(1)
     const { dispatch, darkMode } = useContext(GameContext);
 
@@ -36,7 +34,7 @@ const Profile = ({ history }: { history?: any }) => {
     return (
         <Container>
             <div className="text-center d-flex flex-wrap justify-content-center">
-                <h3>Hello {session?.user?.email}! This is your game history:</h3>
+                <h3>Hello {user}! This is your game history:</h3>
             </div>
 
             {history ?
@@ -75,7 +73,7 @@ const Profile = ({ history }: { history?: any }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const session = await getSession({ req });
+    const session = false;
     if (!session) {
         return {
             redirect: {
