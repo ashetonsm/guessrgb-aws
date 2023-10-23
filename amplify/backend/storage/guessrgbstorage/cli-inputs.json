@@ -1,0 +1,13 @@
+{
+  "resourceName": "guessrgbstorage",
+  "policyUUID": "2fa9245c",
+  "bucketName": "guessrgbstorage",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
