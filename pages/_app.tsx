@@ -31,7 +31,7 @@ export default function MyApp({ Component, pageProps }: any) {
   return (
     <GameProvider>
       <Layout {...pageProps}>
-        <Component {...pageProps} user={user} />
+        <Component {...pageProps} />
       </Layout>
     </GameProvider>
   );
