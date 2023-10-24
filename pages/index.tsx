@@ -6,6 +6,8 @@ import { useContext, useEffect, useState } from 'react';
 import GameContext from '@/context/GameContext';
 import { Container } from 'react-bootstrap';
 import { InfoToast } from '@/components/infoToast';
+import { withSSRContext } from 'aws-amplify';
+import { GetServerSideProps } from 'next';
 
 export default function Home({ user }: any) {
   const {
@@ -56,6 +58,13 @@ export default function Home({ user }: any) {
 
   }, [darkMode])
 
+  useEffect(() => {
+    if (user && !isAuthenticated) {
+      console.log(user)
+      dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
+    }
+  }, [user])
+
   const saveHistory = async () => {
 
     const result = {
@@ -67,7 +76,7 @@ export default function Home({ user }: any) {
     }
     const key = `${user.attributes.email}-${crypto.randomUUID()}`
 
-    const blob = new Blob([JSON.stringify(result)], {type: 'text/plain'})
+    const blob = new Blob([JSON.stringify(result)], { type: 'text/plain' })
 
     console.log(blob)
     console.log(key)
@@ -103,3 +112,27 @@ export default function Home({ user }: any) {
     </Container>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const { Auth } = withSSRContext({ req });
+  var user = null;
+  try {
+    user = await Auth.currentAuthenticatedUser()
+    console.log(`This email address is logged in: ${user.attributes.email}`)
+  } catch (err) {
+    console.log("No cognito user is logged in")
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/'
+      }
+    };
+  }
+
+  return {
+    props: {
+      user: JSON.parse(JSON.stringify(user))
+    }
+  };
+};
+

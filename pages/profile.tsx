@@ -9,7 +9,7 @@ import { Container, Button } from "react-bootstrap";
 const Profile = ({ history, user }: { history?: any, user: any }) => {
 
     const [pageNumber, setPageNumber] = useState(1)
-    const { dispatch, darkMode } = useContext(GameContext);
+    const { dispatch, darkMode, isAuthenticated } = useContext(GameContext);
 
     useEffect(() => {
         const appBG = document.getElementById('__next')
@@ -33,8 +33,10 @@ const Profile = ({ history, user }: { history?: any, user: any }) => {
     }, [darkMode])
 
     useEffect(() => {
-        console.log(user)
-    }, [user])
+        if (user && !isAuthenticated) {
+            dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
+        }
+    })
 
     return (
         <Container>
