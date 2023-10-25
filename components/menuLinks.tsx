@@ -5,11 +5,16 @@ import { Login } from "@/components/login"
 import { Register } from "@/components/register"
 import GameContext from "@/context/GameContext"
 import { Auth } from 'aws-amplify'
+import Router from "next/router"
 
 export const MenuLinks = () => {
-    const { dispatch, isAuthenticated } = useContext(GameContext);
+    const { isAuthenticated } = useContext(GameContext);
     const [showLogin, setShowLogin] = useState(true)
     const [showRegister, setShowRegister] = useState(false)
+
+    const redirectHome = () => {
+        Router.push("/")
+    }
 
     return (
         <Nav variant="pills" className='d-inline' justify defaultActiveKey={"login"}>
@@ -26,7 +31,7 @@ export const MenuLinks = () => {
                             setShowRegister(false)
                             setShowLogin(true)
                             Auth.signOut()
-                            dispatch({ type: 'SET_IS_AUTHENTICATED', payload: false })
+                            redirectHome()
                         }}>Log out</Nav.Link>
                     </Nav.Item>
                 </div>
