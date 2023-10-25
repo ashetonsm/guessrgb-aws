@@ -84,7 +84,7 @@ export default function Home({ user }: any) {
     }
 
     try {
-      const savedGame = await API.graphql(graphqlOperation(mutations.createGame, { input: result }))
+      await API.graphql(graphqlOperation(mutations.createGame, { input: result }))
       return setToastMsg("Game saved to history!");
     } catch (err) {
       return setToastMsg("Unable to save game to history!");
