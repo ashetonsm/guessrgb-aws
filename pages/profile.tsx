@@ -12,6 +12,9 @@ const Profile = ({ history, user }: { history?: any, user: any }) => {
     const [pageNumber, setPageNumber] = useState(1)
     const { dispatch, darkMode, isAuthenticated } = useContext(GameContext);
 
+    /**
+     * Toggles dark mode
+     */
     useEffect(() => {
         const appBG = document.getElementById('__next')
 
@@ -45,7 +48,7 @@ const Profile = ({ history, user }: { history?: any, user: any }) => {
                 <h3>Hello {user ? user.attributes.email : '...'}! This is your game history:</h3>
             </div>
 
-            {history ?
+            {history.length !== 0 ?
                 <div>
                     <div className="d-flex flex-wrap justify-content-center gap-3 mb-2">
                         <Button
@@ -98,7 +101,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         email: user.attributes.email.toString()
     }
 
-    var history = await API.graphql(graphqlOperation(queries.gameByEmail, game))
+    var history = null
+    history = await API.graphql(graphqlOperation(queries.gameByEmail, game))
     history = history.data.gameByEmail.items
 
     return {
