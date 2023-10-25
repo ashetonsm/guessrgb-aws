@@ -13,7 +13,6 @@ export const Login = () => {
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
-        rememberUser: "false",
     });
 
     /**
@@ -88,20 +87,12 @@ export const Login = () => {
                     <Form.Text>Please enter your password.</Form.Text>
                 </Form.Group>
 
-                <Form.Group className="mb-3 text-start">
-                    <Form.Check
-                        type="checkbox"
-                        id="rememberUser"
-                        label="Remember me"
-                        value={inputs.rememberUser}
-                        onChange={(e) => {
-                            const { id, value } = e.target
-                            setInputs((inputs) => ({
-                                ...inputs,
-                                [id]: value === "false" ? "true" : "false",
-                            }))
-                        }}
-                    />
+                <Form.Group className="mb-3 text-center">
+                    <Form.Text>
+                        <a href="/reset-password">
+                            Reset Password
+                        </a>
+                    </Form.Text>
                 </Form.Group>
                 <Button className="mb-3" type="submit" onClick={handleSubmit}>Log in</Button>
             </Form>
