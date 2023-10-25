@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Button, Col, Container, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
-import { Auth } from 'aws-amplify';
+import { Auth, withSSRContext } from 'aws-amplify';
 import Router from "next/router";
+import GameContext from "@/context/GameContext";
+import { GetServerSideProps } from "next";
 
-const ResetPassword = () => {
+const ResetPassword = ({ user }: any) => {
 
+    const { dispatch, darkMode, isAuthenticated } = useContext(GameContext);
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
     const [emailValidated, setEmailValidated] = useState(false);
@@ -78,6 +81,36 @@ const ResetPassword = () => {
         }
         return setShowInfoToast(true);
     }
+
+    /**
+     * Toggles dark mode
+     */
+    useEffect(() => {
+        const appBG = document.getElementById('__next')
+
+        // Dark mode was already set on load
+        if (window.localStorage.getItem("darkMode")) {
+            // Update the state to match
+            dispatch({ type: 'SET_DARK_MODE', payload: true })
+            appBG?.classList.add('darkMode')
+        } else {
+            if (darkMode === true) {
+                appBG?.classList.add('darkMode')
+                window.localStorage.setItem('darkMode', 'true')
+
+            } else {
+                appBG?.classList.remove('darkMode')
+                window.localStorage.removeItem('darkMode')
+            }
+        }
+
+    }, [darkMode])
+
+    useEffect(() => {
+        if (user && !isAuthenticated) {
+            dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
+        }
+    })
 
     return (
         <>
@@ -167,5 +200,21 @@ const ResetPassword = () => {
 
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+    const { Auth } = withSSRContext({ req });
+    var user = null;
+    try {
+        user = await Auth.currentAuthenticatedUser()
+    } catch (err) {
+        console.log(err)
+    }
+
+    return {
+        props: {
+            user: JSON.parse(JSON.stringify(user))
+        }
+    };
+};
 
 export default ResetPassword
