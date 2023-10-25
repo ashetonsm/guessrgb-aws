@@ -7,7 +7,7 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
      * @param input The array of guesses
      * @returns An array of Card
      */
-    const returnGuesses = (input: any[]) => {
+    const returnGuesses = (input: any) => {
         var output = input.map((guess: { r: number, g: number, b: number, correct: Array<number> }, idx: number) =>
 
             <Card key={idx}
@@ -73,7 +73,7 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
         return <div className="col text-center"><p>{textDifficulty}</p></div>
     }
 
-    var output = games.map((entry: { status: number, date: Date, guesses: Array<any>, answer: string, difficulty: number }, idx: number) =>
+    var output = games.map((entry: { status: number, date: Date, guesses: string, answer: string, difficulty: number }, idx: number) =>
         <Card key={idx}
             id={`guessHistory-${idx}`}
             className="mb-3"
