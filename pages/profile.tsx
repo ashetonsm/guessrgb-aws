@@ -5,7 +5,7 @@ import { API, graphqlOperation, withSSRContext } from "aws-amplify";
 import * as queries from '@/src/graphql/queries';
 import { GetServerSideProps } from "next";
 import { useContext, useEffect, useState } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Row, Col } from "react-bootstrap";
 
 const Profile = ({ history, user }: { history?: any, user: any }) => {
 
@@ -45,8 +45,16 @@ const Profile = ({ history, user }: { history?: any, user: any }) => {
     return (
         <Container>
             <div className="text-center d-flex flex-wrap justify-content-center">
+                <h5>Options:</h5>
+            </div>
+            <div className="text-center d-flex flex-wrap justify-content-center mb-3">
+                <a href="/change-password">Change Password</a>
+            </div>
+            <hr/>
+            <div className="text-center d-flex flex-wrap justify-content-center">
                 <h3>Hello {user ? user.attributes.email : '...'}! This is your game history:</h3>
             </div>
+
 
             {history.length !== 0 ?
                 <div>
