@@ -1,14 +1,12 @@
 import Router from "next/router";
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import LoadingDots from "@/components/icons/loading-dots";
 import { InfoToast } from "@/components/infoToast";
 import { Auth } from 'aws-amplify';
 import GameContext from "@/context/GameContext";
 
 export const Login = () => {
     const { dispatch } = useContext(GameContext);
-    const [loading, setLoading] = useState(false);
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
     const [validated, setValidated] = useState(false);
