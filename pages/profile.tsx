@@ -109,8 +109,16 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         email: user.attributes.email.toString()
     }
 
+    interface GraphQLResult {
+        data?: any;
+        errors?: [object];
+        extensions?: {
+            [key: string]: any;
+        };
+    }
+
     var history = null
-    history = await API.graphql(graphqlOperation(queries.gameByEmail, game))
+    history = await API.graphql(graphqlOperation(queries.gameByEmail, game)) as GraphQLResult
     history = history.data.gameByEmail.items
 
     return {
