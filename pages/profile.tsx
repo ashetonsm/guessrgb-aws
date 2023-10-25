@@ -5,7 +5,7 @@ import { API, graphqlOperation, withSSRContext } from "aws-amplify";
 import * as queries from '@/src/graphql/queries';
 import { GetServerSideProps } from "next";
 import { useContext, useEffect, useState } from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 
 const Profile = ({ history, user }: { history?: any, user: any }) => {
 
