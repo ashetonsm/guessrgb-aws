@@ -1,17 +1,20 @@
 import { GuessDisplayH } from "@/components/guessDisplayH";
 import GameContext from "@/context/GameContext";
 import Paginate from "@/lib/paginate";
+import { API, graphqlOperation, withSSRContext } from "aws-amplify";
+import * as queries from '@/src/graphql/queries';
 import { GetServerSideProps } from "next";
-import { getSession, useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Row, Col } from "react-bootstrap";
 
-const Profile = ({ history }: { history?: any }) => {
+const Profile = ({ history, user }: { history?: any, user: any }) => {
 
-    const { data: session } = useSession();
     const [pageNumber, setPageNumber] = useState(1)
-    const { dispatch, darkMode } = useContext(GameContext);
+    const { dispatch, darkMode, isAuthenticated } = useContext(GameContext);
 
+    /**
+     * Toggles dark mode
+     */
     useEffect(() => {
         const appBG = document.getElementById('__next')
 
@@ -33,13 +36,27 @@ const Profile = ({ history }: { history?: any }) => {
 
     }, [darkMode])
 
+    useEffect(() => {
+        if (user && !isAuthenticated) {
+            dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
+        }
+    })
+
     return (
         <Container>
             <div className="text-center d-flex flex-wrap justify-content-center">
-                <h3>Hello {session?.user?.email}! This is your game history:</h3>
+                <h5>Options:</h5>
+            </div>
+            <div className="text-center d-flex flex-wrap justify-content-center mb-3">
+                <a href="/change-password">Change Password</a>
+            </div>
+            <hr/>
+            <div className="text-center d-flex flex-wrap justify-content-center">
+                <h3>Hello {user ? user.attributes.email : '...'}! This is your game history:</h3>
             </div>
 
-            {history ?
+
+            {history.length !== 0 ?
                 <div>
                     <div className="d-flex flex-wrap justify-content-center gap-3 mb-2">
                         <Button
@@ -75,8 +92,11 @@ const Profile = ({ history }: { history?: any }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const session = await getSession({ req });
-    if (!session) {
+    const { Auth } = withSSRContext({ req });
+    var user = null;
+    try {
+        user = await Auth.currentAuthenticatedUser()
+    } catch (err) {
         return {
             redirect: {
                 permanent: false,
@@ -85,23 +105,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         };
     }
 
-    const getHistory = await fetch(`${process.env.NEXTAUTH_URL}/api/games`, {
-        method: 'GET',
-        headers: {
-            cookie: req.headers.cookie || ""
-        }
-    })
-
-    const historyObj = await getHistory.json()
-    var history = null
-    if (historyObj.history) {
-        history = historyObj.history.reverse()
+    const game = {
+        email: user.attributes.email.toString()
     }
+
+    var history = null
+    history = await API.graphql(graphqlOperation(queries.gameByEmail, game))
+    history = history.data.gameByEmail.items
 
     return {
         props: {
-            history,
-            session
+            user: JSON.parse(JSON.stringify(user)),
+            history
         }
     };
 };

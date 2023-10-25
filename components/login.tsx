@@ -1,20 +1,18 @@
-import { signIn, useSession } from "next-auth/react";
 import Router from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import LoadingDots from "@/components/icons/loading-dots";
 import { InfoToast } from "@/components/infoToast";
+import { Auth } from 'aws-amplify';
+import GameContext from "@/context/GameContext";
 
 export const Login = () => {
-    const { status } = useSession();
-    const [loading, setLoading] = useState(false);
+    const { dispatch } = useContext(GameContext);
     const [showInfoToast, setShowInfoToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("...");
     const [validated, setValidated] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
-        rememberUser: "false",
     });
 
     /**
@@ -47,18 +45,12 @@ export const Login = () => {
             return e.stopPropagation();
         }
 
-        const res: any = await signIn("credentials", {
-            email: inputs.email,
-            password: inputs.password,
-            redirect: false,
-            callbackUrl: `${window.location.origin}`,
-        });
-
-        if (res.error) {
-            setToastMsg("Sorry, we weren't able to log you in!");
-        } else {
-            // dispatch({ type: 'SET_USERID', payload: res.session.userId });
+        try {
+            await Auth.signIn(inputs.email, inputs.password);
+            dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
             setToastMsg("Log in successful!");
+        } catch (err) {
+            setToastMsg("Sorry, we weren't able to log you in!");
         }
         redirectToHome();
         return setShowInfoToast(true);
@@ -95,44 +87,15 @@ export const Login = () => {
                     <Form.Text>Please enter your password.</Form.Text>
                 </Form.Group>
 
-                <Form.Group className="mb-3 text-start">
-                    <Form.Check
-                        type="checkbox"
-                        id="rememberUser"
-                        label="Remember me"
-                        value={inputs.rememberUser}
-                        onChange={(e) => {
-                            const { id, value } = e.target
-                            setInputs((inputs) => ({
-                                ...inputs,
-                                [id]: value === "false" ? "true" : "false",
-                            }))
-                        }}
-                    />
+                <Form.Group className="mb-3 text-center">
+                    <Form.Text>
+                        <a href="/reset-password">
+                            Reset Password
+                        </a>
+                    </Form.Text>
                 </Form.Group>
                 <Button className="mb-3" type="submit" onClick={handleSubmit}>Log in</Button>
             </Form>
-            
-            <hr/>
-
-            {status !== 'loading' ?
-                (
-                    <Button 
-                        disabled={loading}
-                        onClick={() => {
-                            setLoading(true);
-                            signIn('github', { callbackUrl: `/` });
-                        }}
-                        className={`${loading
-                            ? 'bg-gray-200 border-gray-300'
-                            : 'bg-black hover:bg-white border-black'
-                            } w-36 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
-                    >
-                        {loading ? <LoadingDots color="gray" /> : 'Log in with GitHub'}
-                    </Button>
-                )
-                : <LoadingDots color={"black"} />
-            }
 
         </>
     )

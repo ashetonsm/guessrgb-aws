@@ -4,23 +4,21 @@
   "private": true,
   "homepage": "https://main.d3p24kghk68qsi.amplifyapp.com/",
   "dependencies": {
-    "@next-auth/mongodb-adapter": "^1.1.1",
+    "@aws-crypto/sha256-js": "^5.2.0",
     "@types/node": "^16.11.26",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
-    "bcryptjs": "^2.4.3",
+    "aws-amplify": "^5.3.11",
     "bootstrap": "^5.2.3",
     "dotenv": "^16.0.3",
-    "mongodb": "^4.13.0",
-    "mongoose": "^6.9.1",
     "next": "^13.1.6",
-    "next-auth": "^4.19.2",
     "react": "^18.0.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.0",
     "sass": "^1.57.1",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "dev": "next dev",
@@ -45,8 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.2"
   }
 }

@@ -1,21 +1,19 @@
 import '@/styles/globals.css';
-import { AppProps } from 'next/app';
-import { SessionProvider } from 'next-auth/react';
 import Layout from '@/components/layout';
 import '@/styles/custom.scss'
 import { GameProvider } from '@/context/GameContext';
+import { Amplify } from 'aws-amplify';
+import awsmobile from '@/src/aws-exports';
 
-export default function MyApp({
-  Component,
-  pageProps: { session, ...pageProps }
-}: AppProps) {
+Amplify.configure({ ...awsmobile, ssr: true })
+
+export default function MyApp({ Component, pageProps }: any) {
   return (
-    <SessionProvider session={session}>
-      <GameProvider>
-        <Layout {...pageProps}>
-          <Component {...pageProps} />
-        </Layout>
-      </GameProvider>
-    </SessionProvider>
+    <GameProvider>
+      <Layout {...pageProps}>
+        <Component {...pageProps} />
+      </Layout>
+    </GameProvider>
   );
+
 }

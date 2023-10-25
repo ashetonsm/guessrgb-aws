@@ -68,6 +68,7 @@ div[id^="guessContainer"],
   animation: rainbow 10s infinite;
   margin: 0;
   font-size: 2em;
+  text-decoration: none;
 }
 
 #menuTitle {

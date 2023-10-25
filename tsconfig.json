@@ -19,14 +19,14 @@
       "@/lib/*": [
         "lib/*"
       ],
-      "@/models/*": [
-        "models/*"
-      ],
       "@/pages/*": [
         "pages/*"
       ],
       "@/styles/*": [
         "styles/*"
+      ],
+      "@/src/*": [
+        "src/*"
       ]
     },
     "skipLibCheck": true,
