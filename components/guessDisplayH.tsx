@@ -73,16 +73,16 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
         return <div className="col text-center"><p>{textDifficulty}</p></div>
     }
 
-    var output = games.map((entry: { status: number, date: Date, guesses: Array<any>, answer: { r: number; g: number; b: number }, difficulty: number }, idx: number) =>
+    var output = games.map((entry: { status: number, date: Date, guesses: Array<any>, answer: string, difficulty: number }, idx: number) =>
         <Card key={idx}
             id={`guessHistory-${idx}`}
             className="mb-3"
-            style={{ backgroundColor: "#ff000000", borderColor: `rgb(${entry.answer.r}, ${entry.answer.g}, ${entry.answer.b})` }}>
+            style={{ backgroundColor: "#ff000000", borderColor: `rgb(${JSON.parse(entry.answer).r}, ${JSON.parse(entry.answer).g}, ${JSON.parse(entry.answer).b})` }}>
             <div className="row g-0">
                 <div className="row g-0 gap-3 rounded-top historyHeader"
-                    style={{ backgroundColor: `rgb(${entry.answer.r}, ${entry.answer.g}, ${entry.answer.b})` }}>
+                    style={{ backgroundColor: `rgb(${JSON.parse(entry.answer).r}, ${JSON.parse(entry.answer).g}, ${JSON.parse(entry.answer).b})` }}>
                     <div className="col text-center">
-                        <p>R: {entry.answer.r}, G: {entry.answer.g}, B: {entry.answer.b}  </p>
+                        <p>R: {JSON.parse(entry.answer).r}, G: {JSON.parse(entry.answer).g}, B: {JSON.parse(entry.answer).b}  </p>
                     </div>
                     <div className="col text-center">
                         <p>{new Date(entry.date).toLocaleDateString()}</p>
@@ -96,7 +96,7 @@ export const GuessDisplayH = ({ games }: { games: any }) => {
                 <Card.Body
                     className="text-center d-flex flex-wrap justify-content-center gap-2"
                     style={{ maxWidth: 'inherit' }}>
-                    {returnGuesses(entry.guesses)}
+                    {returnGuesses(JSON.parse(entry.guesses))}
                 </Card.Body>
             </div>
 
