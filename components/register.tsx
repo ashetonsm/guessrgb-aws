@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
 import { Auth } from 'aws-amplify';
+import Router from "next/router";
 
 export const Register = () => {
 
@@ -23,6 +24,10 @@ export const Register = () => {
             ...inputs,
             [id]: value,
         }))
+    }
+
+    const redirectToValidate = () => {
+        Router.push("/validate")
     }
 
     /**
@@ -47,6 +52,7 @@ export const Register = () => {
         console.log(user)
         if (user) {
             setToastMsg("Registration successful!");
+            redirectToValidate()
         } else {
             setToastMsg("Registration unsuccessful!");
         }
