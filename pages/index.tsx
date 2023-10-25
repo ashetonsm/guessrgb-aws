@@ -38,6 +38,9 @@ export default function Home({ user }: any) {
     }
   })
 
+  /**
+   * Toggles dark mode
+   */
   useEffect(() => {
     const appBG = document.getElementById('__next')
 
@@ -63,6 +66,10 @@ export default function Home({ user }: any) {
     if (user && !isAuthenticated) {
       console.log(user)
       dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
+    } else {
+      if (!user && isAuthenticated) {
+        dispatch({ type: 'SET_IS_AUTHENTICATED', payload: false })
+      }
     }
   }, [user])
 
@@ -110,12 +117,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     console.log(`This email address is logged in: ${user.attributes.email}`)
   } catch (err) {
     console.log("No cognito user is logged in")
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/'
-      }
-    };
   }
 
   return {
