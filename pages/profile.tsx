@@ -1,7 +1,8 @@
 import { GuessDisplayH } from "@/components/guessDisplayH";
 import GameContext from "@/context/GameContext";
 import Paginate from "@/lib/paginate";
-import { withSSRContext } from "aws-amplify";
+import { API, graphqlOperation, withSSRContext } from "aws-amplify";
+import * as queries from '@/src/graphql/queries';
 import { GetServerSideProps } from "next";
 import { useContext, useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
@@ -80,13 +81,11 @@ const Profile = ({ history, user }: { history?: any, user: any }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const { Auth } = withSSRContext({req});
+    const { Auth } = withSSRContext({ req });
     var user = null;
     try {
         user = await Auth.currentAuthenticatedUser()
-        console.log(`This email address is logged in: ${user.attributes.email}`)
     } catch (err) {
-        console.log("No cognito user is logged in")
         return {
             redirect: {
                 permanent: false,
@@ -95,24 +94,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         };
     }
 
-    /*
-    const getHistory = await fetch(`${process.env.NEXTAUTH_URL}/api/games`, {
-        method: 'GET',
-        headers: {
-            cookie: req.headers.cookie || ""
-        }
-    })
-
-    const historyObj = await getHistory.json()
-    var history = null
-    if (historyObj.history) {
-        history = historyObj.history.reverse()
+    const game = {
+        email: user.attributes.email.toString()
     }
-    
-    */
+
+    var history = await API.graphql(graphqlOperation(queries.gameByEmail, game))
+    history = history.data.gameByEmail.items
+
     return {
         props: {
-            user: JSON.parse(JSON.stringify(user))
+            user: JSON.parse(JSON.stringify(user)),
+            history
         }
     };
 };
