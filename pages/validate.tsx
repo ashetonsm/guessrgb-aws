@@ -48,7 +48,6 @@ const Validate = () => {
             setToastMsg("Validation successful! You may now log in.");
             redirectToHome()
         } catch (err) {
-            console.log(err)
             setToastMsg("Validation unsuccessful!");
         }
         return setShowInfoToast(true);

@@ -52,9 +52,7 @@ export const Login = () => {
             setToastMsg("Log in successful!");
         } catch (err) {
             setToastMsg("Sorry, we weren't able to log you in!");
-            console.log(err);
         }
-        console.log('Success!');
         redirectToHome();
         return setShowInfoToast(true);
     }

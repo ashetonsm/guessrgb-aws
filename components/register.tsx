@@ -48,8 +48,6 @@ export const Register = () => {
             password: inputs.password
         })
 
-
-        console.log(user)
         if (user) {
             setToastMsg("Registration successful!");
             redirectToValidate()

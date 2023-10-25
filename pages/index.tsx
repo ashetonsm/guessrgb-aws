@@ -64,7 +64,6 @@ export default function Home({ user }: any) {
 
   useEffect(() => {
     if (user && !isAuthenticated) {
-      console.log(user)
       dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
     } else {
       if (!user && isAuthenticated) {
@@ -84,14 +83,10 @@ export default function Home({ user }: any) {
       difficulty: difficulty
     }
 
-    console.log(result)
-
     try {
       const savedGame = await API.graphql(graphqlOperation(mutations.createGame, { input: result }))
-      console.log(savedGame)
       return setToastMsg("Game saved to history!");
     } catch (err) {
-      console.log(err)
       return setToastMsg("Unable to save game to history!");
     }
 
@@ -114,9 +109,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   var user = null;
   try {
     user = await Auth.currentAuthenticatedUser()
-    console.log(`This email address is logged in: ${user.attributes.email}`)
   } catch (err) {
-    console.log("No cognito user is logged in")
+    // console.log("No cognito user is logged in")
   }
 
   return {
