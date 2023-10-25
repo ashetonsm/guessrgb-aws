@@ -27,7 +27,7 @@ export const Menu = () => {
                             }}>MENU</Button>
                     </Col>
                     <Col className='d-flex justify-content-center' style={{ marginTop: '1em', padding: 0 }}>
-                        <h1 className="text-center" id="title" style={{ margin: '0' }} >guessRGB</h1>
+                        <a href={"/"} className="text-center" id="title" style={{ margin: '0' }} >guessRGB</a>
                     </Col>
                     <Col className='d-flex justify-content-end'>
                         <span onClick={() => setShowInfoBox(true)}
