@@ -1,43 +1,55 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createHistory = /* GraphQL */ `
-  mutation CreateHistory(
-    $input: CreateHistoryInput!
-    $condition: ModelHistoryConditionInput
+export const createGame = /* GraphQL */ `
+  mutation CreateGame(
+    $input: CreateGameInput!
+    $condition: ModelGameConditionInput
   ) {
-    createHistory(input: $input, condition: $condition) {
+    createGame(input: $input, condition: $condition) {
       id
       email
-      history
+      status
+      date
+      guesses
+      answer
+      difficulty
       createdAt
       updatedAt
     }
   }
 `;
-export const updateHistory = /* GraphQL */ `
-  mutation UpdateHistory(
-    $input: UpdateHistoryInput!
-    $condition: ModelHistoryConditionInput
+export const updateGame = /* GraphQL */ `
+  mutation UpdateGame(
+    $input: UpdateGameInput!
+    $condition: ModelGameConditionInput
   ) {
-    updateHistory(input: $input, condition: $condition) {
+    updateGame(input: $input, condition: $condition) {
       id
       email
-      history
+      status
+      date
+      guesses
+      answer
+      difficulty
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteHistory = /* GraphQL */ `
-  mutation DeleteHistory(
-    $input: DeleteHistoryInput!
-    $condition: ModelHistoryConditionInput
+export const deleteGame = /* GraphQL */ `
+  mutation DeleteGame(
+    $input: DeleteGameInput!
+    $condition: ModelGameConditionInput
   ) {
-    deleteHistory(input: $input, condition: $condition) {
+    deleteGame(input: $input, condition: $condition) {
       id
       email
-      history
+      status
+      date
+      guesses
+      answer
+      difficulty
       createdAt
       updatedAt
     }
