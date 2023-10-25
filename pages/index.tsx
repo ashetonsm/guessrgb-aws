@@ -6,7 +6,8 @@ import { useContext, useEffect, useState } from 'react';
 import GameContext from '@/context/GameContext';
 import { Container } from 'react-bootstrap';
 import { InfoToast } from '@/components/infoToast';
-import { withSSRContext } from 'aws-amplify';
+import * as mutations from '@/src/graphql/mutations';
+import { API, graphqlOperation, withSSRContext } from 'aws-amplify';
 import { GetServerSideProps } from 'next';
 
 export default function Home({ user }: any) {
@@ -68,37 +69,25 @@ export default function Home({ user }: any) {
   const saveHistory = async () => {
 
     const result = {
+      email: user.attributes.email.toString(),
       status: gameWon ? 1 : 0,
       date: new Date().toUTCString(),
-      guesses: guesses,
-      answer: correctAnswer,
+      guesses: JSON.stringify(guesses),
+      answer: JSON.stringify(correctAnswer),
       difficulty: difficulty
     }
-    const key = `${user.attributes.email}-${crypto.randomUUID()}`
 
-    const blob = new Blob([JSON.stringify(result)], { type: 'text/plain' })
+    console.log(result)
 
-    console.log(blob)
-    console.log(key)
-    /*
-    // Object must be an instance of Blob
     try {
-      await Storage.put(key, blob, {
-        resumable: true,
-        completeCallback: (event) => {
-          console.log(`Successfully uploaded ${event.key}`)
-          return setToastMsg("Game saved to history!");
-        },
-        errorCallback: (err) => {
-          console.error('Unexpected error while uploading', err);
-          return setToastMsg("Unable to save game to history!");
-        }
-      })
+      const savedGame = await API.graphql(graphqlOperation(mutations.createGame, { input: result }))
+      console.log(savedGame)
+      return setToastMsg("Game saved to history!");
     } catch (err) {
       console.log(err)
       return setToastMsg("Unable to save game to history!");
     }
-    */
+
   }
 
   return (
