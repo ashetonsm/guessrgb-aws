@@ -8,11 +8,9 @@
 
 A casual browser game. Guess the color by selecting a value from the color input. The answer is randomly generated. The player has five chances to guess correctly.
 
-This application is currently in development. It's being completely rewritten. It can be played below:
+This application is currently in development. It can be played below:
 
-## [AWS Amplify demo with login/registration](https://main.d3p24kghk68qsi.amplifyapp.com/)
-
-## [Non-AWS Github Demo (without login/registration)](https://ashetonsm.github.io/guessRGB/)
+## [AWS Amplify demo with login/registration](https://main.d2as1o88cv9ho1.amplifyapp.com/)
 
 ### To do:
 - General
