@@ -10,7 +10,7 @@ A casual browser game. Guess the color by selecting a value from the color input
 
 This application is currently in development. It can be played below:
 
-## [AWS Amplify demo with login/registration](https://main.d2as1o88cv9ho1.amplifyapp.com/)
+## [AWS Amplify demo with login/registration](https://guessrgb.ashetonsm.com/)
 
 ### To do:
 - General
