@@ -2,7 +2,7 @@
   "name": "guessrgb",
   "version": "1.1.0",
   "private": true,
-  "homepage": "https://main.d3p24kghk68qsi.amplifyapp.com/",
+  "homepage": "https://guessrgb.ashetonsm.com/",
   "dependencies": {
     "@aws-crypto/sha256-js": "^5.2.0",
     "@types/node": "^16.11.26",
