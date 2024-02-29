@@ -1,6 +1,6 @@
 projects:
   guessrgbaws:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/guessrgbaws/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:
