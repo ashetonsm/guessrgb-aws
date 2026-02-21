@@ -1,8 +1,6 @@
 import { GuessDisplayH } from "@/components/guessDisplayH";
 import GameContext from "@/context/GameContext";
 import Paginate from "@/lib/paginate";
-import { API, graphqlOperation, withSSRContext } from "aws-amplify";
-import * as queries from '@/src/graphql/queries';
 import { GetServerSideProps } from "next";
 import { useContext, useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
@@ -92,10 +90,10 @@ const Profile = ({ history, user }: { history?: any, user: any }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const { Auth } = withSSRContext({ req });
+    // const { Auth } = withSSRContext({ req });
     var user = null;
     try {
-        user = await Auth.currentAuthenticatedUser()
+        // user = await Auth.currentAuthenticatedUser()
     } catch (err) {
         return {
             redirect: {
@@ -106,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
 
     const game = {
-        email: user.attributes.email.toString()
+        // email: user.attributes.email.toString()
     }
 
     interface GraphQLResult {
@@ -118,8 +116,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
 
     var history = null
-    history = await API.graphql(graphqlOperation(queries.gameByEmail, game)) as GraphQLResult
-    history = history.data.gameByEmail.items
+    // history = await API.graphql(graphqlOperation(queries.gameByEmail, game)) as GraphQLResult
+    // history = history.data.gameByEmail.items
 
     return {
         props: {

@@ -1,5 +1,5 @@
 import GameContext from "@/context/GameContext"
-import { DetailedHTMLProps, HTMLAttributes, RefObject, ReactNode, useContext } from "react"
+import { DetailedHTMLProps, HTMLAttributes, RefObject, ReactNode, useContext, JSX } from "react"
 import { Button, ButtonGroup, Modal, ModalProps, ToggleButton } from "react-bootstrap"
 import { Omit, BsPrefixProps } from "react-bootstrap/esm/helpers"
 
