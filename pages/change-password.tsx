@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
-import { Auth, withSSRContext } from 'aws-amplify';
+// import { Auth, withSSRContext } from 'aws-amplify';
 import Router from "next/router";
 import { GetServerSideProps } from "next";
 import GameContext from "@/context/GameContext";
@@ -53,8 +53,8 @@ const ChangePassword = ({ user }: any) => {
         }
 
         try {
-            const user = await Auth.currentAuthenticatedUser();
-            await Auth.changePassword(user, inputs.oldPassword, inputs.newPassword);
+            // const user = await Auth.currentAuthenticatedUser();
+            // await Auth.changePassword(user, inputs.oldPassword, inputs.newPassword);
             setToastMsg("Password changed!");
             redirectToHome()
         } catch (err) {
@@ -139,10 +139,10 @@ const ChangePassword = ({ user }: any) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const { Auth } = withSSRContext({ req });
+    // const { Auth } = withSSRContext({ req });
     var user = null;
     try {
-        user = await Auth.currentAuthenticatedUser()
+        // user = await Auth.currentAuthenticatedUser()
     } catch (err) {
         return {
             redirect: {

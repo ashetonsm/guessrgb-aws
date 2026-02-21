@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Button, Col, Container, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
-import { Auth, withSSRContext } from 'aws-amplify';
+// import { Auth, withSSRContext } from 'aws-amplify';
 import Router from "next/router";
 import GameContext from "@/context/GameContext";
 import { GetServerSideProps } from "next";
@@ -50,7 +50,7 @@ const ResetPassword = ({ user }: any) => {
         }
 
         try {
-            await Auth.forgotPasswordSubmit(inputs.email, inputs.authentication, inputs.password)
+            // await Auth.forgotPasswordSubmit(inputs.email, inputs.authentication, inputs.password)
             setToastMsg("Validation successful! You may now log in.");
             redirectToHome()
         } catch (err) {
@@ -74,7 +74,7 @@ const ResetPassword = ({ user }: any) => {
         }
 
         try {
-            await Auth.forgotPassword(inputs.accountEmail)
+            // await Auth.forgotPassword(inputs.accountEmail)
             setToastMsg("Validation code sent.");
         } catch (err) {
             setToastMsg("No account found!");
@@ -202,10 +202,10 @@ const ResetPassword = ({ user }: any) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const { Auth } = withSSRContext({ req });
+    // const { Auth } = withSSRContext({ req });
     var user = null;
     try {
-        user = await Auth.currentAuthenticatedUser()
+        // user = await Auth.currentAuthenticatedUser()
     } catch (err) {
         console.log(err)
     }

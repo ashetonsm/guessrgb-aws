@@ -4,7 +4,7 @@ import { Nav } from "react-bootstrap"
 import { Login } from "@/components/login"
 import { Register } from "@/components/register"
 import GameContext from "@/context/GameContext"
-import { Auth } from 'aws-amplify'
+// import { Auth } from 'aws-amplify'
 import Router from "next/router"
 
 export const MenuLinks = () => {
@@ -30,7 +30,7 @@ export const MenuLinks = () => {
                         <Nav.Link onClick={() => {
                             setShowRegister(false)
                             setShowLogin(true)
-                            Auth.signOut()
+                            // Auth.signOut()
                             redirectHome()
                         }}>Log out</Nav.Link>
                     </Nav.Item>

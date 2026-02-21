@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 import Router from "next/router";
 
 export const Register = () => {
@@ -43,10 +43,12 @@ export const Register = () => {
             return e.stopPropagation();
         }
 
-        const { user } = await Auth.signUp({
-            username: inputs.email,
-            password: inputs.password
-        })
+        const user = null
+
+        // const { user } = await Auth.signUp({
+        //     username: inputs.email,
+        //     password: inputs.password
+        // })
 
         if (user) {
             setToastMsg("Registration successful!");

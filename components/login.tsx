@@ -2,7 +2,7 @@ import Router from "next/router";
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 import GameContext from "@/context/GameContext";
 
 export const Login = () => {
@@ -46,7 +46,7 @@ export const Login = () => {
         }
 
         try {
-            await Auth.signIn(inputs.email, inputs.password);
+            // await Auth.signIn(inputs.email, inputs.password);
             dispatch({ type: 'SET_IS_AUTHENTICATED', payload: true })
             setToastMsg("Log in successful!");
         } catch (err) {

@@ -7,7 +7,7 @@ import GameContext from '@/context/GameContext';
 import { Container } from 'react-bootstrap';
 import { InfoToast } from '@/components/infoToast';
 import * as mutations from '@/src/graphql/mutations';
-import { API, graphqlOperation, withSSRContext } from 'aws-amplify';
+// import { API, graphqlOperation, withSSRContext } from 'aws-amplify';
 import { GetServerSideProps } from 'next';
 
 export default function Home({ user }: any) {
@@ -84,7 +84,7 @@ export default function Home({ user }: any) {
     }
 
     try {
-      await API.graphql(graphqlOperation(mutations.createGame, { input: result }))
+      // await API.graphql(graphqlOperation(mutations.createGame, { input: result }))
       return setToastMsg("Game saved to history!");
     } catch (err) {
       return setToastMsg("Unable to save game to history!");
@@ -105,10 +105,10 @@ export default function Home({ user }: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { Auth } = withSSRContext({ req });
+  // const { Auth } = withSSRContext({ req });
   var user = null;
   try {
-    user = await Auth.currentAuthenticatedUser()
+    // user = await Auth.currentAuthenticatedUser()
   } catch (err) {
     // console.log("No cognito user is logged in")
   }

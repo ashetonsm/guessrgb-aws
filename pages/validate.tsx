@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { InfoToast } from "@/components/infoToast";
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 import Router from "next/router";
 
 const Validate = () => {
@@ -44,7 +44,7 @@ const Validate = () => {
         }
 
         try {
-            await Auth.confirmSignUp(inputs.email, inputs.authentication)
+            // await Auth.confirmSignUp(inputs.email, inputs.authentication)
             setToastMsg("Validation successful! You may now log in.");
             redirectToHome()
         } catch (err) {
