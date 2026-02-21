@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import GameContext from '@/context/GameContext';
 import { Container } from 'react-bootstrap';
 import { InfoToast } from '@/components/infoToast';
-import * as mutations from '@/src/graphql/mutations';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 // import { API, graphqlOperation, withSSRContext } from 'aws-amplify';
 import { GetServerSideProps } from 'next';
 
